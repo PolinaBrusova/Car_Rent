@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import com.example.demo.controllers.MyController;
 import com.example.demo.controllers.PersonEditingController;
 import com.example.demo.controllers.PersonOverviewController;
 import com.example.demo.models.Person;
@@ -23,6 +22,7 @@ public class JavaFxApplication extends Application {
     private ConfigurableApplicationContext applicationContext;
     private Stage primaryStage;
     private ObservableList<Person> personData = FXCollections.observableArrayList();
+    private FxWeaver fxWeaver;
 
 
     @Override
@@ -36,6 +36,7 @@ public class JavaFxApplication extends Application {
         this.applicationContext = new SpringApplicationBuilder()
                 .sources(DemoApplication.class)
                 .run(args);
+        fxWeaver = applicationContext.getBean(FxWeaver.class);
     }
 
     @Override
@@ -60,56 +61,41 @@ public class JavaFxApplication extends Application {
         return applicationContext;
     }
 
+    public FxWeaver getFxWeaver() {
+        return fxWeaver;
+    }
+
     public Stage getPrimaryStage() {
         return primaryStage;
     }
 
     public void initStartLayout() {
-        FxWeaver fxWeaver = applicationContext.getBean(FxWeaver.class);
         FxControllerAndView<PersonOverviewController, Node> controllerAndView = fxWeaver.load(PersonOverviewController.class);
         controllerAndView.getView().ifPresent(parent -> {
-            Scene scene = new Scene((Parent) parent, 800, 600);
+            Scene scene = new Scene((Parent) parent);
             primaryStage.setScene(scene);
         });
-
         controllerAndView.getController().setDialogStage(primaryStage);
         controllerAndView.getController().setMain(this);
         primaryStage.setTitle("Application");
         primaryStage.show();
     }
 
-    /*public boolean showPersonEditDialog(Person person) {
-        try {
-            FxWeaver fxWeaver = applicationContext.getBean(FxWeaver.class);
-            Parent root = fxWeaver.loadView(PersonEditingController.class);
-            Scene scene = new Scene(root);
-            AnchorPane page = (AnchorPane) fxWeaver.load();
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Edit Person");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(primaryStage);
-            Scene scene = new Scene(page);
+    public boolean showPersonEditDialog(Person person) {
+        FxControllerAndView<PersonEditingController, Node> controllerAndView = fxWeaver.load(PersonEditingController.class);
+        Stage dialogStage = new Stage();
+        controllerAndView.getView().ifPresent(parent -> {
+            Scene scene = new Scene((Parent) parent);
             dialogStage.setScene(scene);
-
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("views/PersonEditDialog.fxml"));
-            AnchorPane page = (AnchorPane) loader.load();
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Edit Person");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(primaryStage);
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
-            PersonEditingController controller = loader.getController();
-            controller.setDialogStage(dialogStage);
-            controller.setPerson(person);
-            dialogStage.showAndWait();
-            return controller.isOkClicked();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }*/
+        });
+        dialogStage.setTitle("New Person");
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.initOwner(primaryStage);
+        controllerAndView.getController().setDialogStage(dialogStage);
+        controllerAndView.getController().setPerson(person);
+        dialogStage.showAndWait();
+        return controllerAndView.getController().isOkClicked();
+    }
 
 
 }

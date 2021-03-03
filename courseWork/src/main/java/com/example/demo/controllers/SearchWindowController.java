@@ -1,14 +1,19 @@
 package com.example.demo.controllers;
 
 import com.example.demo.JavaFxApplication;
+import com.example.demo.models.Person;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import net.rgielen.fxweaver.core.FxControllerAndView;
+import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,6 +25,7 @@ import java.io.IOException;
 public class SearchWindowController {
 
     private JavaFxApplication main;
+    private FxWeaver fxWeaver;
     private Stage searchStage;
 
     @FXML
@@ -36,33 +42,32 @@ public class SearchWindowController {
     private void initialize() {
     }
 
-    public void setDialogStage(Stage searchStage) {
+    public void setFxWeaver(FxWeaver fxWeaver) {
+        this.fxWeaver = fxWeaver;
+    }
+
+    public void setSearchStage(Stage searchStage) {
         this.searchStage = searchStage;
     }
 
     @FXML
     private void handleSearch(){
-        /*if (!phoneField.getText().isBlank()) {
+        if (!phoneField.getText().isBlank()) {
             if (phoneValidation(phoneField.getText())){
                 if (clientExistence(phoneField.getText())){
-                    try {
-                        FXMLLoader loader = new FXMLLoader();
-                        loader.setLocation(Main.class.getResource("views/requirements.fxml"));
-                        AnchorPane page = loader.load();
-                        Stage requirementStage = new Stage();
-                        requirementStage.setTitle("Search");
-                        requirementStage.initModality(Modality.WINDOW_MODAL);
-                        requirementStage.initOwner(main.getPrimaryStage());
-                        Scene scene = new Scene(page);
-                        requirementStage.setScene(scene);
-                        RequirementsController controller = loader.getController();
-                        controller.setStage(requirementStage);
-                        controller.setPerson((Person) main.getPersonData().stream().filter(item -> item.getPhone().equals(phoneField.getText())).toArray()[0]);
-                        searchStage.close();
-                        requirementStage.showAndWait();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    FxControllerAndView<RequirementsController, Node> controllerAndView = fxWeaver.load(RequirementsController.class);
+                    Stage reqStage = new Stage();
+                    controllerAndView.getView().ifPresent(parent -> {
+                        Scene scene = new Scene((Parent) parent);
+                        reqStage.setScene(scene);
+                    });
+                    reqStage.setTitle("Requirements");
+                    reqStage.initModality(Modality.WINDOW_MODAL);
+                    reqStage.initOwner(main.getPrimaryStage());
+                    controllerAndView.getController().setStage(reqStage);
+                    controllerAndView.getController().setPerson((Person) main.getPersonData().stream().filter(item -> item.getPhone().equals(phoneField.getText())).toArray()[0]);
+                    searchStage.close();
+                    reqStage.showAndWait();
                 }else{
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.initOwner(searchStage);
@@ -94,7 +99,7 @@ public class SearchWindowController {
             alert.setHeaderText("Fill an empty field");
             alert.setContentText("Fill the telephone number for the search");
             alert.showAndWait();
-        }*/
+        }
     }
 
     private boolean phoneValidation(String phone){

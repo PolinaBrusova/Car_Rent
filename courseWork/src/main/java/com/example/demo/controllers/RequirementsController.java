@@ -1,11 +1,17 @@
 package com.example.demo.controllers;
 
+import com.example.demo.JavaFxApplication;
+import com.example.demo.models.Person;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.stereotype.Component;
 
+@Component
+@FxmlView("requirements.fxml")
 public class RequirementsController {
-    /*private Main main;
+    private JavaFxApplication main;
     private Person person;
     private Stage stage;
     @FXML
@@ -27,7 +33,7 @@ public class RequirementsController {
     private void initialize(){
     }
 
-    public void setMain(Main main){
+    public void setMain(JavaFxApplication main){
         this.main = main;
     }
 
@@ -42,5 +48,5 @@ public class RequirementsController {
 
     public void setStage(Stage stage) {
         this.stage=stage;
-    }*/
+    }
 }

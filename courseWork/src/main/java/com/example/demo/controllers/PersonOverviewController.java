@@ -4,11 +4,17 @@ import com.example.demo.JavaFxApplication;
 import com.example.demo.models.Person;
 import com.example.demo.utils.DateUtil;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import net.rgielen.fxweaver.core.FxControllerAndView;
+import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 
@@ -33,6 +39,7 @@ public class PersonOverviewController {
     private Label liscenceLabel;
     private JavaFxApplication main;
     private Stage startStage;
+    private FxWeaver fxWeaver;
 
     public PersonOverviewController(){}
 
@@ -50,6 +57,7 @@ public class PersonOverviewController {
     }
     public void setMain(JavaFxApplication main){
         this.main = main;
+        this.fxWeaver = this.main.getFxWeaver();
         personTable.setItems(main.getPersonData());
     }
 
@@ -75,7 +83,7 @@ public class PersonOverviewController {
 
     @FXML
     private void handleEditPerson() {
-        /*Person selectedPerson = personTable.getSelectionModel().getSelectedItem();
+        Person selectedPerson = personTable.getSelectionModel().getSelectedItem();
         if (selectedPerson != null) {
             boolean okClicked = main.showPersonEditDialog(selectedPerson);
             if (okClicked) {
@@ -89,16 +97,16 @@ public class PersonOverviewController {
             alert.setContentText("Please select a person in the table.");
 
             alert.showAndWait();
-        }*/
+        }
     }
 
     @FXML
     private void handleNewPerson() {
-        /*Person tempPerson = new Person();
+        Person tempPerson = new Person();
         boolean okClicked = main.showPersonEditDialog(tempPerson);
         if (okClicked) {
             main.getPersonData().add(tempPerson);
-        }*/
+        }
     }
 
     private void showPersonsOverviewDetails(Person person){
@@ -125,18 +133,19 @@ public class PersonOverviewController {
 
     @FXML
     private void handleSearch(){
-        /*FxWeaver fxWeaver = main.getApplicationContext().getBean(FxWeaver.class);
         FxControllerAndView<SearchWindowController, Node> controllerAndView = fxWeaver.load(SearchWindowController.class);
+        Stage searchStage = new Stage();
         controllerAndView.getView().ifPresent(parent -> {
-            Scene scene = new Scene((Parent) parent, 800, 600);
+            Scene scene = new Scene((Parent) parent, 380, 280);
             searchStage.setScene(scene);
         });
         searchStage.setTitle("Search");
-        searchStage.initModality(Modality.WINDOW_MODAL);
         searchStage.initOwner(main.getPrimaryStage());
-        controllerAndView.getController().setDialogStage(searchStage);
+        searchStage.initModality(Modality.WINDOW_MODAL);
+        controllerAndView.getController().setSearchStage(searchStage);
         controllerAndView.getController().setMain(main);
-        searchStage.showAndWait();*/
+        controllerAndView.getController().setFxWeaver(this.fxWeaver);
+        searchStage.showAndWait();
     }
 
 }
