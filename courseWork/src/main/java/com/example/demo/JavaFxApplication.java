@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.controllers.EmployeeController;
 import com.example.demo.controllers.PersonEditingController;
 import com.example.demo.controllers.PersonOverviewController;
 import com.example.demo.models.Person;
@@ -70,14 +71,14 @@ public class JavaFxApplication extends Application {
     }
 
     public void initStartLayout() {
-        FxControllerAndView<PersonOverviewController, Node> controllerAndView = fxWeaver.load(PersonOverviewController.class);
+        FxControllerAndView<EmployeeController, Node> controllerAndView = fxWeaver.load(EmployeeController.class);
         controllerAndView.getView().ifPresent(parent -> {
             Scene scene = new Scene((Parent) parent);
             primaryStage.setScene(scene);
         });
-        controllerAndView.getController().setDialogStage(primaryStage);
+        controllerAndView.getController().setLoginStage(primaryStage);
         controllerAndView.getController().setMain(this);
-        primaryStage.setTitle("Application");
+        primaryStage.setTitle("Login");
         primaryStage.show();
     }
 
