@@ -1,4 +1,4 @@
-package com.example.demo.controllers;
+package com.example.demo.controllersFX;
 
 import com.example.demo.services.WeatherService;
 import javafx.event.ActionEvent;

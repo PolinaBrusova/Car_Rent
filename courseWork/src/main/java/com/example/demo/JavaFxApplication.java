@@ -1,8 +1,7 @@
 package com.example.demo;
 
-import com.example.demo.controllers.EmployeeController;
-import com.example.demo.controllers.PersonEditingController;
-import com.example.demo.controllers.PersonOverviewController;
+import com.example.demo.controllersFX.EmployeeController;
+import com.example.demo.controllersFX.PersonEditingController;
 import com.example.demo.models.Person;
 import javafx.application.Application;
 import javafx.application.Platform;

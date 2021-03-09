@@ -1,7 +1,6 @@
-package com.example.demo.controllers;
+package com.example.demo.controllersFX;
 
 import com.example.demo.JavaFxApplication;
-import com.example.demo.models.Person;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -14,8 +13,6 @@ import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.awt.*;
 
 @Component
 @FxmlView("EmployeeRegister.fxml")
