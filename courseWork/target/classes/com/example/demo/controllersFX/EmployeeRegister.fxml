@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="292.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controllers.EmployeeController">
+<AnchorPane prefHeight="292.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controllersFX.EmployeeController">
    <children>
       <Button layoutX="349.0" layoutY="227.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="105.0" text="Войти" onAction="#handleEnter"/>
       <Label layoutX="237.0" layoutY="38.0" prefHeight="27.0" prefWidth="127.0" text="RENT-A-CAR Moscow" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS" />

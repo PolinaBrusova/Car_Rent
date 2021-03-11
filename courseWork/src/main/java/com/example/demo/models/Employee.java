@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity // This tells Hibernate to make a table out of this class
-@Table(name = "Discounts")
+@Table(name = "Employees")
 public class Employee extends AuditModel{
     @Id
     @GeneratedValue(generator = "EmployeeId_generator")
