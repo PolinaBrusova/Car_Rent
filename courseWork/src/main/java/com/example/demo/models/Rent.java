@@ -4,10 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.Period;
 
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name = "Rents")
-public class Rent extends AuditModel{
+public class Rent{
     @Id
     @GeneratedValue(generator = "RentId_generator")
     @SequenceGenerator(
@@ -76,7 +77,16 @@ public class Rent extends AuditModel{
     private LocalDate endDate;
 
     @Column(name = "total_summ", nullable = false)
-    private LocalDate totalSumm;
+    private float totalSumm;
+
+    public Rent(LocalDate startDate, LocalDate endDate){
+        this.startDate=startDate;
+        this.endDate=endDate;
+        this.totalSumm = Period.between(endDate, startDate).getDays()*
+                car.getComfortLevel().getRentPrice()*(1-discount.getPercent())+car.getComfortLevel().getDeposit();
+    }
+
+    public Rent(){}
 
     public Long getId() {
         return id;
@@ -90,7 +100,7 @@ public class Rent extends AuditModel{
         return endDate;
     }
 
-    public LocalDate getTotalSumm() {
+    public float getTotalSumm() {
         return totalSumm;
     }
 
@@ -102,7 +112,21 @@ public class Rent extends AuditModel{
         this.endDate = endDate;
     }
 
-    public void setTotalSumm(LocalDate totalSumm) {
+    public void setTotalSumm(float totalSumm) {
         this.totalSumm = totalSumm;
+    }
+
+    @Override
+    public String toString() {
+        return "Rent{" +
+                "id=" + id +
+                ", car=" + car +
+                ", client=" + client +
+                ", discount=" + discount +
+                ", employee=" + employee +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", totalSumm=" + totalSumm +
+                '}';
     }
 }

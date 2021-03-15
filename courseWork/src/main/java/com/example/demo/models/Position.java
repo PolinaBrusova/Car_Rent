@@ -1,11 +1,12 @@
 package com.example.demo.models;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name = "Positions")
-public class Position extends AuditModel{
+public class Position{
     @Id
     @GeneratedValue(generator = "PositionId_generator")
     @SequenceGenerator(
@@ -26,6 +27,20 @@ public class Position extends AuditModel{
 
     @Column(name = "NumberOfWorkingDays")
     private int numberOfWorkingDays;
+
+    public Position(String name, int salary, Integer[] args){
+        this.name = name;
+        this.salary = salary;
+        if (args.length==2){
+            this.numberOfDaysOff = args[0];
+            this.numberOfWorkingDays = args[1];
+        }else{
+            this.numberOfDaysOff = 0;
+            this.numberOfWorkingDays = 0;
+        }
+    }
+
+    public Position(String name, Integer salary, Integer numberOfDaysOff, Integer numberOfWorkDays){}
 
     public Long getId() {
         return id;
@@ -64,22 +79,13 @@ public class Position extends AuditModel{
     }
 
     @Override
-    public Date getCreatedDate() {
-        return super.getCreatedDate();
-    }
-
-    @Override
-    public Date getUpdateDate() {
-        return super.getUpdateDate();
-    }
-
-    @Override
-    public String toString(){
+    public String toString() {
         return "Position{" +
-                "id=" + id + ", Name='" + name +
-                '\'' + ", Salary='" + salary +
-                '\'' + ", Number Of Working Days'" + numberOfWorkingDays +
-                '\'' + ", Number of Days Off='" + numberOfDaysOff +
-                '\'' + '}';
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", salary=" + salary +
+                ", numberOfDaysOff=" + numberOfDaysOff +
+                ", numberOfWorkingDays=" + numberOfWorkingDays +
+                '}';
     }
 }

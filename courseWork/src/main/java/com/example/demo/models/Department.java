@@ -1,11 +1,12 @@
 package com.example.demo.models;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name = "Departments")
-public class Department extends AuditModel{
+public class Department{
     @Id
     @GeneratedValue(generator = "DepartmentId_generator")
     @SequenceGenerator(
@@ -27,8 +28,18 @@ public class Department extends AuditModel{
     @Column(name = "Email", nullable = false)
     private String email;
 
-    @Column(name = "Additional")
+    @Column(name = "Additional", nullable = false)
     private String additional;
+
+    public Department(String adress, String head, String phone, String email, String additional){
+        this.adress=adress;
+        this.head=head;
+        this.phone=phone;
+        this.email=email;
+        this.additional=additional;
+    }
+
+    public Department(){}
 
     public Long getId() {
         return id;
@@ -75,23 +86,14 @@ public class Department extends AuditModel{
     }
 
     @Override
-    public Date getCreatedDate() {
-        return super.getCreatedDate();
-    }
-
-    @Override
-    public Date getUpdateDate() {
-        return super.getUpdateDate();
-    }
-
-    @Override
-    public String toString(){
+    public String toString() {
         return "Department{" +
-                "id=" + id + ", Adress='" + adress +
-                '\'' + ", Head='" + head +
-                '\'' + ", Phone'" + phone +
-                '\'' + ", Email='" + email +
-                '\'' + ", Additional='" + additional +
-                '\'' + '}';
+                "id=" + id +
+                ", adress='" + adress + '\'' +
+                ", head='" + head + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", additional='" + additional + '\'' +
+                '}';
     }
 }

@@ -11,4 +11,8 @@ import java.util.List;
 @Service
 public interface ClientRepository extends JpaRepository<Client, Integer> {
     public List<Client> findAll();
+
+    public Client findClientById(Long id);
+
+    public  Client findClientByPhoneNumber(String phone);
 }

@@ -1,6 +1,9 @@
 package com.example.demo.controllersFX;
 
 import com.example.demo.JavaFxApplication;
+import com.example.demo.models.ComfortLevel;
+import com.example.demo.repositories.CarRepository;
+import com.example.demo.repositories.ComfortLevelRepository;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -25,9 +28,15 @@ public class EmployeeController {
     private TextField login;
     @FXML
     private TextField password;
+
+    private final ComfortLevelRepository comfortLevelRepository;
+    private final CarRepository carRepository;
     
     @Autowired
-    public EmployeeController(){}
+    public EmployeeController(ComfortLevelRepository comfortLevelRepository, CarRepository carRepository){
+        this.carRepository = carRepository;
+        this.comfortLevelRepository = comfortLevelRepository;
+    }
 
     public void setMain(JavaFxApplication main){
         this.main = main;
@@ -44,7 +53,10 @@ public class EmployeeController {
     
     @FXML
     private void handleEnter(){
-        if(!login.getText().isBlank()){
+        ComfortLevel comfortLevel = new ComfortLevel();
+        comfortLevel.setId("A");comfortLevel.setDeposit((long) 1222);comfortLevel.setLevel("basic");comfortLevel.setMinExperience(1);comfortLevel.setRentPrice((long) 1200);
+        this.comfortLevelRepository.save(comfortLevel);
+        /*if(!login.getText().isBlank()){
             if(!password.getText().isBlank()){
                 FxControllerAndView<PersonOverviewController, Node> controllerAndView = fxWeaver.load(PersonOverviewController.class);
                 Stage base = new Stage();
@@ -60,6 +72,6 @@ public class EmployeeController {
                 base.close();
                 base.showAndWait();
             }
-        }
+        }*/
     }
 }

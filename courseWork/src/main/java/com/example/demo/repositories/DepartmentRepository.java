@@ -11,4 +11,6 @@ import java.util.List;
 @Service
 public interface DepartmentRepository extends JpaRepository<Department, Integer> {
     public List<Department> findAll();
+
+    public Department findDepartmentById(Long id);
 }

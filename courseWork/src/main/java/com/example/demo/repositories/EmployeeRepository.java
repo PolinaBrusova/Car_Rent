@@ -11,4 +11,6 @@ import java.util.List;
 @Service
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     public List<Employee> findAll();
+
+    public Employee findEmployeeById(Long id);
 }

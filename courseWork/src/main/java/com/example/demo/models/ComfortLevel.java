@@ -1,13 +1,17 @@
 package com.example.demo.models;
 
+import org.springframework.cglib.core.Local;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name = "ComfortLevels")
-public class ComfortLevel extends AuditModel{
+public class ComfortLevel{
     @Id
     private String id; //Уровень комфорта от низшего(D) До высшего (S) (DCBAS)
 
@@ -22,6 +26,16 @@ public class ComfortLevel extends AuditModel{
 
     @Column(name = "MinExperience", nullable = false)
     private int minExperience;
+
+    public ComfortLevel(String id, String level, Long deposit, long rentPrice, int minExperience){
+        this.id = id;
+        this.level = level;
+        this.deposit = deposit;
+        this.rentPrice = rentPrice;
+        this.minExperience = minExperience;
+    }
+
+    public ComfortLevel(){}
 
     public String getId(){
         return id;
@@ -64,12 +78,13 @@ public class ComfortLevel extends AuditModel{
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "ComfortLevel{" +
-                "id=" + id + ", Level='" + level +
-                '\'' + ", Deposit sum='" + deposit +
-                '\'' + ", RentDao price='" + rentPrice +
-                '\'' + ", Minimum experience='" + minExperience +
-                '\'' + '}';
+                "id='" + id + '\'' +
+                ", level='" + level + '\'' +
+                ", deposit=" + deposit +
+                ", rentPrice=" + rentPrice +
+                ", minExperience=" + minExperience +
+                '}';
     }
 }

@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Cars")
-public class Car extends AuditModel{
+public class Car{
     @Id
     @GeneratedValue(generator = "CarId_generator")
     @SequenceGenerator(
@@ -36,6 +36,18 @@ public class Car extends AuditModel{
 
     @Column(name = "Color", nullable = false)
     private String color;
+
+    public Car(String brand, String carcase, String gearbox, Integer doorNumber, Integer seats,
+               Integer releaseYear, String color) {
+        this.brand=brand;
+        this.carcase=carcase;
+        this.gearbox=gearbox;
+        this.doorNumber=doorNumber;
+        this.seats=seats;
+        this.releaseYear=releaseYear;
+        this.color=color;
+    }
+    public Car(){}
 
     public Long getId(){
         return id;
@@ -111,15 +123,17 @@ public class Car extends AuditModel{
     }
 
     @Override
-    public String toString(){
-        return "CarDao{" +
-                "id=" + id + ", Brand='" + brand +
-                '\'' + ", Carcase='" + carcase +
-                '\'' + ", Gearbox='" + gearbox +
-                '\'' + ", Number of doors='" + doorNumber +
-                '\'' + ", Number of seats='" + seats +
-                '\'' + ", Release Year='" + releaseYear +
-                '\'' + ", Color='" + color +
-                '\'' + '}';
+    public String toString() {
+        return "Car{" +
+                "id=" + id +
+                ", brand='" + brand + '\'' +
+                ", carcase='" + carcase + '\'' +
+                ", gearbox='" + gearbox + '\'' +
+                ", doorNumber=" + doorNumber +
+                ", seats=" + seats +
+                ", releaseYear=" + releaseYear +
+                ", color='" + color + '\'' +
+                ", comfortLevel=" + comfortLevel +
+                '}';
     }
 }

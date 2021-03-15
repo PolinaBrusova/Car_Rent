@@ -11,4 +11,6 @@ import java.util.List;
 @Service
 public interface DiscountRepository extends JpaRepository<Discount, Integer> {
     public List<Discount> findAll();
+
+    public  Discount findDiscountById(Long id);
 }

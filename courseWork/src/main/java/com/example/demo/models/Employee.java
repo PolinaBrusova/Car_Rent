@@ -3,11 +3,12 @@ package com.example.demo.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name = "Employees")
-public class Employee extends AuditModel{
+public class Employee{
     @Id
     @GeneratedValue(generator = "EmployeeId_generator")
     @SequenceGenerator(
@@ -34,6 +35,17 @@ public class Employee extends AuditModel{
 
     @Column(name = "Adress", nullable = false)
     private String adress;
+
+    public Employee(String firstName, String lastName, String phone, String email, String passport, String adress){
+        this.firstName=firstName;
+        this.lastName=lastName;
+        this.phone=phone;
+        this.email=email;
+        this.passport=passport;
+        this.adress=adress;
+    }
+
+    public Employee(){}
 
     public Long getId() {
         return id;
@@ -87,16 +99,6 @@ public class Employee extends AuditModel{
         this.adress = adress;
     }
 
-    @Override
-    public Date getCreatedDate() {
-        return super.getCreatedDate();
-    }
-
-    @Override
-    public Date getUpdateDate() {
-        return super.getUpdateDate();
-    }
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "Department_Id", nullable = false)
     @JsonIgnore
@@ -124,14 +126,17 @@ public class Employee extends AuditModel{
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Employee{" +
-                "id=" + id + ", First name='" + firstName +
-                '\'' + ", Last name='" + lastName +
-                '\'' + ", Phone Number='" + phone +
-                '\'' + ", Email='" + email +
-                '\'' + ", Passport='" + passport +
-                '\'' + ", Adress='" + adress +
-                '\'' + '}';
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", passport='" + passport + '\'' +
+                ", adress='" + adress + '\'' +
+                ", department=" + department +
+                ", position=" + position +
+                '}';
     }
 }

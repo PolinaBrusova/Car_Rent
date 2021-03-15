@@ -2,10 +2,11 @@ package com.example.demo.models;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.Period;
 
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name = "Clients")
-public class Client extends AuditModel{
+public class Client{
     @Id
     @GeneratedValue(generator = "ClientId_generator")
     @SequenceGenerator(
@@ -27,12 +28,22 @@ public class Client extends AuditModel{
     @Column(name = "Passport", nullable = false)
     private String passport;
 
-    @Column(name = "liscenceDate", nullable = false)
+    @Column(name = "liscenceDate")
     private LocalDate liscenceDate;
 
     @Column(name = "Experience", nullable = false)
     private int experience;
-    //= Period.between(liscenceDate, LocalDate.now()).getYears();
+
+    public Client(String firstName, String lastName, String phoneNumber, String passport, LocalDate liscenceDate){
+        this.firstName=firstName;
+        this.lastName=lastName;
+        this.phoneNumber=phoneNumber;
+        this.passport=passport;
+        this.liscenceDate = liscenceDate;
+        this.experience = Period.between(liscenceDate, LocalDate.now()).getYears();
+    }
+
+    public Client(){}
 
     public Long getId() {
         return id;
@@ -79,14 +90,15 @@ public class Client extends AuditModel{
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Client{" +
-                "id=" + id + ", First name='" + firstName +
-                '\'' + ", Last name='" + lastName +
-                '\'' + ", Phone Number='" + phoneNumber +
-                '\'' + ", Passport='" + passport +
-                '\'' + ", LiscenceDate='" + liscenceDate +
-                '\'' + ", Experience in Years='" + experience +
-                '\'' + '}';
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", passport='" + passport + '\'' +
+                ", liscenceDate=" + liscenceDate +
+                ", experience=" + experience +
+                '}';
     }
 }

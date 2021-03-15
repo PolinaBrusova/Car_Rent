@@ -3,6 +3,8 @@ package com.example.demo;
 import com.example.demo.controllersFX.EmployeeController;
 import com.example.demo.controllersFX.PersonEditingController;
 import com.example.demo.models.Person;
+import com.example.demo.repositories.CarRepository;
+import com.example.demo.repositories.ComfortLevelRepository;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;

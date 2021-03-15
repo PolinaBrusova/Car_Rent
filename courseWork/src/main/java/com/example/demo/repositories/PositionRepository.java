@@ -11,4 +11,6 @@ import java.util.List;
 @Service
 public interface PositionRepository extends JpaRepository<Position, Integer> {
     public List<Position> findAll();
+
+    public  Position findPositionById(Long id);
 }
