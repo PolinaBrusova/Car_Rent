@@ -7,13 +7,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import net.rgielen.fxweaver.core.FxmlView;
-import org.springframework.stereotype.Component;
 
-
-@Component
-@FxmlView("personEditDialog.fxml")
 public class PersonEditingController {
+
     @FXML
     private TextField firstNameField;
     @FXML

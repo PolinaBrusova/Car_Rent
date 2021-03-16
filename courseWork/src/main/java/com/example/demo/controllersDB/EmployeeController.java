@@ -35,7 +35,7 @@ public class EmployeeController {
         return this.employeeRepository.save(employee);
     }
 
-    @GetMapping("/clients/{id}")
+    @GetMapping("/employees/{id}")
     Employee getEmployee(@PathVariable Long id) {
 //        curl -X GET http://127.0.0.1:8080/api/theater/ticket?price=777
         return this.employeeRepository.findEmployeeById(id);

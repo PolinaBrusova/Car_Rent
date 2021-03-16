@@ -5,11 +5,7 @@ import com.example.demo.models.Person;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import net.rgielen.fxweaver.core.FxmlView;
-import org.springframework.stereotype.Component;
 
-@Component
-@FxmlView("requirements.fxml")
 public class RequirementsController {
     private JavaFxApplication main;
     private Person person;

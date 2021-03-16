@@ -4,22 +4,12 @@ import com.example.demo.JavaFxApplication;
 import com.example.demo.models.Person;
 import com.example.demo.utils.DateUtil;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import net.rgielen.fxweaver.core.FxControllerAndView;
-import net.rgielen.fxweaver.core.FxWeaver;
-import net.rgielen.fxweaver.core.FxmlView;
-import org.springframework.stereotype.Component;
 
-@Component
-@FxmlView("main.fxml")
+
 public class PersonOverviewController {
     @FXML
     private TableView<Person> personTable;
@@ -38,8 +28,6 @@ public class PersonOverviewController {
     @FXML
     private Label liscenceLabel;
     private JavaFxApplication main;
-    private Stage startStage;
-    private FxWeaver fxWeaver;
 
     public PersonOverviewController(){}
 
@@ -52,17 +40,12 @@ public class PersonOverviewController {
         showPersonsOverviewDetails(null); //очищаем справа
         personTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable,oldValue,newValue) -> showPersonsOverviewDetails(newValue)
-        ); //при изменении слушатель изменит данные на новые из таблицы*/
+        ); //при изменении слушатель изменит данные на новые из таблицы
 
     }
     public void setMain(JavaFxApplication main){
         this.main = main;
-        this.fxWeaver = this.main.getFxWeaver();
         personTable.setItems(main.getPersonData());
-    }
-
-    public void setDialogStage(Stage searchStage) {
-        this.startStage = searchStage;
     }
 
     @FXML
@@ -124,28 +107,6 @@ public class PersonOverviewController {
             passportLabel.setText("");
             liscenceLabel.setText("");
         }
-    }
-
-    @FXML
-    private  void handleClose(){
-        startStage.close();
-    }
-
-    @FXML
-    private void handleSearch(){
-        FxControllerAndView<SearchWindowController, Node> controllerAndView = fxWeaver.load(SearchWindowController.class);
-        Stage searchStage = new Stage();
-        controllerAndView.getView().ifPresent(parent -> {
-            Scene scene = new Scene((Parent) parent, 380, 280);
-            searchStage.setScene(scene);
-        });
-        searchStage.setTitle("Search");
-        searchStage.initOwner(main.getPrimaryStage());
-        searchStage.initModality(Modality.WINDOW_MODAL);
-        controllerAndView.getController().setSearchStage(searchStage);
-        controllerAndView.getController().setMain(main);
-        controllerAndView.getController().setFxWeaver(this.fxWeaver);
-        searchStage.showAndWait();
     }
 
 }
