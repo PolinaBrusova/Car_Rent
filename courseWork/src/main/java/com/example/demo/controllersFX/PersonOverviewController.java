@@ -1,8 +1,7 @@
 package com.example.demo.controllersFX;
 
 import com.example.demo.JavaFxApplication;
-import com.example.demo.models.Person;
-import com.example.demo.utils.DateUtil;
+import com.example.demo.models.Client;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -12,11 +11,11 @@ import javafx.scene.control.TableView;
 
 public class PersonOverviewController {
     @FXML
-    private TableView<Person> personTable;
+    private TableView<Client> personTable;
     @FXML
-    private TableColumn<Person,String> firstNameColumn;
+    private TableColumn<Client,String> firstNameColumn;
     @FXML
-    private TableColumn<Person,String> lastNameColumn;
+    private TableColumn<Client,String> lastNameColumn;
     @FXML
     private Label firstNameLabel;
     @FXML
@@ -66,7 +65,7 @@ public class PersonOverviewController {
 
     @FXML
     private void handleEditPerson() {
-        Person selectedPerson = personTable.getSelectionModel().getSelectedItem();
+        Client selectedPerson = personTable.getSelectionModel().getSelectedItem();
         if (selectedPerson != null) {
             boolean okClicked = main.showPersonEditDialog(selectedPerson);
             if (okClicked) {
@@ -85,20 +84,20 @@ public class PersonOverviewController {
 
     @FXML
     private void handleNewPerson() {
-        Person tempPerson = new Person();
+        Client tempPerson = new Client();
         boolean okClicked = main.showPersonEditDialog(tempPerson);
         if (okClicked) {
             main.getPersonData().add(tempPerson);
         }
     }
 
-    private void showPersonsOverviewDetails(Person person){
+    private void showPersonsOverviewDetails(Client person){
         if(person != null){
             firstNameLabel.setText(person.getFirstName());
             lastNameLabel.setText(person.getLastName());
-            phoneLabel.setText(person.getPhone());
+            phoneLabel.setText(person.getPhoneNumber());
             passportLabel.setText(person.getPassport());
-            liscenceLabel.setText(DateUtil.format(person.getLiscence()));
+            liscenceLabel.setText(person.getLiscenceDate());
         }
         else{
             firstNameLabel.setText("");

@@ -1,5 +1,10 @@
 package com.example.demo.models;
 
+import com.example.demo.utils.DateUtil;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.Period;
@@ -29,18 +34,18 @@ public class Client{
     private String passport;
 
     @Column(name = "liscenceDate")
-    private LocalDate liscenceDate;
+    private String liscenceDate;
 
     @Column(name = "Experience", nullable = false)
     private int experience;
 
-    public Client(String firstName, String lastName, String phoneNumber, String passport, LocalDate liscenceDate){
+    public Client(String firstName, String lastName, String phoneNumber, String passport, String liscenceDate){
         this.firstName=firstName;
         this.lastName=lastName;
         this.phoneNumber=phoneNumber;
         this.passport=passport;
         this.liscenceDate = liscenceDate;
-        this.experience = Period.between(liscenceDate, LocalDate.now()).getYears();
+        this.experience = Period.between(DateUtil.parse(liscenceDate), LocalDate.now()).getYears();
     }
 
     public Client(){}
@@ -53,7 +58,7 @@ public class Client{
         return experience;
     }
 
-    public LocalDate getLiscenceDate() {
+    public String getLiscenceDate() {
         return liscenceDate;
     }
 
@@ -81,13 +86,20 @@ public class Client{
         this.lastName = lastName;
     }
 
-    public void setLiscenceDate(LocalDate liscenceDate) {
+    public void setLiscenceDate(String liscenceDate) {
         this.liscenceDate = liscenceDate;
     }
 
     public void setPassport(String passport) {
         this.passport = passport;
     }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public StringProperty getFirstNameProperty() { return new SimpleStringProperty(firstName); }
+    public StringProperty getLastNameProperty() { return new SimpleStringProperty(lastName);}
 
     @Override
     public String toString() {

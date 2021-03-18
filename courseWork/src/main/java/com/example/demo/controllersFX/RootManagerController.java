@@ -1,7 +1,7 @@
 package com.example.demo.controllersFX;
 
 import com.example.demo.JavaFxApplication;
-import com.example.demo.models.Person;
+import com.example.demo.models.Client;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,7 +18,7 @@ public class RootManagerController {
     private Stage searchStage;
 
     @FXML
-    private TableView<Person> personTableView;
+    private TableView<Client> personTableView;
 
     public RootManagerController(){}
 

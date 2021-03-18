@@ -15,7 +15,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 public class EmployeeRegisterController {
     
@@ -41,9 +48,24 @@ public class EmployeeRegisterController {
     }
     
     @FXML
-    private void handleEnter(){
+    private void handleEnter() throws IOException {
         if(!login.getText().isBlank()){
             if(!password.getText().isBlank()){
+                StringBuilder result = new StringBuilder();
+                URL url = new URL("http://localhost:9090/api/tests/emp_log_pas/id="+login.getText()+"/password="+password.getText());
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("GET");
+                try (var reader = new BufferedReader(
+                        new InputStreamReader(httpURLConnection.getInputStream()))) {
+                    for (String line; (line = reader.readLine()) != null;) {
+                        result.append(line);
+                    }
+                }
+                if (!result.toString().isEmpty()){
+                    System.out.println(result.toString());
+                }else{
+                    System.out.println("hgbtjhgbd");
+                }
                 main.showPersonOverview();
             }
         }

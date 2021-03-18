@@ -1,7 +1,6 @@
 package com.example.demo.controllersFX;
 
 import com.example.demo.JavaFxApplication;
-import com.example.demo.models.Person;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;

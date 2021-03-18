@@ -1,9 +1,6 @@
 package com.example.demo.controllersDB;
 
-import com.example.demo.models.Department;
 import com.example.demo.models.EmpLogPas;
-import com.example.demo.models.Employee;
-import com.example.demo.models.Position;
 import com.example.demo.repositories.EmpLogPasReposiroty;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +22,17 @@ public class LogPasController {
 
     @GetMapping("/emp_log_pas/{id}")
     EmpLogPas getLogPas(@PathVariable Long id) {
-//        curl -X GET http://127.0.0.1:8080/api/theater/ticket?price=777
         return this.empLogPasReposiroty.findEmpLogPasById(id);
+    }
+
+    @GetMapping("/emp_log_pas/id={id}/password={password}")
+    boolean canLogin(@PathVariable Long id, @PathVariable String password) {
+        System.out.println(id);
+        EmpLogPas worker = this.empLogPasReposiroty.findEmpLogPasById(id);
+        if(worker != null){
+            return worker.getPassword().equals(password);
+        }else{
+            return false;
+        }
     }
 }

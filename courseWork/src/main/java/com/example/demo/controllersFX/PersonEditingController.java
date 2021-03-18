@@ -1,6 +1,6 @@
 package com.example.demo.controllersFX;
 
-import com.example.demo.models.Person;
+import com.example.demo.models.Client;
 import com.example.demo.utils.DateUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -23,7 +23,7 @@ public class PersonEditingController {
 
 
     private Stage dialogStage;
-    private Person person;
+    private Client person;
     private boolean okClicked = false;
 
     @FXML
@@ -34,14 +34,13 @@ public class PersonEditingController {
         this.dialogStage = dialogStage;
     }
 
-    public void setPerson(Person person) {
+    public void setPerson(Client person) {
         this.person = person;
-
         firstNameField.setText(person.getFirstName());
         lastNameField.setText(person.getLastName());
-        phoneField.setText(person.getPhone());
+        phoneField.setText(person.getPhoneNumber());
         passportField.setText(person.getPassport());
-        liscenceField.setText(DateUtil.format(person.getLiscence()));
+        liscenceField.setText(person.getLiscenceDate());
         liscenceField.setPromptText("dd.mm.yyyy");
     }
 
@@ -54,9 +53,9 @@ public class PersonEditingController {
         if (isInputValid()) {
             person.setFirstName(firstNameField.getText());
             person.setLastName(lastNameField.getText());
-            person.setPhone(phoneField.getText());
+            person.setPhoneNumber(phoneField.getText());
             person.setPassport(passportField.getText());
-            person.setLiscence(DateUtil.parse(liscenceField.getText()));
+            person.setLiscenceDate(liscenceField.getText());
 
             okClicked = true;
             dialogStage.close();

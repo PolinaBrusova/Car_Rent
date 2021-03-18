@@ -1,7 +1,7 @@
 package com.example.demo.controllersFX;
 
 import com.example.demo.JavaFxApplication;
-import com.example.demo.models.Person;
+import com.example.demo.models.Client;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -53,7 +53,7 @@ public class SearchWindowController {
                         requirementStage.setScene(scene);
                         RequirementsController controller = loader.getController();
                         controller.setStage(requirementStage);
-                        controller.setPerson((Person) main.getPersonData().stream().filter(item -> item.getPhone().equals(phoneField.getText())).toArray()[0]);
+                        controller.setPerson((Person) main.getPersonData().stream().filter(item -> item.getPhoneNumber().equals(phoneField.getText())).toArray()[0]);
                         searchStage.close();
                         requirementStage.showAndWait();
                     } catch (IOException e) {
@@ -66,8 +66,8 @@ public class SearchWindowController {
                     alert.setHeaderText("Client Not found in the database");
                     alert.setContentText("Redirecting on adding a client...");
                     alert.showAndWait();
-                    Person tempPerson = new Person();
-                    tempPerson.setPhone(phoneField.getText());
+                    Client tempPerson = new Client();
+                    tempPerson.setPhoneNumber(phoneField.getText());
                     if(main.showPersonEditDialog(tempPerson)){
                         main.getPersonData().add(tempPerson);
                     }
@@ -99,7 +99,7 @@ public class SearchWindowController {
     }
 
     private boolean clientExistence(String phone){
-        return main.getPersonData().stream().anyMatch(item -> item.getPhone().equals(phone));
+        return main.getPersonData().stream().anyMatch(item -> item.getPhoneNumber().equals(phone));
         //Позволяет узнать, если номер клиента (и соответсвенно сам клиент) в базе
     }
 }
