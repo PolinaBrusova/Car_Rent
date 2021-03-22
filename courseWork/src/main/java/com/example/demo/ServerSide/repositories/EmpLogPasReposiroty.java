@@ -1,6 +1,6 @@
 package com.example.demo.ServerSide.repositories;
 
-import com.example.demo.models.EmpLogPas;
+import com.example.demo.ServerSide.models.EmpLogPas;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

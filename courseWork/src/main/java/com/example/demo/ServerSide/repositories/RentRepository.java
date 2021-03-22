@@ -1,6 +1,6 @@
 package com.example.demo.ServerSide.repositories;
 
-import com.example.demo.models.Rent;
+import com.example.demo.ServerSide.models.Rent;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.example.demo.ServerSide.controllersDB;
 
-import com.example.demo.models.Car;
+import com.example.demo.ServerSide.models.Car;
 import com.example.demo.ServerSide.repositories.CarRepository;
 import com.example.demo.ServerSide.repositories.ComfortLevelRepository;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ public class CarController {
         this.comfortLevelRepository = comfortLevelRepository;
     }
 
-    @PostMapping("/cars")
+    @PostMapping("/addCar")
     Car createCar(@RequestParam String brand, @RequestParam String carcase, @RequestParam String gearbox,
                   @RequestParam Integer doorNumber, @RequestParam Integer seats, @RequestParam Integer releaseYear,
                   @RequestParam String color) {
@@ -29,7 +29,7 @@ public class CarController {
         return this.carRepository.save(car);
     }
 
-    @GetMapping("/cars/{id}")
+    @GetMapping("/getCar={id}")
     Car getCar(@PathVariable Long id) {
 //        curl -X GET http://127.0.0.1:8080/api/theater/ticket?price=777
         return this.carRepository.findCarById(id);

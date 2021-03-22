@@ -1,6 +1,6 @@
 package com.example.demo.clientView.controllersFX;
 
-import com.example.demo.models.Client;
+import com.example.demo.ServerSide.models.Client;
 import com.example.demo.utils.DateUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

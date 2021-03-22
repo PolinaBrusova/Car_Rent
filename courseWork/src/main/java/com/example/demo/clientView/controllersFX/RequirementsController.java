@@ -1,13 +1,14 @@
 package com.example.demo.clientView.controllersFX;
 
 import com.example.demo.clientView.JavaFxApplication;
+import com.example.demo.ServerSide.models.Client;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 public class RequirementsController {
     private JavaFxApplication main;
-    private Person person;
+    private Client client;
     private Stage stage;
     @FXML
     private Label FirstNameLabel;
@@ -32,13 +33,13 @@ public class RequirementsController {
         this.main = main;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPerson(Client person) {
+        this.client = person;
         FirstNameLabel.setText(person.getFirstName());
         LastNameLabel.setText(person.getLastName());
-        PhoneLabel.setText(person.getPhone());
+        PhoneLabel.setText(person.getPhoneNumber());
         PassportLabel.setText(person.getPassport());
-        LiscenceLabel.setText(person.getLiscence().toString());
+        LiscenceLabel.setText(person.getLiscenceDate().toString());
     }
 
     public void setStage(Stage stage) {

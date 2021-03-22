@@ -1,12 +1,15 @@
 package com.example.demo.clientView.controllersFX;
 
 import com.example.demo.clientView.JavaFxApplication;
-import com.example.demo.models.Client;
+import com.example.demo.ServerSide.models.Client;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 public class PersonOverviewController {
@@ -48,10 +51,31 @@ public class PersonOverviewController {
     }
 
     @FXML
-    private void handleDeletePerson(){
+    private void handleDeletePerson() throws IOException {
         int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0){
-            personTable.getItems().remove(selectedIndex);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.initOwner(main.getPrimaryStage());
+            alert.setTitle("Submit deleting");
+            alert.setHeaderText("Delete this client?");
+            alert.setContentText("Are you sure if you want to delete this client?");
+            ButtonType answer = alert.showAndWait().orElse(ButtonType.OK);
+            if (answer.equals(ButtonType.OK)){
+                System.out.println(personTable.getItems().get(selectedIndex).getId());
+                StringBuilder result = new StringBuilder();
+                URL url = new URL("http://localhost:9090/api/tests/deleteClient="+personTable.getItems().get(selectedIndex).getId());
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("DELETE");
+                try (var reader = new BufferedReader(
+                        new InputStreamReader(httpURLConnection.getInputStream()))) {
+                    for (String line; (line = reader.readLine()) != null; ) {
+                        result.append(line);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                personTable.getItems().remove(selectedIndex);
+            }
         }
         else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -83,11 +107,22 @@ public class PersonOverviewController {
     }
 
     @FXML
-    private void handleNewPerson() {
+    private void handleNewPerson() throws IOException {
         Client tempPerson = new Client();
         boolean okClicked = main.showPersonEditDialog(tempPerson);
         if (okClicked) {
-            main.getPersonData().add(tempPerson);
+            StringBuilder result = new StringBuilder();
+            URL url = new URL("http://localhost:9090/api/tests/clients/"+tempPerson.toString());
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setRequestMethod("POST");
+            try (var reader = new BufferedReader(
+                    new InputStreamReader(httpURLConnection.getInputStream()))) {
+                for (String line; (line = reader.readLine()) != null; ) {
+                    result.append(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

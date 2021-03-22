@@ -1,7 +1,7 @@
 package com.example.demo.clientView.controllersFX;
 
 import com.example.demo.clientView.JavaFxApplication;
-import com.example.demo.models.Client;
+import com.example.demo.ServerSide.models.Client;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

@@ -1,10 +1,8 @@
-package com.example.demo.models;
+package com.example.demo.ServerSide.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.Date;
 
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name = "Employees")

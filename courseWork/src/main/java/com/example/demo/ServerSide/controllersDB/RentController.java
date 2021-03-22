@@ -1,6 +1,6 @@
 package com.example.demo.ServerSide.controllersDB;
 
-import com.example.demo.models.*;
+import com.example.demo.ServerSide.models.*;
 import com.example.demo.ServerSide.repositories.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,11 +27,10 @@ public class RentController {
         this.rentRepository=rentRepository;
     }
 
-    @PostMapping("/rents")
+    @PostMapping("/addRent")
     Rent createRent(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate,
                     @RequestParam Employee employee, @RequestParam Client client,
                     @RequestParam Discount discount, @RequestParam Car car) {
-//        curl -X POST http://127.0.0.1:8080/api/theater/ticket?price=777
         Rent rent = new Rent(startDate, endDate);
         rent.setCar(carRepository.findCarById(car.getId()));
         rent.setClient(clientRepository.findClientById(client.getId()));
@@ -42,9 +41,8 @@ public class RentController {
         return this.rentRepository.save(rent);
     }
 
-    @GetMapping("/rents/{id}")
+    @GetMapping("/getRent={id}")
     Rent getRent(@PathVariable Long id) {
-//        curl -X GET http://127.0.0.1:8080/api/theater/ticket?price=777
         return this.rentRepository.findRentById(id);
     }
 }

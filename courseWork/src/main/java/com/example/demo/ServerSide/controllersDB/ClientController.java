@@ -1,7 +1,8 @@
 package com.example.demo.ServerSide.controllersDB;
 
-import com.example.demo.models.Client;
+import com.example.demo.ServerSide.models.Client;
 import com.example.demo.ServerSide.repositories.ClientRepository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,25 +17,32 @@ public class ClientController {
         this.clientRepository=clientRepository;
     }
 
-    @PostMapping("/clients")
+    @PostMapping("/addClient")
     Client createClient(@RequestParam String firstName, @RequestParam String lastName,
                         @RequestParam String phone, @RequestParam String passport,
                         @RequestParam String liscence) {
-//        curl -X POST http://127.0.0.1:8080/api/theater/ticket?price=777
         Client client = new Client(firstName, lastName, phone, passport, liscence);
         return this.clientRepository.save(client);
     }
 
-    @GetMapping("/clients/{id}")
+    @GetMapping("/getClient={id}")
     Client getClient(@PathVariable Long id) {
-//        curl -X GET http://127.0.0.1:8080/api/theater/ticket?price=777
         return this.clientRepository.findClientById(id);
     }
 
-    @GetMapping("/clients/all")
+    @GetMapping("/AllClients")
     List<Client> getClients() {
         List<Client> clients = this.clientRepository.findAll();
-//        curl -X GET http://127.0.0.1:8080/api/theater/ticket?price=777
         return this.clientRepository.findAll();
+    }
+
+    @GetMapping("getClient/phone={phone}")
+    Client getClientByPhone(@PathVariable String phone){
+        return this.clientRepository.findClientByPhoneNumber(phone);
+    }
+
+    @DeleteMapping("/deleteClient={id}")
+    Client deleteClientById(@PathVariable Long id){
+        return this.clientRepository.removeClientById(id);
     }
 }

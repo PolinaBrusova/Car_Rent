@@ -1,6 +1,6 @@
 package com.example.demo.ServerSide.controllersDB;
 
-import com.example.demo.models.ComfortLevel;
+import com.example.demo.ServerSide.models.ComfortLevel;
 import com.example.demo.ServerSide.repositories.ComfortLevelRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,17 +14,15 @@ public class ComfortLevelController {
         this.comfortLevelRepository = comfortLevelRepository;
     }
 
-    @PostMapping("/comfort_levels")
+    @PostMapping("/addComfortLevel")
     ComfortLevel createComfortLevel(@RequestParam String id, @RequestParam String level, @RequestParam Long deposit,
                            @RequestParam Long rentPrice, @RequestParam Integer minExperience) {
-//        curl -X POST http://127.0.0.1:8080/api/theater/ticket?price=777
         ComfortLevel comfortLevel = new ComfortLevel(id, level, deposit, rentPrice, minExperience);
         return this.comfortLevelRepository.save(comfortLevel);
     }
 
-    @GetMapping("/comfort_levels/{id}")
+    @GetMapping("/getComfortLevel/{id}")
     ComfortLevel getComfortLevel(@PathVariable String id) {
-//        curl -X GET http://127.0.0.1:8080/api/theater/ticket?price=777
         return this.comfortLevelRepository.findComfortLevelById(id);
     }
 }

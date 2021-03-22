@@ -1,7 +1,6 @@
-package com.example.demo.models;
+package com.example.demo.ServerSide.models;
 
 import com.example.demo.utils.DateUtil;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -76,6 +75,10 @@ public class Client{
 
     public String getFirstName() {
         return firstName;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setFirstName(String firstName) {

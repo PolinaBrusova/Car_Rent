@@ -1,13 +1,9 @@
-package com.example.demo.models;
-
-import org.springframework.cglib.core.Local;
+package com.example.demo.ServerSide.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.time.LocalDate;
-import java.util.Date;
 
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name = "ComfortLevels")

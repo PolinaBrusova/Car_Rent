@@ -1,6 +1,6 @@
 package com.example.demo.ServerSide.repositories;
 
-import com.example.demo.models.ComfortLevel;
+import com.example.demo.ServerSide.models.ComfortLevel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

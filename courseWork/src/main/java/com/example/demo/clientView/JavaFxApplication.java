@@ -4,7 +4,7 @@ import com.example.demo.clientView.controllersFX.EmployeeRegisterController;
 import com.example.demo.clientView.controllersFX.PersonEditingController;
 import com.example.demo.clientView.controllersFX.PersonOverviewController;
 import com.example.demo.clientView.controllersFX.RootManagerController;
-import com.example.demo.models.Client;
+import com.example.demo.ServerSide.models.Client;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -92,7 +92,7 @@ public class JavaFxApplication extends Application {
     public void showPersonOverview() {
         try {
             StringBuilder result = new StringBuilder();
-            URL url = new URL("http://localhost:9090/api/tests/clients/all");
+            URL url = new URL("http://localhost:9090/api/tests/AllClients");
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestMethod("GET");
             try (var reader = new BufferedReader(
@@ -101,10 +101,10 @@ public class JavaFxApplication extends Application {
                     result.append(line);
                 }
             }
-            System.out.println(result);
             JSONArray jsonArray = new JSONArray(result.toString());
             for (int i=0; i< jsonArray.length(); i++){
                 Client person = new Client();
+                person.setId(Long.valueOf(jsonArray.getJSONObject(i).get("id").toString()));
                 person.setFirstName(jsonArray.getJSONObject(i).get("firstName").toString());
                 person.setLastName(jsonArray.getJSONObject(i).get("lastName").toString());
                 person.setPassport(jsonArray.getJSONObject(i).get("passport").toString());
@@ -143,6 +143,11 @@ public class JavaFxApplication extends Application {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public void stop() throws Exception {
+        super.stop();
     }
 
     public static void main(String[] args) {

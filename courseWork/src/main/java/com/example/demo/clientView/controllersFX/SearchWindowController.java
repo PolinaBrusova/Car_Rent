@@ -1,7 +1,8 @@
 package com.example.demo.clientView.controllersFX;
 
 import com.example.demo.clientView.JavaFxApplication;
-import com.example.demo.models.Client;
+import com.example.demo.ServerSide.models.Client;
+import com.example.demo.utils.PhoneUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,8 +11,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class SearchWindowController {
 
@@ -37,10 +43,11 @@ public class SearchWindowController {
     }
 
     @FXML
-    private void handleSearch(){
+    private void handleSearch() throws IOException {
         if (!phoneField.getText().isBlank()) {
-            if (phoneValidation(phoneField.getText())){
-                if (clientExistence(phoneField.getText())){
+            if (PhoneUtil.validPhone(phoneField.getText())){
+                Client client = clientExistence(phoneField.getText());
+                if (client.getId() != null){
                     try {
                         FXMLLoader loader = new FXMLLoader();
                         loader.setLocation(JavaFxApplication.class.getResource("views/requirements.fxml"));
@@ -53,7 +60,7 @@ public class SearchWindowController {
                         requirementStage.setScene(scene);
                         RequirementsController controller = loader.getController();
                         controller.setStage(requirementStage);
-                        controller.setPerson((Person) main.getPersonData().stream().filter(item -> item.getPhoneNumber().equals(phoneField.getText())).toArray()[0]);
+                        controller.setPerson((Client) main.getPersonData().stream().filter(item -> item.getPhoneNumber().equals(phoneField.getText())).toArray()[0]);
                         searchStage.close();
                         requirementStage.showAndWait();
                     } catch (IOException e) {
@@ -68,6 +75,7 @@ public class SearchWindowController {
                     alert.showAndWait();
                     Client tempPerson = new Client();
                     tempPerson.setPhoneNumber(phoneField.getText());
+                    //TODO: Make adding new client (why the id does not generates tho?
                     if(main.showPersonEditDialog(tempPerson)){
                         main.getPersonData().add(tempPerson);
                     }
@@ -93,14 +101,28 @@ public class SearchWindowController {
         }
     }
 
-    private boolean phoneValidation(String phone){
-        return phone.matches("^\\+\\d?-?\\d?\\d?\\d{11}$");
-        //Валидация номера телефона позволяет отсеить поиск по формату +(кодСтраны)(11цифр) без скобок и тире
-    }
-
-    private boolean clientExistence(String phone){
-        return main.getPersonData().stream().anyMatch(item -> item.getPhoneNumber().equals(phone));
-        //Позволяет узнать, если номер клиента (и соответсвенно сам клиент) в базе
+    private Client clientExistence(String phone) throws IOException {
+        StringBuilder result = new StringBuilder();
+        URL url = new URL("http://localhost:9090/api/tests/getClient/phone="+phone);
+        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+        httpURLConnection.setRequestMethod("GET");
+        try (var reader = new BufferedReader(
+                new InputStreamReader(httpURLConnection.getInputStream()))) {
+            for (String line; (line = reader.readLine()) != null;) {
+                result.append(line);
+            }
+        }
+        Client client1 = new Client();
+        if(!result.toString().isBlank()) {
+            JSONObject client = new JSONObject(result.toString());
+            client1.setId(Long.valueOf(client.get("id").toString()));
+            client1.setFirstName(client.get("firstName").toString());
+            client1.setLastName(client.get("lastName").toString());
+            client1.setPassport(client.get("passport").toString());
+            client1.setPhoneNumber(client.get("phoneNumber").toString());
+            client1.setLiscenceDate(client.get("liscenceDate").toString());
+        }
+        return client1;
     }
 }
 

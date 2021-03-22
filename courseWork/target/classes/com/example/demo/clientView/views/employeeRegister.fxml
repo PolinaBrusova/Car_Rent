@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controllersFX.EmployeeRegisterController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.clientView.controllersFX.EmployeeRegisterController">
    <children>
       <PasswordField fx:id="password" layoutX="319.0" layoutY="171.0" />
       <TextField fx:id="login" layoutX="319.0" layoutY="121.0" />

@@ -1,6 +1,6 @@
 package com.example.demo.ServerSide.controllersDB;
 
-import com.example.demo.models.EmpLogPas;
+import com.example.demo.ServerSide.models.EmpLogPas;
 import com.example.demo.ServerSide.repositories.EmpLogPasReposiroty;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,19 +13,18 @@ public class LogPasController {
         this.empLogPasReposiroty=empLogPasReposiroty;
     }
 
-    @PostMapping("/emp_log_pas")
+    @PostMapping("/addLogPas")
     EmpLogPas createLogPas(@RequestParam Long id, @RequestParam String password) {
-//        curl -X POST http://127.0.0.1:8080/api/theater/ticket?price=777
         EmpLogPas empLogPas = new EmpLogPas(id, password);
         return this.empLogPasReposiroty.save(empLogPas);
     }
 
-    @GetMapping("/emp_log_pas/{id}")
+    @GetMapping("/getLogPass={id}")
     EmpLogPas getLogPas(@PathVariable Long id) {
         return this.empLogPasReposiroty.findEmpLogPasById(id);
     }
 
-    @GetMapping("/emp_log_pas/id={id}/password={password}")
+    @GetMapping("/LogPas_Id={id}_password={password}")
     boolean canLogin(@PathVariable Long id, @PathVariable String password) {
         System.out.println(id);
         EmpLogPas worker = this.empLogPasReposiroty.findEmpLogPasById(id);
