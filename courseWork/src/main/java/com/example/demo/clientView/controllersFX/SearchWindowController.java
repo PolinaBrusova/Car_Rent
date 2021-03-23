@@ -61,6 +61,7 @@ public class SearchWindowController {
                         RequirementsController controller = loader.getController();
                         controller.setStage(requirementStage);
                         controller.setPerson((Client) main.getPersonData().stream().filter(item -> item.getPhoneNumber().equals(phoneField.getText())).toArray()[0]);
+                        controller.setMain(this.main);
                         searchStage.close();
                         requirementStage.showAndWait();
                     } catch (IOException e) {

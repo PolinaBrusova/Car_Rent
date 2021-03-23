@@ -1,5 +1,7 @@
 package com.example.demo.clientView;
 
+import com.example.demo.ServerSide.models.Car;
+import com.example.demo.ServerSide.models.ComfortLevel;
 import com.example.demo.clientView.controllersFX.EmployeeRegisterController;
 import com.example.demo.clientView.controllersFX.PersonEditingController;
 import com.example.demo.clientView.controllersFX.PersonOverviewController;
@@ -10,17 +12,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 
 public class JavaFxApplication extends Application {
@@ -28,6 +34,7 @@ public class JavaFxApplication extends Application {
     private BorderPane rootLayout;
     private ObservableList<Client> personData = FXCollections.observableArrayList();
     private long employeeId;
+    private ObservableList<Car> existingCars = FXCollections.observableArrayList();
 
     public JavaFxApplication() { }
 
@@ -36,8 +43,8 @@ public class JavaFxApplication extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Address Application");
 
-        initRootLayout();
         showLoginPage();
+
     }
 
     public void initRootLayout() {
@@ -58,12 +65,38 @@ public class JavaFxApplication extends Application {
 
     public void showLoginPage() {
         try {
+            Stage stage = new Stage();
+            stage.setTitle("Sign in");
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(primaryStage);
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(JavaFxApplication.class.getResource("views/employeeRegister.fxml"));
-            AnchorPane register = (AnchorPane) loader.load();
-            rootLayout.setCenter(register);
+            BorderPane register = (BorderPane) loader.load();
+            Scene scene = new Scene(register);
+            stage.setScene(scene);
             EmployeeRegisterController controller = loader.getController();
             controller.setMain(this);
+            controller.setRegisterStage(stage);
+            stage.showAndWait();
+            try{
+                findAllCars();
+            }catch (Exception e){
+                try {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.initOwner(stage);
+                    alert.setTitle("No connection");
+                    alert.setHeaderText("Not established connection with the server");
+                    alert.setContentText("Connection with the server was not established. try again later. Halting th system...");
+                    ButtonType answer = alert.showAndWait().orElse(ButtonType.OK);
+                    if (ButtonType.OK.equals(answer)) {
+                        stage.close();
+                        this.stop();
+                    }
+                }catch (Exception k){
+                    k.printStackTrace();
+                }
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -87,6 +120,10 @@ public class JavaFxApplication extends Application {
 
     public ObservableList<Client> getPersonData() {
         return personData;
+    }
+
+    public ObservableList<Car> getExistingCars() {
+        return existingCars;
     }
 
     public void showPersonOverview() {
@@ -142,6 +179,51 @@ public class JavaFxApplication extends Application {
         } catch (IOException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public void findAllCars() throws IOException {
+        StringBuilder result = new StringBuilder();
+        URL url = new URL("http://localhost:9090/api/tests/AllCars");
+        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+        httpURLConnection.setRequestMethod("GET");
+        try (var reader = new BufferedReader(
+                new InputStreamReader(httpURLConnection.getInputStream()))) {
+            for (String line; (line = reader.readLine()) != null;) {
+                result.append(line);
+            }
+        }
+        JSONArray jsonArray = new JSONArray(result.toString());
+        for (int i=0; i< jsonArray.length(); i++){
+            Car car = new Car();
+            car.setId(Long.valueOf(jsonArray.getJSONObject(i).get("id").toString()));
+            car.setBrand(jsonArray.getJSONObject(i).get("brand").toString());
+            car.setCarcase(jsonArray.getJSONObject(i).get("carcase").toString());
+            car.setGearbox(jsonArray.getJSONObject(i).get("gearbox").toString());
+            car.setDoorNumber(Integer.parseInt(jsonArray.getJSONObject(i).get("doorNumber").toString()));
+            car.setSeats(Integer.parseInt(jsonArray.getJSONObject(i).get("seats").toString()));
+            car.setReleaseYear(Integer.parseInt(jsonArray.getJSONObject(i).get("releaseYear").toString()));
+            car.setColor(jsonArray.getJSONObject(i).get("color").toString());
+            StringBuilder result2 = new StringBuilder();
+            URL url2 = new URL("http://localhost:9090/api/tests/LevelByCarId="+jsonArray.getJSONObject(i).get("id").toString());
+            HttpURLConnection httpURLConnection2 = (HttpURLConnection) url2.openConnection();
+            httpURLConnection2.setRequestMethod("GET");
+            try (var reader = new BufferedReader(
+                    new InputStreamReader(httpURLConnection2.getInputStream()))) {
+                for (String line; (line = reader.readLine()) != null;) {
+                    result2.append(line);
+                }
+            }
+            ComfortLevel comfortLevel = new ComfortLevel();
+            JSONObject comf_lvl = new JSONObject(result2.toString().replace("ComfortLevel", "").replace("=", ":"));
+            comfortLevel.setId(comf_lvl.get("id").toString());
+            comfortLevel.setLevel(comf_lvl.get("level").toString());
+            comfortLevel.setDeposit(Long.parseLong(comf_lvl.get("deposit").toString()));
+            comfortLevel.setRentPrice(Long.parseLong(comf_lvl.get("rentPrice").toString()));
+            comfortLevel.setMinExperience(Integer.parseInt(comf_lvl.get("minExperience").toString()));
+            car.setComfortLevel(comfortLevel);
+            System.out.println(car.toString());
+            this.existingCars.add(car);
         }
     }
 

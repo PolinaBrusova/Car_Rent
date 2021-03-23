@@ -17,10 +17,7 @@ public class RootManagerController {
     private JavaFxApplication main;
     private Stage searchStage;
 
-    @FXML
-    private TableView<Client> personTableView;
-
-    public RootManagerController(){}
+    public RootManagerController(){ }
 
     public void setMain(JavaFxApplication main){
         this.main = main;

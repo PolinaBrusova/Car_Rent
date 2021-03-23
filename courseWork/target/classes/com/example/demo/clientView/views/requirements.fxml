@@ -48,21 +48,21 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <ChoiceBox prefHeight="27.0" prefWidth="149.0" GridPane.columnIndex="1" />
-                        <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <Label text="Label" />
-                        <Label text="Label" GridPane.rowIndex="1" />
-                        <Label text="Label" GridPane.rowIndex="2" />
-                        <Label text="Label" GridPane.rowIndex="3" />
-                        <Label text="Label" GridPane.rowIndex="4" />
-                        <Label text="Label" GridPane.rowIndex="5" />
+                        <Label text="Brand" />
+                        <Label text="Carcase" GridPane.rowIndex="1" />
+                        <Label text="Gear Box" GridPane.rowIndex="2" />
+                        <Label text="Door Number" GridPane.rowIndex="3" />
+                        <Label text="Seats" GridPane.rowIndex="4" />
+                        <Label text="Comfort Level" GridPane.rowIndex="5" />
+                        <ComboBox fx:id="cb1" prefWidth="150.0" GridPane.columnIndex="1" />
+                        <ComboBox fx:id="cb2" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="cb3" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <ComboBox fx:id="cb4" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="cb5" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="cb6" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                      </children>
                   </GridPane>
-                  <Button layoutX="135.0" layoutY="343.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="119.0" text="Search" />
+                  <Button layoutX="135.0" layoutY="343.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="119.0" text="Search" onAction="#handleSearch"/>
                </children></AnchorPane>
         </items>
       </SplitPane>
