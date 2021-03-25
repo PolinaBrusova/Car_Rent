@@ -21,7 +21,7 @@
         </children>
     </GridPane>
         <HBox layoutX="197.1875" layoutY="241.0" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-          <Button layoutX="291.0" layoutY="127.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="62.0" text="Search" textFill="#d34e15" onAction="#handleSearch">
+          <Button layoutX="291.0" layoutY="127.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="62.0" text="Найти" textFill="#d34e15" onAction="#handleSearch">
          <font>
             <Font size="14.0" />
          </font>

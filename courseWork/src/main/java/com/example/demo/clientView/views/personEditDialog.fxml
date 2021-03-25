@@ -17,12 +17,12 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
         <children>
-            <Label text="First Name" />
+            <Label text="Имя" />
             <TextField fx:id="firstNameField" GridPane.columnIndex="1" />
-            <Label text="Last Name" GridPane.rowIndex="1" />
-            <Label text="Phone" GridPane.rowIndex="2" />
-            <Label text="Passport" GridPane.rowIndex="3" />
-            <Label text="Liscence" GridPane.rowIndex="4" />
+            <Label text="Фамилия" GridPane.rowIndex="1" />
+            <Label text="Номер телефона" GridPane.rowIndex="2" />
+            <Label text="Серия и номер паспорта" GridPane.rowIndex="3" />
+            <Label text="Дата получения прав" GridPane.rowIndex="4" />
             <TextField fx:id="lastNameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="phoneField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="passportField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
@@ -32,7 +32,7 @@
         <HBox layoutX="197.1875" layoutY="241.0" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
             <children>
                 <Button layoutX="197.1875" layoutY="241.0" mnemonicParsing="false" onAction="#handleOk" prefWidth="90.0" text="OK" />
-                <Button layoutX="249.375" layoutY="241.0" mnemonicParsing="false" onAction="#handleCancel" prefWidth="90.0" text="Cancel" />
+                <Button layoutX="249.375" layoutY="241.0" mnemonicParsing="false" onAction="#handleCancel" prefWidth="90.0" text="Отмена" />
             </children>
         </HBox>
     </children></AnchorPane>

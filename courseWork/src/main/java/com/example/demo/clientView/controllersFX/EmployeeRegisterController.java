@@ -54,36 +54,40 @@ public class EmployeeRegisterController {
                     for (String line; (line = reader.readLine()) != null; ) {
                         result.append(line);
                     }
+                    if (!result.toString().isEmpty()){
+                        if (result.toString().equals("true")) {
+                            main.initRootLayout();
+                            main.showPersonOverview();
+                            this.registerStage.close();
+                        }else{
+                            this.login.setText(login.getText());
+                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                            alert.initOwner(this.registerStage);
+                            alert.setTitle("Sign In failed");
+                            alert.setHeaderText("Wrong Login or Password");
+                            alert.setContentText("Please, enter the correct login and password. Login is an " +
+                                    "employee's company system code");
+                            alert.showAndWait();
+                        }
+                    }
                 }catch (Exception e){
                     try {
+                        e.printStackTrace();
                         Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.initOwner(main.getPrimaryStage());
+                        alert.initOwner(this.registerStage);
                         alert.setTitle("No connection");
                         alert.setHeaderText("Not established connection with the server");
                         alert.setContentText("Connection with the server was not established. try again later. Halting th system...");
                         ButtonType answer = alert.showAndWait().orElse(ButtonType.OK);
                         if (ButtonType.OK.equals(answer)) {
-                            this.main.getPrimaryStage().close();
+                            this.registerStage.close();
                             this.main.stop();
                         }
                     }catch (Exception k){
                         k.printStackTrace();
                     }
                 }
-                if (!result.toString().isEmpty()){
-                    if (result.toString().equals("true")) {
-                        main.showPersonOverview();
-                    }else{
-                        this.login.setText(login.getText());
-                        Alert alert = new Alert(Alert.AlertType.WARNING);
-                        alert.initOwner(main.getPrimaryStage());
-                        alert.setTitle("Sign In failed");
-                        alert.setHeaderText("Wrong Login or Password");
-                        alert.setContentText("Please, enter the correct login and password. Login is an " +
-                                "employee's company system code");
-                        alert.showAndWait();
-                    }
-                }
+
             }else {
                 password.setPromptText("FILL THE PASSWORD");
                 password.setStyle("-fx-prompt-text-fill: red");

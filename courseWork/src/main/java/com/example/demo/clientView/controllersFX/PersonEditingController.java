@@ -48,6 +48,8 @@ public class PersonEditingController {
         return okClicked;
     }
 
+    public Client getPerson() {return person;}
+
     @FXML
     private void handleOk() {
         if (isInputValid()) {

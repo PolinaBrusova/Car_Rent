@@ -12,8 +12,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -24,9 +22,12 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
+import java.nio.charset.StandardCharsets;
+import java.util.Dictionary;
+import java.util.HashMap;
 
 
 public class JavaFxApplication extends Application {
@@ -44,7 +45,6 @@ public class JavaFxApplication extends Application {
         this.primaryStage.setTitle("Address Application");
 
         showLoginPage();
-
     }
 
     public void initRootLayout() {
@@ -58,6 +58,7 @@ public class JavaFxApplication extends Application {
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
             primaryStage.show();
+            findAllCars();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -78,24 +79,6 @@ public class JavaFxApplication extends Application {
             controller.setMain(this);
             controller.setRegisterStage(stage);
             stage.showAndWait();
-            try{
-                findAllCars();
-            }catch (Exception e){
-                try {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.initOwner(stage);
-                    alert.setTitle("No connection");
-                    alert.setHeaderText("Not established connection with the server");
-                    alert.setContentText("Connection with the server was not established. try again later. Halting th system...");
-                    ButtonType answer = alert.showAndWait().orElse(ButtonType.OK);
-                    if (ButtonType.OK.equals(answer)) {
-                        stage.close();
-                        this.stop();
-                    }
-                }catch (Exception k){
-                    k.printStackTrace();
-                }
-            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -127,6 +110,7 @@ public class JavaFxApplication extends Application {
     }
 
     public void showPersonOverview() {
+        this.personData.clear();
         try {
             StringBuilder result = new StringBuilder();
             URL url = new URL("http://localhost:9090/api/tests/AllClients");
@@ -160,8 +144,9 @@ public class JavaFxApplication extends Application {
         }
     }
 
-    public boolean showPersonEditDialog(Client person) {
+    public HashMap<Boolean, Client> showPersonEditDialog(Client person) {
         try {
+            HashMap<Boolean, Client> dictionary = new HashMap<>();
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(JavaFxApplication.class.getResource("views/PersonEditDialog.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
@@ -175,14 +160,18 @@ public class JavaFxApplication extends Application {
             controller.setDialogStage(dialogStage);
             controller.setPerson(person);
             dialogStage.showAndWait();
-            return controller.isOkClicked();
+            dictionary.put(controller.isOkClicked(), controller.getPerson());
+            return dictionary;
         } catch (IOException e) {
+            HashMap<Boolean, Client> dictionary = new HashMap<>();
+            dictionary.put(false, null);
             e.printStackTrace();
-            return false;
+            return dictionary;
         }
     }
 
     public void findAllCars() throws IOException {
+        this.existingCars.clear();
         StringBuilder result = new StringBuilder();
         URL url = new URL("http://localhost:9090/api/tests/AllCars");
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();

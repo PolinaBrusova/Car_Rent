@@ -4,12 +4,16 @@ import com.example.demo.clientView.JavaFxApplication;
 import com.example.demo.ServerSide.models.Client;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 
 
 public class PersonOverviewController {
@@ -89,7 +93,7 @@ public class PersonOverviewController {
 
     @FXML
     private void handleEditPerson() {
-        Client selectedPerson = personTable.getSelectionModel().getSelectedItem();
+        /*Client selectedPerson = personTable.getSelectionModel().getSelectedItem();
         if (selectedPerson != null) {
             boolean okClicked = main.showPersonEditDialog(selectedPerson);
             if (okClicked) {
@@ -103,26 +107,42 @@ public class PersonOverviewController {
             alert.setContentText("Please select a person in the table.");
 
             alert.showAndWait();
-        }
+        }*/
     }
 
     @FXML
     private void handleNewPerson() throws IOException {
         Client tempPerson = new Client();
-        boolean okClicked = main.showPersonEditDialog(tempPerson);
+        HashMap<Boolean, Client> answer = main.showPersonEditDialog(tempPerson);
+        boolean okClicked = (boolean) answer.keySet().toArray()[0];
+        Client client = answer.get(okClicked);
         if (okClicked) {
-            StringBuilder result = new StringBuilder();
-            URL url = new URL("http://localhost:9090/api/tests/clients/"+tempPerson.toString());
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("firstName", client.getFirstName());
+            jsonObject.put("lastName", client.getLastName());
+            jsonObject.put("phoneNumber", client.getPhoneNumber());
+            jsonObject.put("passport", client.getPassport());
+            jsonObject.put("liscenceDate", client.getLiscenceDate());
+            URL url = new URL("http://localhost:9090/api/tests/addClient");
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestMethod("POST");
-            try (var reader = new BufferedReader(
-                    new InputStreamReader(httpURLConnection.getInputStream()))) {
-                for (String line; (line = reader.readLine()) != null; ) {
-                    result.append(line);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+            httpURLConnection.setRequestProperty("Content-Type", "application/json; utf-8");
+            httpURLConnection.setRequestProperty("Accept", "application/json");
+            httpURLConnection.setDoOutput(true);
+            try(OutputStream os = httpURLConnection.getOutputStream()) {
+                byte[] input = jsonObject.toString().getBytes(StandardCharsets.UTF_8);
+                os.write(input, 0, input.length);
             }
+            try(BufferedReader br = new BufferedReader(
+                    new InputStreamReader(httpURLConnection.getInputStream(), "utf-8"))) {
+                StringBuilder response = new StringBuilder();
+                String responseLine = null;
+                while ((responseLine = br.readLine()) != null) {
+                    response.append(responseLine.trim());
+                }
+                System.out.println(response.toString());
+            }
+            this.main.showPersonOverview();
         }
     }
 

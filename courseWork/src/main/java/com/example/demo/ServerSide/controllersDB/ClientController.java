@@ -18,10 +18,8 @@ public class ClientController {
     }
 
     @PostMapping("/addClient")
-    Client createClient(@RequestParam String firstName, @RequestParam String lastName,
-                        @RequestParam String phone, @RequestParam String passport,
-                        @RequestParam String liscence) {
-        Client client = new Client(firstName, lastName, phone, passport, liscence);
+    Client createClient(@RequestBody Client client) {
+        System.out.println(client);
         return this.clientRepository.save(client);
     }
 

@@ -69,7 +69,19 @@ public class RequirementsController {
     }
 
     public void handleSearch(){
-        System.out.println("search");
+        String brand = cb1.getSelectionModel().getSelectedItem();
+        String carc = cb2.getSelectionModel().getSelectedItem();
+        String gear = cb3.getSelectionModel().getSelectedItem();
+        String doors = cb4.getSelectionModel().getSelectedItem();
+        String seat = cb5.getSelectionModel().getSelectedItem();
+        String level = cb6.getSelectionModel().getSelectedItem();
+        //TODO сформировать запрос на бд с введенными параметрами, сделать открытие нового окна с вариантами, переданными от бд
+        //TODO Если вариантов нет, то просто алерт
+    }
+
+    public void handleBack(){
+        this.main.initRootLayout();
+        this.main.showPersonOverview();
     }
 
     private void createLists(){
@@ -104,6 +116,8 @@ public class RequirementsController {
     private void setupComboB(){
         cb1.setItems(brands);
         cb1.setValue(brands.get(0));
+        cb1.getSelectionModel().selectedItemProperty().addListener(
+                (observable,oldValue,newValue) -> System.out.println(newValue));
         cb2.setItems(carcase);
         cb2.setValue(carcase.get(0));
         cb3.setItems(gearbox);

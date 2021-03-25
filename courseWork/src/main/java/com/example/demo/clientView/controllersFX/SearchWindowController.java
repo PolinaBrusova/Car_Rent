@@ -52,18 +52,20 @@ public class SearchWindowController {
                         FXMLLoader loader = new FXMLLoader();
                         loader.setLocation(JavaFxApplication.class.getResource("views/requirements.fxml"));
                         AnchorPane page = loader.load();
-                        Stage requirementStage = new Stage();
+                        /*Stage requirementStage = new Stage();
                         requirementStage.setTitle("Search");
                         requirementStage.initModality(Modality.WINDOW_MODAL);
-                        requirementStage.initOwner(main.getPrimaryStage());
+                        requirementStage.initOwner(main.getPrimaryStage());*/
+                        this.main.getPrimaryStage().setTitle("search");
                         Scene scene = new Scene(page);
-                        requirementStage.setScene(scene);
+                        //requirementStage.setScene(scene);
+                        this.main.getPrimaryStage().setScene(scene);
                         RequirementsController controller = loader.getController();
-                        controller.setStage(requirementStage);
+                        controller.setStage(this.main.getPrimaryStage());
                         controller.setPerson((Client) main.getPersonData().stream().filter(item -> item.getPhoneNumber().equals(phoneField.getText())).toArray()[0]);
                         controller.setMain(this.main);
                         searchStage.close();
-                        requirementStage.showAndWait();
+                        //requirementStage.showAndWait();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -77,9 +79,9 @@ public class SearchWindowController {
                     Client tempPerson = new Client();
                     tempPerson.setPhoneNumber(phoneField.getText());
                     //TODO: Make adding new client (why the id does not generates tho?
-                    if(main.showPersonEditDialog(tempPerson)){
+                    /*if(main.showPersonEditDialog(tempPerson)){
                         main.getPersonData().add(tempPerson);
-                    }
+                    }*/
                     searchStage.close();
                     //Добавить переход с новым клиентом сразу на оформление требований
                 }
