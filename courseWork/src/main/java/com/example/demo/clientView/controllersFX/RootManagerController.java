@@ -1,11 +1,9 @@
 package com.example.demo.clientView.controllersFX;
 
 import com.example.demo.clientView.JavaFxApplication;
-import com.example.demo.ServerSide.models.Client;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;

@@ -7,6 +7,7 @@ import com.example.demo.clientView.controllersFX.PersonEditingController;
 import com.example.demo.clientView.controllersFX.PersonOverviewController;
 import com.example.demo.clientView.controllersFX.RootManagerController;
 import com.example.demo.ServerSide.models.Client;
+import com.example.demo.utils.ConnectionPerfomance;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,14 +20,7 @@ import javafx.stage.Stage;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.Dictionary;
 import java.util.HashMap;
 
 
@@ -112,17 +106,7 @@ public class JavaFxApplication extends Application {
     public void showPersonOverview() {
         this.personData.clear();
         try {
-            StringBuilder result = new StringBuilder();
-            URL url = new URL("http://localhost:9090/api/tests/AllClients");
-            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestMethod("GET");
-            try (var reader = new BufferedReader(
-                    new InputStreamReader(httpURLConnection.getInputStream()))) {
-                for (String line; (line = reader.readLine()) != null;) {
-                    result.append(line);
-                }
-            }
-            JSONArray jsonArray = new JSONArray(result.toString());
+            JSONArray jsonArray = ConnectionPerfomance.excecuteManyGET("http://localhost:9090/api/tests/AllClients");
             for (int i=0; i< jsonArray.length(); i++){
                 Client person = new Client();
                 person.setId(Long.valueOf(jsonArray.getJSONObject(i).get("id").toString()));
@@ -172,17 +156,7 @@ public class JavaFxApplication extends Application {
 
     public void findAllCars() throws IOException {
         this.existingCars.clear();
-        StringBuilder result = new StringBuilder();
-        URL url = new URL("http://localhost:9090/api/tests/AllCars");
-        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-        httpURLConnection.setRequestMethod("GET");
-        try (var reader = new BufferedReader(
-                new InputStreamReader(httpURLConnection.getInputStream()))) {
-            for (String line; (line = reader.readLine()) != null;) {
-                result.append(line);
-            }
-        }
-        JSONArray jsonArray = new JSONArray(result.toString());
+        JSONArray jsonArray = ConnectionPerfomance.excecuteManyGET("http://localhost:9090/api/tests/AllCars");
         for (int i=0; i< jsonArray.length(); i++){
             Car car = new Car();
             car.setId(Long.valueOf(jsonArray.getJSONObject(i).get("id").toString()));
@@ -193,18 +167,8 @@ public class JavaFxApplication extends Application {
             car.setSeats(Integer.parseInt(jsonArray.getJSONObject(i).get("seats").toString()));
             car.setReleaseYear(Integer.parseInt(jsonArray.getJSONObject(i).get("releaseYear").toString()));
             car.setColor(jsonArray.getJSONObject(i).get("color").toString());
-            StringBuilder result2 = new StringBuilder();
-            URL url2 = new URL("http://localhost:9090/api/tests/LevelByCarId="+jsonArray.getJSONObject(i).get("id").toString());
-            HttpURLConnection httpURLConnection2 = (HttpURLConnection) url2.openConnection();
-            httpURLConnection2.setRequestMethod("GET");
-            try (var reader = new BufferedReader(
-                    new InputStreamReader(httpURLConnection2.getInputStream()))) {
-                for (String line; (line = reader.readLine()) != null;) {
-                    result2.append(line);
-                }
-            }
+            JSONObject comf_lvl = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/LevelByCarId=", jsonArray.getJSONObject(i).get("id").toString(), "ComfortLevel");
             ComfortLevel comfortLevel = new ComfortLevel();
-            JSONObject comf_lvl = new JSONObject(result2.toString().replace("ComfortLevel", "").replace("=", ":"));
             comfortLevel.setId(comf_lvl.get("id").toString());
             comfortLevel.setLevel(comf_lvl.get("level").toString());
             comfortLevel.setDeposit(Long.parseLong(comf_lvl.get("deposit").toString()));

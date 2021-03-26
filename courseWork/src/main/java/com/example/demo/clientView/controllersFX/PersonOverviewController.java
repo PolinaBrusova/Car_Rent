@@ -2,6 +2,7 @@ package com.example.demo.clientView.controllersFX;
 
 import com.example.demo.clientView.JavaFxApplication;
 import com.example.demo.ServerSide.models.Client;
+import com.example.demo.utils.ConnectionPerfomance;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.json.JSONObject;
@@ -9,10 +10,8 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 
@@ -123,25 +122,7 @@ public class PersonOverviewController {
             jsonObject.put("phoneNumber", client.getPhoneNumber());
             jsonObject.put("passport", client.getPassport());
             jsonObject.put("liscenceDate", client.getLiscenceDate());
-            URL url = new URL("http://localhost:9090/api/tests/addClient");
-            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestMethod("POST");
-            httpURLConnection.setRequestProperty("Content-Type", "application/json; utf-8");
-            httpURLConnection.setRequestProperty("Accept", "application/json");
-            httpURLConnection.setDoOutput(true);
-            try(OutputStream os = httpURLConnection.getOutputStream()) {
-                byte[] input = jsonObject.toString().getBytes(StandardCharsets.UTF_8);
-                os.write(input, 0, input.length);
-            }
-            try(BufferedReader br = new BufferedReader(
-                    new InputStreamReader(httpURLConnection.getInputStream(), "utf-8"))) {
-                StringBuilder response = new StringBuilder();
-                String responseLine = null;
-                while ((responseLine = br.readLine()) != null) {
-                    response.append(responseLine.trim());
-                }
-                System.out.println(response.toString());
-            }
+            ConnectionPerfomance.excecutePost("http://localhost:9090/api/tests/addClient", jsonObject);
             this.main.showPersonOverview();
         }
     }

@@ -2,6 +2,7 @@ package com.example.demo.clientView.controllersFX;
 
 import com.example.demo.clientView.JavaFxApplication;
 import com.example.demo.ServerSide.models.Client;
+import com.example.demo.utils.ConnectionPerfomance;
 import com.example.demo.utils.PhoneUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.json.JSONObject;
 
@@ -105,25 +105,15 @@ public class SearchWindowController {
     }
 
     private Client clientExistence(String phone) throws IOException {
-        StringBuilder result = new StringBuilder();
-        URL url = new URL("http://localhost:9090/api/tests/getClient/phone="+phone);
-        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-        httpURLConnection.setRequestMethod("GET");
-        try (var reader = new BufferedReader(
-                new InputStreamReader(httpURLConnection.getInputStream()))) {
-            for (String line; (line = reader.readLine()) != null;) {
-                result.append(line);
-            }
-        }
+        JSONObject jsonObject = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/getClient/phone=", phone, "");
         Client client1 = new Client();
-        if(!result.toString().isBlank()) {
-            JSONObject client = new JSONObject(result.toString());
-            client1.setId(Long.valueOf(client.get("id").toString()));
-            client1.setFirstName(client.get("firstName").toString());
-            client1.setLastName(client.get("lastName").toString());
-            client1.setPassport(client.get("passport").toString());
-            client1.setPhoneNumber(client.get("phoneNumber").toString());
-            client1.setLiscenceDate(client.get("liscenceDate").toString());
+        if (!jsonObject.isEmpty()){
+            client1.setId(Long.valueOf(jsonObject.get("id").toString()));
+            client1.setFirstName(jsonObject.get("firstName").toString());
+            client1.setLastName(jsonObject.get("lastName").toString());
+            client1.setPassport(jsonObject.get("passport").toString());
+            client1.setPhoneNumber(jsonObject.get("phoneNumber").toString());
+            client1.setLiscenceDate(jsonObject.get("liscenceDate").toString());
         }
         return client1;
     }

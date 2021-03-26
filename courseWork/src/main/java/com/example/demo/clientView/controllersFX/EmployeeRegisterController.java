@@ -1,6 +1,7 @@
 package com.example.demo.clientView.controllersFX;
 
 import com.example.demo.clientView.JavaFxApplication;
+import com.example.demo.utils.ConnectionPerfomance;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -8,11 +9,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class EmployeeRegisterController {
 
@@ -45,34 +42,22 @@ public class EmployeeRegisterController {
 
         if(!login.getText().isBlank()){
             if(!password.getText().isBlank()){
-                StringBuilder result = new StringBuilder();
-                URL url = new URL("http://localhost:9090/api/tests/LogPas_Id="+login.getText()+"_password="+password.getText());
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("GET");
-                try (var reader = new BufferedReader(
-                        new InputStreamReader(httpURLConnection.getInputStream()))) {
-                    for (String line; (line = reader.readLine()) != null; ) {
-                        result.append(line);
-                    }
-                    if (!result.toString().isEmpty()){
-                        if (result.toString().equals("true")) {
-                            main.initRootLayout();
-                            main.showPersonOverview();
-                            this.registerStage.close();
-                        }else{
-                            this.login.setText(login.getText());
-                            Alert alert = new Alert(Alert.AlertType.WARNING);
-                            alert.initOwner(this.registerStage);
-                            alert.setTitle("Sign In failed");
-                            alert.setHeaderText("Wrong Login or Password");
-                            alert.setContentText("Please, enter the correct login and password. Login is an " +
-                                    "employee's company system code");
-                            alert.showAndWait();
-                        }
-                    }
-                }catch (Exception e){
+                String result = ConnectionPerfomance.excecuteValidation("http://localhost:9090/api/tests/LogPas_Id="+login.getText()+"_password="+password.getText());
+                if (result.equals("true")){
+                    main.initRootLayout();
+                    main.showPersonOverview();
+                    this.registerStage.close();
+                }else if (result.equals("false")){
+                    this.login.setText(login.getText());
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.initOwner(this.registerStage);
+                    alert.setTitle("Sign In failed");
+                    alert.setHeaderText("Wrong Login or Password");
+                    alert.setContentText("Please, enter the correct login and password. Login is an " +
+                            "employee's company system code");
+                    alert.showAndWait();
+                }else{
                     try {
-                        e.printStackTrace();
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.initOwner(this.registerStage);
                         alert.setTitle("No connection");
@@ -87,7 +72,6 @@ public class EmployeeRegisterController {
                         k.printStackTrace();
                     }
                 }
-
             }else {
                 password.setPromptText("FILL THE PASSWORD");
                 password.setStyle("-fx-prompt-text-fill: red");
