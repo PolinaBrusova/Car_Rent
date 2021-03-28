@@ -34,7 +34,7 @@ public class RootManagerController {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(JavaFxApplication.class.getResource("views/searchStage.fxml"));
-            AnchorPane page = (AnchorPane) loader.load();
+            AnchorPane page = loader.load();
             searchStage = new Stage();
             searchStage.setTitle("Search");
             searchStage.initModality(Modality.WINDOW_MODAL);
@@ -53,5 +53,55 @@ public class RootManagerController {
     @FXML
     private  void handleClose(){
         main.getPrimaryStage().close();
+    }
+
+    @FXML
+    private void handleSales(){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(JavaFxApplication.class.getResource("views/saleInfo.fxml"));
+            AnchorPane page = loader.load();
+            Stage salesInfoStage = new Stage();
+            salesInfoStage.setTitle("SALES");
+            salesInfoStage.initModality(Modality.WINDOW_MODAL);
+            salesInfoStage.initOwner(main.getPrimaryStage());
+            Scene scene = new Scene(page);
+            salesInfoStage.setScene(scene);
+            SalesInfoController controller = loader.getController();
+            controller.setSalesInfogStage(salesInfoStage);
+            salesInfoStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleClientReq(){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(JavaFxApplication.class.getResource("views/clientReq.fxml"));
+            AnchorPane page = loader.load();
+            Stage clientReqStage= new Stage();
+            clientReqStage.setTitle("CLIENT REQUIREMENTS");
+            clientReqStage.initModality(Modality.WINDOW_MODAL);
+            clientReqStage.initOwner(main.getPrimaryStage());
+            Scene scene = new Scene(page);
+            clientReqStage.setScene(scene);
+            ClientReqController controller = loader.getController();
+            controller.setClientReqStage(clientReqStage);
+            clientReqStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleCars() throws IOException {
+        main.showCarOwerview();
+    }
+
+    @FXML
+    private void handleClients(){
+        main.showPersonOverview();
     }
 }

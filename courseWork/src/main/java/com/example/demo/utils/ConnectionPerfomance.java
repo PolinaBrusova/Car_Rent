@@ -22,6 +22,7 @@ public class ConnectionPerfomance {
         httpURLConnection.setRequestProperty("Content-Type", "application/json; utf-8");
         httpURLConnection.setRequestProperty("Accept", "application/json");
         httpURLConnection.setDoOutput(true);
+        System.out.println(jsonObject);
         try(OutputStream os = httpURLConnection.getOutputStream()) {
             byte[] input = jsonObject.toString().getBytes(StandardCharsets.UTF_8);
             os.write(input, 0, input.length);

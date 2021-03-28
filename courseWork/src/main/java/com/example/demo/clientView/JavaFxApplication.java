@@ -2,10 +2,7 @@ package com.example.demo.clientView;
 
 import com.example.demo.ServerSide.models.Car;
 import com.example.demo.ServerSide.models.ComfortLevel;
-import com.example.demo.clientView.controllersFX.EmployeeRegisterController;
-import com.example.demo.clientView.controllersFX.PersonEditingController;
-import com.example.demo.clientView.controllersFX.PersonOverviewController;
-import com.example.demo.clientView.controllersFX.RootManagerController;
+import com.example.demo.clientView.controllersFX.*;
 import com.example.demo.ServerSide.models.Client;
 import com.example.demo.utils.ConnectionPerfomance;
 import javafx.application.Application;
@@ -36,6 +33,7 @@ public class JavaFxApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
+        this.primaryStage.setMaximized(true);
         this.primaryStage.setTitle("Address Application");
 
         showLoginPage();
@@ -175,8 +173,21 @@ public class JavaFxApplication extends Application {
             comfortLevel.setRentPrice(Long.parseLong(comf_lvl.get("rentPrice").toString()));
             comfortLevel.setMinExperience(Integer.parseInt(comf_lvl.get("minExperience").toString()));
             car.setComfortLevel(comfortLevel);
-            System.out.println(car.toString());
             this.existingCars.add(car);
+        }
+    }
+
+    public void showCarOwerview() throws IOException {
+        findAllCars();
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(JavaFxApplication.class.getResource("views/carOverview.fxml"));
+            AnchorPane carOverview = (AnchorPane) loader.load();
+            rootLayout.setCenter(carOverview);
+            CarOverviewController controller = loader.getController();
+            controller.setMain(this);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

@@ -1,9 +1,12 @@
 package com.example.demo.ServerSide.controllersDB;
 
 import com.example.demo.ServerSide.models.Car;
+import com.example.demo.ServerSide.models.Client;
 import com.example.demo.ServerSide.models.ComfortLevel;
 import com.example.demo.ServerSide.repositories.CarRepository;
 import com.example.demo.ServerSide.repositories.ComfortLevelRepository;
+import org.json.JSONObject;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,12 +26,17 @@ public class CarController {
     }
 
     @PostMapping("/addCar")
-    Car createCar(@RequestParam String brand, @RequestParam String carcase, @RequestParam String gearbox,
-                  @RequestParam Integer doorNumber, @RequestParam Integer seats, @RequestParam Integer releaseYear,
-                  @RequestParam String color) {
-//        curl -X POST http://127.0.0.1:8080/api/theater/ticket?price=777
-        Car car = new Car(brand, carcase, gearbox, doorNumber, seats, releaseYear, color);
-        car.setComfortLevel(comfortLevelRepository.findComfortLevelById("A"));
+    Car createCar(@RequestBody String line) {
+        JSONObject jsonObject = new JSONObject(line);
+        Car car = new Car();
+        car.setBrand(jsonObject.getString("brand"));
+        car.setCarcase(jsonObject.getString("carcase"));
+        car.setColor(jsonObject.getString("color"));
+        car.setDoorNumber(jsonObject.getInt("doorNumber"));
+        car.setGearbox(jsonObject.getString("gearbox"));
+        car.setReleaseYear(jsonObject.getInt("releaseYear"));
+        car.setSeats(jsonObject.getInt("seats"));
+        car.setComfortLevel(comfortLevelRepository.findComfortLevelById(jsonObject.getJSONObject("comfortLevel").getString("id")));
         return this.carRepository.save(car);
     }
 

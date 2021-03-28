@@ -10,17 +10,21 @@
             <menus>
                 <Menu mnemonicParsing="false" text="Файл">
                     <items>
+                        <MenuItem mnemonicParsing="false" text="Машины" onAction="#handleCars"/>
+                        <MenuItem mnemonicParsing="false" text="Клиенты" onAction="#handleClients"/>
+                        <MenuItem mnemonicParsing="false" text="Договора"/>
                         <MenuItem mnemonicParsing="false" text="Закрыть" onAction="#handleClose"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Обработка">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Удаление" />
+                        <MenuItem mnemonicParsing="false" text="Поиск клиента" onAction="#handleSearch"/>
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Помощь">
+                <Menu mnemonicParsing="false" text="Для работника">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Посик" onAction="#handleSearch"/>
+                        <MenuItem mnemonicParsing="false" text="Информация о скидках" onAction="#handleSales"/>
+                        <MenuItem mnemonicParsing="false" text="Требования к клиенту" onAction="#handleClientReq"/>
                     </items>
                 </Menu>
             </menus>

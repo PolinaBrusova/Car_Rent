@@ -1,6 +1,7 @@
 package com.example.demo.ServerSide.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import javafx.beans.property.SimpleStringProperty;
 
 import javax.persistence.*;
 
@@ -80,6 +81,10 @@ public class Car{
     public String getColor() {
         return color;
     }
+
+    public SimpleStringProperty getBrandProperty(){return new SimpleStringProperty(brand);}
+
+    public SimpleStringProperty getGearProperty(){return new SimpleStringProperty(gearbox);}
 
     public void setId(Long id) {
         this.id = id;

@@ -52,20 +52,15 @@ public class SearchWindowController {
                         FXMLLoader loader = new FXMLLoader();
                         loader.setLocation(JavaFxApplication.class.getResource("views/requirements.fxml"));
                         AnchorPane page = loader.load();
-                        /*Stage requirementStage = new Stage();
-                        requirementStage.setTitle("Search");
-                        requirementStage.initModality(Modality.WINDOW_MODAL);
-                        requirementStage.initOwner(main.getPrimaryStage());*/
-                        this.main.getPrimaryStage().setTitle("search");
+                        this.main.getPrimaryStage().setTitle("FILLING REQUIREMENTS");
+                        //this.main.getPrimaryStage().setMaximized(false);
                         Scene scene = new Scene(page);
-                        //requirementStage.setScene(scene);
                         this.main.getPrimaryStage().setScene(scene);
                         RequirementsController controller = loader.getController();
                         controller.setStage(this.main.getPrimaryStage());
                         controller.setPerson((Client) main.getPersonData().stream().filter(item -> item.getPhoneNumber().equals(phoneField.getText())).toArray()[0]);
                         controller.setMain(this.main);
                         searchStage.close();
-                        //requirementStage.showAndWait();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
