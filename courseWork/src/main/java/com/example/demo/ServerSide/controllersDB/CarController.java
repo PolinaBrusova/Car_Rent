@@ -7,6 +7,7 @@ import com.example.demo.ServerSide.repositories.CarRepository;
 import com.example.demo.ServerSide.repositories.ComfortLevelRepository;
 import org.json.JSONObject;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,5 +54,11 @@ public class CarController {
     @GetMapping("/LevelByCarId={id}")
     String getLevelByCarId(@PathVariable Long id) {
         return this.comfortLevelRepository.findComfortLevelById(this.carRepository.findCarById(id).getComfortLevel().getId()).toString();
+    }
+
+    @Transactional
+    @DeleteMapping("/deleteCar={id}")
+    public void deleteCar(@PathVariable Long id){
+        this.carRepository.deleteCarById(id);
     }
 }

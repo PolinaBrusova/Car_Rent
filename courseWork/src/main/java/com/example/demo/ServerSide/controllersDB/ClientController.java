@@ -39,8 +39,9 @@ public class ClientController {
         return this.clientRepository.findClientByPhoneNumber(phone);
     }
 
+    @Transactional
     @DeleteMapping("/deleteClient={id}")
-    Client deleteClientById(@PathVariable Long id){
-        return this.clientRepository.removeClientById(id);
+    public void deleteClient(@PathVariable Long id){
+        this.clientRepository.deleteClientById(id);
     }
 }

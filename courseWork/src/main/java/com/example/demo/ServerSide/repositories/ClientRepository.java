@@ -16,5 +16,5 @@ public interface ClientRepository extends JpaRepository<Client, Integer> {
 
     public  Client findClientByPhoneNumber(String phone);
 
-    public Client removeClientById(Long id);
+    public int deleteClientById(Long id);
 }

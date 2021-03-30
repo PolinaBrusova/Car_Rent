@@ -10,8 +10,10 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 
@@ -64,20 +66,8 @@ public class PersonOverviewController {
             alert.setContentText("Are you sure if you want to delete this client?");
             ButtonType answer = alert.showAndWait().orElse(ButtonType.OK);
             if (answer.equals(ButtonType.OK)){
-                System.out.println(personTable.getItems().get(selectedIndex).getId());
-                StringBuilder result = new StringBuilder();
-                URL url = new URL("http://localhost:9090/api/tests/deleteClient="+personTable.getItems().get(selectedIndex).getId());
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("DELETE");
-                try (var reader = new BufferedReader(
-                        new InputStreamReader(httpURLConnection.getInputStream()))) {
-                    for (String line; (line = reader.readLine()) != null; ) {
-                        result.append(line);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                personTable.getItems().remove(selectedIndex);
+                ConnectionPerfomance.excecuteDELETE("http://localhost:9090/api/tests/deleteClient="+personTable.getItems().get(selectedIndex).getId());
+                this.main.showPersonOverview();
             }
         }
         else{

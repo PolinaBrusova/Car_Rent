@@ -91,7 +91,26 @@ public class ConnectionPerfomance {
         }
     }
 
-    public static void excecuteDELETE(){}
+    public static void excecuteDELETE(String link) throws IOException {
+        StringBuilder result = new StringBuilder();
+        URL url = new URL(link);
+        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+        httpURLConnection.setDoOutput(true);
+        httpURLConnection.setRequestProperty("Content-Type", "utf-8");
+        httpURLConnection.setRequestProperty("Accept", "application/json");
+        httpURLConnection.setRequestMethod("DELETE");
+        try(BufferedReader br = new BufferedReader(
+                new InputStreamReader(httpURLConnection.getInputStream(), StandardCharsets.UTF_8))) {
+            StringBuilder response = new StringBuilder();
+            String responseLine = null;
+            while ((responseLine = br.readLine()) != null) {
+                response.append(responseLine.trim());
+            }
+            System.out.println(response.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void excecuteUPDATE(){}
 }

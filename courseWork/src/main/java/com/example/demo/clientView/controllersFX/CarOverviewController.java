@@ -62,30 +62,18 @@ public class CarOverviewController {
 
 
     @FXML
-    private void handleDeleteCar(){
+    private void handleDeleteCar() throws IOException {
         int selectedIndex = carTable.getSelectionModel().getSelectedIndex();
-        /*if (selectedIndex >= 0){
+        if (selectedIndex >= 0){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.initOwner(main.getPrimaryStage());
             alert.setTitle("Submit deleting");
-            alert.setHeaderText("Delete this client?");
-            alert.setContentText("Are you sure if you want to delete this client?");
+            alert.setHeaderText("Delete this car?");
+            alert.setContentText("Are you sure if you want to delete this car?");
             ButtonType answer = alert.showAndWait().orElse(ButtonType.OK);
             if (answer.equals(ButtonType.OK)){
-                System.out.println(personTable.getItems().get(selectedIndex).getId());
-                StringBuilder result = new StringBuilder();
-                URL url = new URL("http://localhost:9090/api/tests/deleteClient="+personTable.getItems().get(selectedIndex).getId());
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("DELETE");
-                try (var reader = new BufferedReader(
-                        new InputStreamReader(httpURLConnection.getInputStream()))) {
-                    for (String line; (line = reader.readLine()) != null; ) {
-                        result.append(line);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                personTable.getItems().remove(selectedIndex);
+                ConnectionPerfomance.excecuteDELETE("http://localhost:9090/api/tests/deleteCar="+carTable.getItems().get(selectedIndex).getId());
+                this.main.showCarOwerview();
             }
         }
         else{
@@ -95,7 +83,7 @@ public class CarOverviewController {
             alert.setHeaderText("No Person selection");
             alert.setContentText("Please, select person in the table");
             alert.showAndWait();
-        }*/
+        }
     }
 
     @FXML
