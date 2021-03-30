@@ -1,6 +1,7 @@
 package com.example.demo.clientView.controllersFX;
 
 import com.example.demo.ServerSide.models.Car;
+import com.example.demo.ServerSide.models.Client;
 import com.example.demo.clientView.JavaFxApplication;
 import com.example.demo.utils.ConnectionPerfomance;
 import javafx.fxml.FXML;
@@ -80,8 +81,8 @@ public class CarOverviewController {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(main.getPrimaryStage());
             alert.setTitle("No selection");
-            alert.setHeaderText("No Person selection");
-            alert.setContentText("Please, select person in the table");
+            alert.setHeaderText("No car selection");
+            alert.setContentText("Please, select car in the table");
             alert.showAndWait();
         }
     }
@@ -93,17 +94,27 @@ public class CarOverviewController {
             HashMap<Boolean, Car> answer = showCarEditDialog(selectedCar);
             boolean okClicked = (boolean) answer.keySet().toArray()[0];
             Car car = answer.get(okClicked);
-            if (okClicked){
-                //TODO добавть update для бд
-                main.showCarOwerview();
+            if (okClicked) {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("id", car.getId());
+                jsonObject.put("brand", car.getBrand());
+                jsonObject.put("carcase", car.getCarcase());
+                jsonObject.put("color", car.getColor());
+                jsonObject.put("doorNumber", car.getDoorNumber());
+                jsonObject.put("gearbox", car.getGearbox());
+                jsonObject.put("releaseYear", car.getReleaseYear());
+                jsonObject.put("seats", car.getSeats());
+                jsonObject.put("comfortLevel", car.getComfortLevel().toString().replace("ComfortLevel", "").replace("=", ":"));
+                ConnectionPerfomance.excecutePUT("http://localhost:9090/api/tests/updateCar", jsonObject);
+                this.main.showCarOwerview();
                 showCarOverviewDetails(car);
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(main.getPrimaryStage());
             alert.setTitle("No Selection");
-            alert.setHeaderText("No Person Selected");
-            alert.setContentText("Please select a person in the table.");
+            alert.setHeaderText("No car Selected");
+            alert.setContentText("Please select a car in the table.");
 
             alert.showAndWait();
         }

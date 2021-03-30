@@ -81,12 +81,23 @@ public class PersonOverviewController {
     }
 
     @FXML
-    private void handleEditPerson() {
-        /*Client selectedPerson = personTable.getSelectionModel().getSelectedItem();
+    private void handleEditPerson() throws IOException {
+        Client selectedPerson = personTable.getSelectionModel().getSelectedItem();
         if (selectedPerson != null) {
-            boolean okClicked = main.showPersonEditDialog(selectedPerson);
+            HashMap<Boolean, Client> answer = main.showPersonEditDialog(selectedPerson);
+            boolean okClicked = (boolean) answer.keySet().toArray()[0];
+            Client client = answer.get(okClicked);
             if (okClicked) {
-                showPersonsOverviewDetails(selectedPerson);
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("id", client.getId());
+                jsonObject.put("firstName", client.getFirstName());
+                jsonObject.put("lastName", client.getLastName());
+                jsonObject.put("phoneNumber", client.getPhoneNumber());
+                jsonObject.put("passport", client.getPassport());
+                jsonObject.put("liscenceDate", client.getLiscenceDate());
+                ConnectionPerfomance.excecutePUT("http://localhost:9090/api/tests/updateClient", jsonObject);
+                this.main.showPersonOverview();
+                showPersonsOverviewDetails(client);
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -96,7 +107,7 @@ public class PersonOverviewController {
             alert.setContentText("Please select a person in the table.");
 
             alert.showAndWait();
-        }*/
+        }
     }
 
     @FXML

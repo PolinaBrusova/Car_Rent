@@ -44,4 +44,16 @@ public class ClientController {
     public void deleteClient(@PathVariable Long id){
         this.clientRepository.deleteClientById(id);
     }
+
+    @Transactional
+    @PutMapping("/updateClient")
+    public Client updateClient(@RequestBody Client newClient){
+        Client current = this.clientRepository.findClientById(newClient.getId());
+        current.setId(newClient.getId());
+        current.setFirstName(newClient.getFirstName());
+        current.setLastName(newClient.getLastName());
+        current.setPassport(newClient.getPassport());
+        current.setLiscenceDate(newClient.getLiscenceDate());
+        return this.clientRepository.save(current);
+    }
 }

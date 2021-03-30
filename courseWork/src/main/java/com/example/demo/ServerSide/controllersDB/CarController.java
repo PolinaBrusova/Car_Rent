@@ -61,4 +61,21 @@ public class CarController {
     public void deleteCar(@PathVariable Long id){
         this.carRepository.deleteCarById(id);
     }
+
+    @Transactional
+    @PutMapping("/updateCar")
+    public Car updateCar(@RequestBody String line){
+        JSONObject jsonObject = new JSONObject(line);
+        Car current = this.carRepository.findCarById(jsonObject.getLong("id"));
+        current.setId(jsonObject.getLong("id"));
+        current.setBrand(jsonObject.getString("brand"));
+        current.setCarcase(jsonObject.getString("carcase"));
+        current.setColor(jsonObject.getString("color"));
+        current.setDoorNumber(jsonObject.getInt("doorNumber"));
+        current.setGearbox(jsonObject.getString("gearbox"));
+        current.setReleaseYear(jsonObject.getInt("releaseYear"));
+        current.setSeats(jsonObject.getInt("seats"));
+        current.setComfortLevel(comfortLevelRepository.findComfortLevelById(new JSONObject(jsonObject.getString("comfortLevel")).getString("id")));
+        return this.carRepository.save(current);
+    }
 }
