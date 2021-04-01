@@ -44,6 +44,7 @@ public class EmployeeRegisterController {
             if(!password.getText().isBlank()){
                 String result = ConnectionPerfomance.excecuteValidation("http://localhost:9090/api/tests/LogPas_Id="+login.getText()+"_password="+password.getText());
                 if (result.equals("true")){
+                    main.setEmployeeId(Long.parseLong(login.getText()));
                     main.initRootLayout();
                     main.showPersonOverview();
                     this.registerStage.close();

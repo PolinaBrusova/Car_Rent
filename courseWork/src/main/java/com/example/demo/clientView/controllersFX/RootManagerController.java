@@ -1,12 +1,16 @@
 package com.example.demo.clientView.controllersFX;
 
+import com.example.demo.ServerSide.models.Employee;
 import com.example.demo.clientView.JavaFxApplication;
+import com.example.demo.utils.ConnectionPerfomance;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -15,10 +19,14 @@ public class RootManagerController {
     private JavaFxApplication main;
     private Stage searchStage;
 
+    @FXML
+    private Label emplInfo;
+
     public RootManagerController(){ }
 
     public void setMain(JavaFxApplication main){
         this.main = main;
+        setEmplInfo();
     }
 
     @FXML
@@ -108,5 +116,22 @@ public class RootManagerController {
     @FXML
     private void handleLevels() throws IOException {
         main.showLevelOverview();
+    }
+
+    @FXML
+    private void handleExit(){
+        this.main.getPrimaryStage().close();
+        this.main.showLoginPage();
+    }
+
+    private void setEmplInfo(){
+        try{
+            JSONObject jsonObject = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/getEmployee=", String.valueOf(main.getEmployeeId()), "Employee");
+            JSONObject jsonObject1 = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/positionById=",  String.valueOf(jsonObject.getLong("id")),"Position");
+            this.emplInfo.setText(jsonObject.getString("firstName")+" "+jsonObject.getString("lastName")+", "+jsonObject1.getString("name"));
+        }catch (Exception e){
+            e.printStackTrace();
+
+        }
     }
 }

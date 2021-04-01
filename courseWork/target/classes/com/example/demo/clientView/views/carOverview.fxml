@@ -59,6 +59,7 @@
                         </GridPane>
                         <HBox layoutX="237.0" layoutY="258.0" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
                             <children>
+                                <Button mnemonicParsing="false" onAction="#handleBreakTrough" text="Оформить" />
                                 <Button mnemonicParsing="false" onAction="#handleNewCar" text="Добавить" />
                                 <Button mnemonicParsing="false" onAction="#handleEditCar" text="Изменить" />
                                 <Button mnemonicParsing="false" onAction="#handleDeleteCar" text="Удалить" />

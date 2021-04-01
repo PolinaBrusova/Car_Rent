@@ -182,7 +182,7 @@ public class JavaFxApplication extends Application {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(JavaFxApplication.class.getResource("views/carOverview.fxml"));
-            AnchorPane carOverview = (AnchorPane) loader.load();
+            AnchorPane carOverview = loader.load();
             rootLayout.setCenter(carOverview);
             CarOverviewController controller = loader.getController();
             controller.setMain(this);

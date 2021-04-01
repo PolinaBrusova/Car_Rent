@@ -4,6 +4,8 @@ import com.example.demo.ServerSide.models.Car;
 import com.example.demo.ServerSide.models.Client;
 import com.example.demo.clientView.JavaFxApplication;
 import com.example.demo.utils.ConnectionPerfomance;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -75,6 +77,42 @@ public class CarOverviewController {
             if (answer.equals(ButtonType.OK)){
                 ConnectionPerfomance.excecuteDELETE("http://localhost:9090/api/tests/deleteCar="+carTable.getItems().get(selectedIndex).getId());
                 this.main.showCarOwerview();
+            }
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(main.getPrimaryStage());
+            alert.setTitle("No selection");
+            alert.setHeaderText("No car selection");
+            alert.setContentText("Please, select car in the table");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    private void handleBreakTrough() throws IOException {
+        //TODO сделать так, чтобы занятая машина не была доступна к оформлению
+        int selectedIndex = carTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0){
+            try {
+                ObservableList<Car> cars = FXCollections.observableArrayList();
+                cars.add(carTable.getItems().get(selectedIndex));
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(JavaFxApplication.class.getResource("views/PersonForBreakTrough.fxml"));
+                AnchorPane page = loader.load();
+                Stage searchStage = new Stage();
+                searchStage.setTitle("Choose Person");
+                searchStage.initModality(Modality.WINDOW_MODAL);
+                searchStage.initOwner(this.main.getPrimaryStage());
+                Scene scene = new Scene(page);
+                searchStage.setScene(scene);
+                PersonForBeakTroughController controller = loader.getController();
+                controller.setDialogStage(searchStage);
+                controller.setMain(main);
+                controller.setCars(cars);
+                searchStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
         else{

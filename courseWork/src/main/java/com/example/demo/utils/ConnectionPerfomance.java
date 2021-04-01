@@ -62,6 +62,7 @@ public class ConnectionPerfomance {
         }
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
         httpURLConnection.setRequestMethod("GET");
+        httpURLConnection.setRequestProperty("Accept", "application/json");
         try (var reader = new BufferedReader(
                 new InputStreamReader(httpURLConnection.getInputStream()))) {
             for (String line; (line = reader.readLine()) != null;) {

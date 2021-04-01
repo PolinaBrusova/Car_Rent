@@ -1,9 +1,12 @@
 package com.example.demo.clientView.controllersFX;
 
-import com.example.demo.clientView.JavaFxApplication;
+import com.example.demo.ServerSide.models.Car;
 import com.example.demo.ServerSide.models.Client;
+import com.example.demo.clientView.JavaFxApplication;
 import com.example.demo.utils.ConnectionPerfomance;
 import com.example.demo.utils.PhoneUtil;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,8 +18,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class SearchWindowController {
-
+public class PersonForBeakTroughController {
+    private ObservableList<Car> cars = FXCollections.observableArrayList();
     private JavaFxApplication main;
     private Stage searchStage;
 
@@ -24,7 +27,7 @@ public class SearchWindowController {
     private TextField phoneField;
 
 
-    public SearchWindowController(){}
+    public PersonForBeakTroughController(){}
 
     public void setMain(JavaFxApplication main){
         this.main = main;
@@ -38,6 +41,10 @@ public class SearchWindowController {
         this.searchStage = searchStage;
     }
 
+    public void setCars(ObservableList<Car> cars) {
+        this.cars = cars;
+    }
+
     @FXML
     private void handleSearch() throws IOException {
         if (!phoneField.getText().isBlank()) {
@@ -46,15 +53,16 @@ public class SearchWindowController {
                 if (client.getId() != null){
                     try {
                         FXMLLoader loader = new FXMLLoader();
-                        loader.setLocation(JavaFxApplication.class.getResource("views/requirements.fxml"));
+                        loader.setLocation(JavaFxApplication.class.getResource("views/choice.fxml"));
                         AnchorPane page = loader.load();
                         this.main.getPrimaryStage().setTitle("FILLING REQUIREMENTS");
                         Scene scene = new Scene(page);
                         this.main.getPrimaryStage().setScene(scene);
-                        RequirementsController controller = loader.getController();
+                        ChoiceController controller = loader.getController();
                         controller.setStage(this.main.getPrimaryStage());
-                        controller.setPerson((Client) main.getPersonData().stream().filter(item -> item.getPhoneNumber().equals(phoneField.getText())).toArray()[0]);
+                        controller.setClient(client);
                         controller.setMain(this.main);
+                        controller.setCars(cars);
                         searchStage.close();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -108,4 +116,3 @@ public class SearchWindowController {
         return client1;
     }
 }
-

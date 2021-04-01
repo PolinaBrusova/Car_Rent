@@ -4,7 +4,10 @@ import com.example.demo.clientView.JavaFxApplication;
 import com.example.demo.ServerSide.models.Client;
 import com.example.demo.utils.ConnectionPerfomance;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -68,6 +71,35 @@ public class PersonOverviewController {
             if (answer.equals(ButtonType.OK)){
                 ConnectionPerfomance.excecuteDELETE("http://localhost:9090/api/tests/deleteClient="+personTable.getItems().get(selectedIndex).getId());
                 this.main.showPersonOverview();
+            }
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(main.getPrimaryStage());
+            alert.setTitle("No selection");
+            alert.setHeaderText("No Person selection");
+            alert.setContentText("Please, select person in the table");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    private void handleBreakThrough() throws IOException {
+        int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0){
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(JavaFxApplication.class.getResource("views/requirements.fxml"));
+                AnchorPane page = loader.load();
+                this.main.getPrimaryStage().setTitle("FILLING REQUIREMENTS");
+                Scene scene = new Scene(page);
+                this.main.getPrimaryStage().setScene(scene);
+                RequirementsController controller = loader.getController();
+                controller.setStage(this.main.getPrimaryStage());
+                controller.setPerson(personTable.getItems().get(selectedIndex));
+                controller.setMain(this.main);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
         else{

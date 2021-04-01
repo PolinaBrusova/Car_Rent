@@ -25,9 +25,13 @@
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#handleSales" text="Информация о скидках" />
                         <MenuItem mnemonicParsing="false" onAction="#handleClientReq" text="Требования к клиенту" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Выйти из системы" />
                     </items>
                 </Menu>
             </menus>
         </MenuBar>
     </top>
+   <bottom>
+      <Label fx:id="emplInfo" alignment="TOP_LEFT" text="Label" BorderPane.alignment="TOP_LEFT" />
+   </bottom>
 </BorderPane>

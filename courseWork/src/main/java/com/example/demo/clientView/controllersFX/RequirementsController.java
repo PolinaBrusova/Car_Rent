@@ -89,6 +89,7 @@ public class RequirementsController {
             ChoiceController controller = loader.getController();
             controller.setMain(this.main);
             controller.setStage(stage);
+            controller.setClient(this.client);
             stage.showAndWait();
 
         } catch (IOException e) {

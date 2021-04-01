@@ -26,19 +26,14 @@ public class Position{
     @Column(name = "NumberOfWorkingDays")
     private int numberOfWorkingDays;
 
-    public Position(String name, int salary, Integer[] args){
+    public Position(String name, int salary, int numberOfWorkingDays, int numberOfDaysOff){
         this.name = name;
         this.salary = salary;
-        if (args.length==2){
-            this.numberOfDaysOff = args[0];
-            this.numberOfWorkingDays = args[1];
-        }else{
-            this.numberOfDaysOff = 0;
-            this.numberOfWorkingDays = 0;
-        }
+        this.numberOfDaysOff = numberOfDaysOff;
+        this.numberOfWorkingDays = numberOfWorkingDays;
     }
 
-    public Position(String name, Integer salary, Integer numberOfDaysOff, Integer numberOfWorkDays){}
+    public Position(){}
 
     public Long getId() {
         return id;

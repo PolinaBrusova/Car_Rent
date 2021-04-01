@@ -4,6 +4,8 @@ import com.example.demo.ServerSide.models.Car;
 import com.example.demo.ServerSide.models.Client;
 import com.example.demo.clientView.JavaFxApplication;
 import com.example.demo.utils.ConnectionPerfomance;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -37,10 +39,22 @@ public class ChoiceController {
     private Label seatsLabel;
     @FXML
     private Label comfortLabel;
+    @FXML
+    private Label FirstNameLabel;
+    @FXML
+    private Label LastNameLabel;
+    @FXML
+    private Label PassportLabel;
+    @FXML
+    private Label PhoneLabel;
+    @FXML
+    private Label LiscenceLabel;
 
     private Stage stage;
 
     private JavaFxApplication main;
+
+    private Client client;
 
     public ChoiceController(){}
 
@@ -61,6 +75,19 @@ public class ChoiceController {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    public void setCars(ObservableList<Car> cars) {
+        this.carTable.setItems(cars);
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+        this.FirstNameLabel.setText(client.getFirstName());
+        this.LastNameLabel.setText(client.getLastName());
+        this.LiscenceLabel.setText(client.getLiscenceDate());
+        this.PassportLabel.setText(client.getPassport());
+        this.PhoneLabel.setText(client.getPhoneNumber());
     }
 
     private void showCarOverviewDetails(Car car){

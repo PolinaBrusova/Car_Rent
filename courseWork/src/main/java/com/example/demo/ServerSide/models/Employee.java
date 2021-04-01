@@ -34,13 +34,17 @@ public class Employee{
     @Column(name = "Adress", nullable = false)
     private String adress;
 
-    public Employee(String firstName, String lastName, String phone, String email, String passport, String adress){
+    @Column(name = "sales", nullable = false)
+    private int sales;
+
+    public Employee(String firstName, String lastName, String phone, String email, String passport, String adress, int sales){
         this.firstName=firstName;
         this.lastName=lastName;
         this.phone=phone;
         this.email=email;
         this.passport=passport;
         this.adress=adress;
+        this.sales = sales;
     }
 
     public Employee(){}
@@ -73,6 +77,10 @@ public class Employee{
         return adress;
     }
 
+    public int getSales() {
+        return sales;
+    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -95,6 +103,10 @@ public class Employee{
 
     public void setAdress(String adress) {
         this.adress = adress;
+    }
+
+    public void setSales(int sales) {
+        this.sales = sales;
     }
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
