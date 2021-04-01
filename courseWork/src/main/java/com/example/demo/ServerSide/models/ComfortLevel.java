@@ -1,5 +1,7 @@
 package com.example.demo.ServerSide.models;
 
+import javafx.beans.property.SimpleStringProperty;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -52,6 +54,8 @@ public class ComfortLevel{
     public int getMinExperience() {
         return minExperience;
     }
+
+    public SimpleStringProperty getLetterProperty(){return new SimpleStringProperty(id);}
 
     public void setId(String id) {
         this.id = id;

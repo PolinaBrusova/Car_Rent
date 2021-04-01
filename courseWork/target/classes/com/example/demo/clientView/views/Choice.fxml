@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="700" prefWidth="1200" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.clientView.controllersFX.CarOverviewController">
+<AnchorPane prefHeight="700" prefWidth="1200" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.clientView.controllersFX.ChoiceController">
     <children>
         <SplitPane dividerPositions="0.29797979797979796" layoutX="144.0" layoutY="40.0" prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
@@ -12,7 +12,6 @@
                         <TableView fx:id="carTable" layoutX="-12.0" layoutY="14.0" prefHeight="298.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <columns>
                                 <TableColumn fx:id="brandColumn" prefWidth="75.0" text="Марка" />
-                                <TableColumn fx:id="gearBoxColumn" prefWidth="75.0" text="Трансмиссия" />
                             </columns>
                             <columnResizePolicy>
                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -59,9 +58,7 @@
                         </GridPane>
                         <HBox layoutX="237.0" layoutY="258.0" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
                             <children>
-                                <Button mnemonicParsing="false" onAction="#handleNewCar" text="Добавить" />
-                                <Button mnemonicParsing="false" onAction="#handleEditCar" text="Изменить" />
-                                <Button mnemonicParsing="false" onAction="#handleDeleteCar" text="Удалить" />
+                                <Button mnemonicParsing="false" text="Оформить" />
                             </children>
                         </HBox>
                     </children></AnchorPane>

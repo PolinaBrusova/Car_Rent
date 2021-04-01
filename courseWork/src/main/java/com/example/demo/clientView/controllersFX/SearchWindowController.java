@@ -53,7 +53,6 @@ public class SearchWindowController {
                         loader.setLocation(JavaFxApplication.class.getResource("views/requirements.fxml"));
                         AnchorPane page = loader.load();
                         this.main.getPrimaryStage().setTitle("FILLING REQUIREMENTS");
-                        //this.main.getPrimaryStage().setMaximized(false);
                         Scene scene = new Scene(page);
                         this.main.getPrimaryStage().setScene(scene);
                         RequirementsController controller = loader.getController();

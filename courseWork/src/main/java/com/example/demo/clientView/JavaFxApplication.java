@@ -33,7 +33,7 @@ public class JavaFxApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
-        this.primaryStage.setMaximized(true);
+        this.primaryStage.setResizable(false);
         this.primaryStage.setTitle("Address Application");
 
         showLoginPage();
@@ -185,6 +185,19 @@ public class JavaFxApplication extends Application {
             AnchorPane carOverview = (AnchorPane) loader.load();
             rootLayout.setCenter(carOverview);
             CarOverviewController controller = loader.getController();
+            controller.setMain(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showLevelOverview() throws IOException {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(JavaFxApplication.class.getResource("views/comfortlevelOverview.fxml"));
+            AnchorPane comfortOverview = loader.load();
+            rootLayout.setCenter(comfortOverview);
+            ComfortOverviewController controller = loader.getController();
             controller.setMain(this);
         } catch (IOException e) {
             e.printStackTrace();

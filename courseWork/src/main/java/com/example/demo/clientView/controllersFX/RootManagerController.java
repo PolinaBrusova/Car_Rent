@@ -104,4 +104,9 @@ public class RootManagerController {
     private void handleClients(){
         main.showPersonOverview();
     }
+
+    @FXML
+    private void handleLevels() throws IOException {
+        main.showLevelOverview();
+    }
 }

@@ -6,9 +6,16 @@ import com.example.demo.ServerSide.models.Client;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class RequirementsController {
     private JavaFxApplication main;
@@ -32,13 +39,7 @@ public class RequirementsController {
     private ComboBox<String> cb3;
     @FXML
     private ComboBox<String> cb4;
-    @FXML
-    private ComboBox<String> cb5;
-    @FXML
-    private ComboBox<String> cb6;
 
-    private ObservableList<String> brands;
-    private ObservableList<String> carcase;
     private ObservableList<String> gearbox;
     private ObservableList<String> doorNumber;
     private ObservableList<String> seats;
@@ -69,14 +70,30 @@ public class RequirementsController {
     }
 
     public void handleSearch(){
-        String brand = cb1.getSelectionModel().getSelectedItem();
-        String carc = cb2.getSelectionModel().getSelectedItem();
-        String gear = cb3.getSelectionModel().getSelectedItem();
-        String doors = cb4.getSelectionModel().getSelectedItem();
-        String seat = cb5.getSelectionModel().getSelectedItem();
-        String level = cb6.getSelectionModel().getSelectedItem();
+        String gear = cb1.getSelectionModel().getSelectedItem();
+        String doors = cb2.getSelectionModel().getSelectedItem();
+        String seat = cb3.getSelectionModel().getSelectedItem();
+        String level = cb4.getSelectionModel().getSelectedItem();
         //TODO сформировать запрос на бд с введенными параметрами, сделать открытие нового окна с вариантами, переданными от бд
         //TODO Если вариантов нет, то просто алерт
+        try {
+            Stage stage = new Stage();
+            stage.setTitle("RENT");
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(this.main.getPrimaryStage());
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(JavaFxApplication.class.getResource("views/Choice.fxml"));
+            AnchorPane choice = loader.load();
+            Scene scene = new Scene(choice);
+            stage.setScene(scene);
+            ChoiceController controller = loader.getController();
+            controller.setMain(this.main);
+            controller.setStage(stage);
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void handleBack(){
@@ -85,14 +102,10 @@ public class RequirementsController {
     }
 
     private void createLists(){
-        this.brands = FXCollections.observableArrayList();
-        this.carcase = FXCollections.observableArrayList();
         this.gearbox = FXCollections.observableArrayList();
         this.doorNumber = FXCollections.observableArrayList();
         this.seats = FXCollections.observableArrayList();
         this.levels = FXCollections.observableArrayList();
-        this.brands.add("-");
-        this.carcase.add("-");
         this.gearbox.add("-");
         this.doorNumber.add("-");
         this.seats.add("-");
@@ -104,8 +117,6 @@ public class RequirementsController {
 
     private void fillCarInfo(){
         for (Car car: this.main.getExistingCars()){
-            if(!brands.contains(car.getBrand())){brands.add(car.getBrand());}
-            if(!carcase.contains(car.getCarcase())){carcase.add(car.getCarcase());}
             if(!gearbox.contains(car.getGearbox())){gearbox.add(car.getGearbox());}
             if(!doorNumber.contains(String.valueOf(car.getDoorNumber()))){doorNumber.add(String.valueOf(car.getDoorNumber()));}
             if(!seats.contains(String.valueOf(car.getSeats()))){seats.add(String.valueOf(car.getSeats()));}
@@ -114,19 +125,15 @@ public class RequirementsController {
     }
 
     private void setupComboB(){
-        cb1.setItems(brands);
-        cb1.setValue(brands.get(0));
+        cb1.setItems(gearbox);
+        cb1.setValue(gearbox.get(0));
         cb1.getSelectionModel().selectedItemProperty().addListener(
                 (observable,oldValue,newValue) -> System.out.println(newValue));
-        cb2.setItems(carcase);
-        cb2.setValue(carcase.get(0));
-        cb3.setItems(gearbox);
-        cb3.setValue(gearbox.get(0));
-        cb4.setItems(doorNumber);
-        cb4.setValue(doorNumber.get(0));
-        cb5.setItems(seats);
-        cb5.setValue(seats.get(0));
-        cb6.setItems(levels);
-        cb6.setValue(levels.get(0));
+        cb2.setItems(doorNumber);
+        cb2.setValue(doorNumber.get(0));
+        cb3.setItems(seats);
+        cb3.setValue(seats.get(0));
+        cb4.setItems(levels);
+        cb4.setValue(levels.get(0));
     }
 }
