@@ -12,5 +12,5 @@ import java.util.List;
 public interface DiscountRepository extends JpaRepository<Discount, Integer> {
     public List<Discount> findAll();
 
-    public  Discount findDiscountById(Long id);
+    public  Discount findDiscountById(String id);
 }

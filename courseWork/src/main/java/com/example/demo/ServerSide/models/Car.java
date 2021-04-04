@@ -1,10 +1,12 @@
 package com.example.demo.ServerSide.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javafx.beans.property.SimpleStringProperty;
 
 import javax.persistence.*;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "Cars")
 public class Car{
@@ -38,6 +40,9 @@ public class Car{
     @Column(name = "Color", nullable = false)
     private String color;
 
+    @Column(name = "Available", nullable = false)
+    private boolean available;
+
     public Car(String brand, String carcase, String gearbox, Integer doorNumber, Integer seats,
                Integer releaseYear, String color) {
         this.brand=brand;
@@ -47,6 +52,7 @@ public class Car{
         this.seats=seats;
         this.releaseYear=releaseYear;
         this.color=color;
+        this.available = true;
     }
     public Car(){}
 
@@ -80,6 +86,10 @@ public class Car{
 
     public String getColor() {
         return color;
+    }
+
+    public boolean isAvailable() {
+        return available;
     }
 
     public SimpleStringProperty getBrandProperty(){return new SimpleStringProperty(brand);}
@@ -118,6 +128,10 @@ public class Car{
         this.seats = seats;
     }
 
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ComfortLevel_Id", nullable = false)
     @JsonIgnore
@@ -142,6 +156,7 @@ public class Car{
                 ", seats=" + seats +
                 ", releaseYear=" + releaseYear +
                 ", color='" + color + '\'' +
+                ", available=" + available +
                 ", comfortLevel=" + comfortLevel +
                 '}';
     }

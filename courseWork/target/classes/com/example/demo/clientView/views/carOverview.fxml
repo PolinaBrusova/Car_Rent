@@ -36,7 +36,8 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="71.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="48.0" minHeight="21.0" prefHeight="48.0" />
                             </rowConstraints>
                             <children>
                                 <Label text="Марка" />
@@ -47,6 +48,7 @@
                                 <Label text="Год выпуска" GridPane.rowIndex="5" />
                                 <Label text="Количество мест" GridPane.rowIndex="6" />
                                 <Label text="Уровень комфорта" GridPane.rowIndex="7" />
+                                <Label text="На техобслуживании" GridPane.rowIndex="8" />
                                 <Label fx:id="brandLabel" text="Label" GridPane.columnIndex="1" />
                                 <Label fx:id="carcaseLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                 <Label fx:id="colorLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -55,11 +57,12 @@
                                 <Label fx:id="releaseLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                 <Label fx:id="seatsLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                 <Label fx:id="comfortLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                <Label fx:id="freeLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                             </children>
                         </GridPane>
                         <HBox layoutX="237.0" layoutY="258.0" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
                             <children>
-                                <Button mnemonicParsing="false" onAction="#handleBreakTrough" text="Оформить" />
+                                <Button mnemonicParsing="false" onAction="#handleBreakTrough" text="К оформлению" />
                                 <Button mnemonicParsing="false" onAction="#handleNewCar" text="Добавить" />
                                 <Button mnemonicParsing="false" onAction="#handleEditCar" text="Изменить" />
                                 <Button mnemonicParsing="false" onAction="#handleDeleteCar" text="Удалить" />

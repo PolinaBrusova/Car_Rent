@@ -7,6 +7,7 @@ import javafx.beans.property.StringProperty;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Objects;
 
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name = "Clients")
@@ -44,7 +45,14 @@ public class Client{
         this.phoneNumber=phoneNumber;
         this.passport=passport;
         this.liscenceDate = liscenceDate;
-        this.experience = Period.between(DateUtil.parse(liscenceDate), LocalDate.now()).getYears();
+        try{
+            System.out.println(DateUtil.parse(liscenceDate));
+            System.out.println(LocalDate.now());
+            System.out.println(Period.between(Objects.requireNonNull(DateUtil.parse(liscenceDate)), LocalDate.now()).getYears());
+            this.experience = Period.between(Objects.requireNonNull(DateUtil.parse(liscenceDate)), LocalDate.now()).getYears();
+        }catch (NullPointerException e){
+            this.experience = 0;
+        }
     }
 
     public Client(){}
@@ -91,6 +99,11 @@ public class Client{
 
     public void setLiscenceDate(String liscenceDate) {
         this.liscenceDate = liscenceDate;
+        try{
+            this.experience = Period.between(Objects.requireNonNull(DateUtil.parse(liscenceDate)), LocalDate.now()).getYears();
+        }catch (NullPointerException e){
+            this.experience = 0;
+        }
     }
 
     public void setPassport(String passport) {

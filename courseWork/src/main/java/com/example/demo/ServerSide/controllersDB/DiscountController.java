@@ -15,13 +15,13 @@ public class DiscountController {
     }
 
     @PostMapping("/addDiscount")
-    Discount createDiscount(@RequestParam Long id, @RequestParam float percent) {
+    Discount createDiscount(@RequestParam String id, @RequestParam float percent) {
         Discount discount = new Discount(id, percent);
         return this.discountRepository.save(discount);
     }
 
     @GetMapping("/getDiscount/{id}")
-    Discount getDiscount(@PathVariable Long id) {
+    Discount getDiscount(@PathVariable String id) {
         return this.discountRepository.findDiscountById(id);
     }
 }

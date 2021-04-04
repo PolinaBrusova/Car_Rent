@@ -57,7 +57,7 @@ public class PersonEditingController {
             person.setLastName(lastNameField.getText());
             person.setPhoneNumber(phoneField.getText());
             person.setPassport(passportField.getText());
-            person.setLiscenceDate(liscenceField.getText());
+            person.setLiscenceDate(DateUtil.format(DateUtil.parse(liscenceField.getText())));
 
             okClicked = true;
             dialogStage.close();
@@ -87,10 +87,10 @@ public class PersonEditingController {
         }
 
         if (liscenceField.getText() == null || liscenceField.getText().length() == 0) {
-            errorMessage += "No valid birthday!\n";
+            errorMessage += "No valid liscence date!\n";
         } else {
             if (!DateUtil.validDate(liscenceField.getText())) {
-                errorMessage += "No valid birthday. Use the format dd.mm.yyyy!\n";
+                errorMessage += "No valid liscence date. Use the format dd.mm.yyyy!\n";
             }
         }
 

@@ -41,6 +41,8 @@ public class CarOverviewController {
     private Label seatsLabel;
     @FXML
     private Label comfortLabel;
+    @FXML
+    private Label freeLabel;
 
     private JavaFxApplication main;
 
@@ -91,31 +93,39 @@ public class CarOverviewController {
 
     @FXML
     private void handleBreakTrough() throws IOException {
-        //TODO сделать так, чтобы занятая машина не была доступна к оформлению
         int selectedIndex = carTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0){
-            try {
-                ObservableList<Car> cars = FXCollections.observableArrayList();
-                cars.add(carTable.getItems().get(selectedIndex));
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(JavaFxApplication.class.getResource("views/PersonForBreakTrough.fxml"));
-                AnchorPane page = loader.load();
-                Stage searchStage = new Stage();
-                searchStage.setTitle("Choose Person");
-                searchStage.initModality(Modality.WINDOW_MODAL);
-                searchStage.initOwner(this.main.getPrimaryStage());
-                Scene scene = new Scene(page);
-                searchStage.setScene(scene);
-                PersonForBeakTroughController controller = loader.getController();
-                controller.setDialogStage(searchStage);
-                controller.setMain(main);
-                controller.setCars(cars);
-                searchStage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(validCar(carTable.getItems().get(selectedIndex))){
+                try {
+                    ObservableList<Car> cars = FXCollections.observableArrayList();
+                    cars.add(carTable.getItems().get(selectedIndex));
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(JavaFxApplication.class.getResource("views/PersonForBreakTrough.fxml"));
+                    AnchorPane page = loader.load();
+                    Stage searchStage = new Stage();
+                    searchStage.setTitle("Choose Person");
+                    searchStage.initModality(Modality.WINDOW_MODAL);
+                    searchStage.initOwner(this.main.getPrimaryStage());
+                    Scene scene = new Scene(page);
+                    searchStage.setScene(scene);
+                    PersonForBeakTroughController controller = loader.getController();
+                    controller.setDialogStage(searchStage);
+                    controller.setMain(main);
+                    controller.setCars(cars);
+                    searchStage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.initOwner(main.getPrimaryStage());
+                alert.setTitle("Машина занята");
+                alert.setHeaderText("Выбранный автомобиль недоступен");
+                alert.setContentText("Нельзя перейтии к оформлению, так как эта машина сейчас арендуется или находится на техобслуживании.\nВыберите другой автомобиль.");
+                alert.showAndWait();
             }
-        }
-        else{
+
+        } else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(main.getPrimaryStage());
             alert.setTitle("No selection");
@@ -142,6 +152,7 @@ public class CarOverviewController {
                 jsonObject.put("gearbox", car.getGearbox());
                 jsonObject.put("releaseYear", car.getReleaseYear());
                 jsonObject.put("seats", car.getSeats());
+                jsonObject.put("available", car.isAvailable());
                 jsonObject.put("comfortLevel", car.getComfortLevel().toString().replace("ComfortLevel", "").replace("=", ":"));
                 ConnectionPerfomance.excecutePUT("http://localhost:9090/api/tests/updateCar", jsonObject);
                 this.main.showCarOwerview();
@@ -173,6 +184,7 @@ public class CarOverviewController {
             inputCar.put("gearbox", car.getGearbox());
             inputCar.put("releaseYear", car.getReleaseYear());
             inputCar.put("seats", car.getSeats());
+            inputCar.put("available", true);
             JSONObject lvl = new JSONObject();
             lvl.put("id", car.getComfortLevel().getId());
             lvl.put("deposit", car.getComfortLevel().getDeposit());
@@ -195,6 +207,11 @@ public class CarOverviewController {
             releaseLabel.setText(String.valueOf(car.getReleaseYear()));
             seatsLabel.setText(String.valueOf(car.getSeats()));
             comfortLabel.setText(car.getComfortLevel().getId());
+            if (car.isAvailable()){
+                freeLabel.setText("Нет");
+            }else{
+                freeLabel.setText("Да");
+            }
         }
         else{
             brandLabel.setText("");
@@ -205,6 +222,7 @@ public class CarOverviewController {
             releaseLabel.setText("");
             seatsLabel.setText("");
             comfortLabel.setText("");
+            freeLabel.setText("");
         }
     }
 
@@ -231,6 +249,14 @@ public class CarOverviewController {
             dictionary.put(false, null);
             e.printStackTrace();
             return dictionary;
+        }
+    }
+    private boolean validCar(Car car) throws IOException {
+        if(car.isAvailable()){
+            String free = ConnectionPerfomance.excecuteValidation("http://localhost:9090/api/tests/Car="+car.getId()+"/rents");
+            return free.matches("true");
+        }else{
+            return false;
         }
     }
 

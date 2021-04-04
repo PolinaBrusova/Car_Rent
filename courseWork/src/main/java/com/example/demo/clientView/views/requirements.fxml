@@ -40,10 +40,14 @@
                    <Label layoutX="167.0" layoutY="165.0" text="Количество дверей" AnchorPane.leftAnchor="165.0" />
                    <Label layoutX="122.0" layoutY="258.0" text="Количество мест" AnchorPane.leftAnchor="165.0" />
                    <Label layoutX="127.0" layoutY="341.0" text="Уровень комфорта" AnchorPane.leftAnchor="165.0" />
+                   <Label layoutX="200.0" layoutY="425.0" text="Дата начала аренды" AnchorPane.leftAnchor="165.0" />
+                   <Label layoutX="200.0" layoutY="513.0" text="Дата завершения аренды" AnchorPane.leftAnchor="165.0"/>
                    <ComboBox fx:id="cb1" layoutX="486.0" layoutY="74.0" prefWidth="150.0" AnchorPane.rightAnchor="170.0" />
                    <ComboBox fx:id="cb2" layoutX="486.0" layoutY="160.0" prefWidth="150.0" AnchorPane.rightAnchor="170.0" />
                    <ComboBox fx:id="cb3" layoutX="486.0" layoutY="253.0" prefWidth="150.0" AnchorPane.rightAnchor="170.0" />
                    <ComboBox fx:id="cb4" layoutX="486.0" layoutY="336.0" prefWidth="150.0" AnchorPane.rightAnchor="170.0" />
+                  <DatePicker fx:id="startDatePicker" layoutX="487.0" layoutY="420.0" editable="false"/>
+                  <DatePicker fx:id="endDatePicker" layoutX="487.0" layoutY="508.0" editable="false"/>
 
                </children></AnchorPane>
         </items>

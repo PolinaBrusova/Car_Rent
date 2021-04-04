@@ -13,4 +13,6 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
     public Car findCarById(Long id);
 
     public int deleteCarById(Long id);
+
+    List<Car> findCarsByGearboxAndAndDoorNumberAndSeatsAndAvailable(String gearbox, int doorNumber, int seats, boolean available);
 }

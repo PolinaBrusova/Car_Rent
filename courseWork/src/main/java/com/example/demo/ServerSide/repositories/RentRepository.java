@@ -10,8 +10,8 @@ import java.util.List;
 @Repository
 @Service
 public interface RentRepository extends JpaRepository<Rent, Integer> {
-    public Rent findRentByCarId(Long id);
+    public List<Rent> findRentsByCarId(Long id);
     public List<Rent> findAll();
-
     public Rent findRentById(Long id);
+    public List<Rent> findRentsByClientId(Long id);
 }

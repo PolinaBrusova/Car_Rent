@@ -64,7 +64,7 @@ public class JavaFxApplication extends Application {
             stage.initOwner(primaryStage);
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(JavaFxApplication.class.getResource("views/employeeRegister.fxml"));
-            BorderPane register = (BorderPane) loader.load();
+            BorderPane register = loader.load();
             Scene scene = new Scene(register);
             stage.setScene(scene);
             EmployeeRegisterController controller = loader.getController();
@@ -165,6 +165,7 @@ public class JavaFxApplication extends Application {
             car.setSeats(Integer.parseInt(jsonArray.getJSONObject(i).get("seats").toString()));
             car.setReleaseYear(Integer.parseInt(jsonArray.getJSONObject(i).get("releaseYear").toString()));
             car.setColor(jsonArray.getJSONObject(i).get("color").toString());
+            car.setAvailable(jsonArray.getJSONObject(i).getBoolean("available"));
             JSONObject comf_lvl = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/LevelByCarId=", jsonArray.getJSONObject(i).get("id").toString(), "ComfortLevel");
             ComfortLevel comfortLevel = new ComfortLevel();
             comfortLevel.setId(comf_lvl.get("id").toString());

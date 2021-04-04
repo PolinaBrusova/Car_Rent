@@ -44,8 +44,8 @@ public class Rent{
         this.client = client;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "Discount_Id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "Discount_Id", nullable = true)
     @JsonIgnore
     private Discount discount;
 

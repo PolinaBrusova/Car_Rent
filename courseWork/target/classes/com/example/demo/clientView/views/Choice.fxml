@@ -61,9 +61,9 @@
                                 <Button mnemonicParsing="false" text="Оформить" />
                             </children>
                         </HBox>
-                  <TitledPane layoutX="496.0" layoutY="28.0" prefHeight="577.0" prefWidth="318.0" text="Информация по клиенту">
+                  <TitledPane layoutX="336.0" layoutY="28.0" prefHeight="364.0" prefWidth="478.0" text="Информация по клиенту">
                      <content>
-                         <GridPane>
+                         <GridPane prefHeight="469.0" prefWidth="302.0">
                              <columnConstraints>
                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                              </columnConstraints>
@@ -83,6 +83,35 @@
                              </children>
                          </GridPane>
                      </content></TitledPane>
+                  <TitledPane layoutX="336.0" layoutY="410.0" prefHeight="200.0" prefWidth="478.0" text="ПРЕДВАРИТЕЛЬНЫЙ РАСЧЕТЫ">
+                     <content>
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Количество дней аренды"/>
+                              <Label text="Сумма аренды без скидки" GridPane.rowIndex="1" />
+                               <Label text="Скидка к заказу" GridPane.rowIndex="2" />
+                               <Label text="Сумма скидки" GridPane.rowIndex="3" />
+                               <Label text="Итого к оплате" GridPane.rowIndex="4" />
+                              <Label fx:id="daysLabel" text="Label" GridPane.columnIndex="1" />
+                               <Label fx:id="priceLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                               <Label fx:id="saleLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                               <Label fx:id="saleSumLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                               <Label fx:id="finalLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                           </children>
+                        </GridPane>
+                     </content>
+                  </TitledPane>
                     </children></AnchorPane>
             </items>
         </SplitPane>

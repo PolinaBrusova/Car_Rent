@@ -3,6 +3,7 @@ package com.example.demo.clientView.controllersFX;
 import com.example.demo.clientView.JavaFxApplication;
 import com.example.demo.ServerSide.models.Client;
 import com.example.demo.utils.ConnectionPerfomance;
+import com.example.demo.utils.DateUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -87,20 +88,30 @@ public class PersonOverviewController {
     private void handleBreakThrough() throws IOException {
         int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0){
-            try {
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(JavaFxApplication.class.getResource("views/requirements.fxml"));
-                AnchorPane page = loader.load();
-                this.main.getPrimaryStage().setTitle("FILLING REQUIREMENTS");
-                Scene scene = new Scene(page);
-                this.main.getPrimaryStage().setScene(scene);
-                RequirementsController controller = loader.getController();
-                controller.setStage(this.main.getPrimaryStage());
-                controller.setPerson(personTable.getItems().get(selectedIndex));
-                controller.setMain(this.main);
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (clientIsNotRenting(personTable.getItems().get(selectedIndex))){
+                try {
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(JavaFxApplication.class.getResource("views/requirements.fxml"));
+                    AnchorPane page = loader.load();
+                    this.main.getPrimaryStage().setTitle("FILLING REQUIREMENTS");
+                    Scene scene = new Scene(page);
+                    this.main.getPrimaryStage().setScene(scene);
+                    RequirementsController controller = loader.getController();
+                    controller.setStage(this.main.getPrimaryStage());
+                    controller.setPerson(personTable.getItems().get(selectedIndex));
+                    controller.setMain(this.main);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.initOwner(main.getPrimaryStage());
+                alert.setTitle("Клиент уже арендует");
+                alert.setHeaderText("Клиент на данные даты уже арендует машину");
+                alert.setContentText("Клиент арендует машину. Клиент должен прийти после окончания аренды.");
+                alert.showAndWait();
             }
+
         }
         else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -166,7 +177,7 @@ public class PersonOverviewController {
             lastNameLabel.setText(person.getLastName());
             phoneLabel.setText(person.getPhoneNumber());
             passportLabel.setText(person.getPassport());
-            liscenceLabel.setText(person.getLiscenceDate());
+            liscenceLabel.setText(DateUtil.formatForPeople(DateUtil.parse(person.getLiscenceDate())));
         }
         else{
             firstNameLabel.setText("");
@@ -177,4 +188,7 @@ public class PersonOverviewController {
         }
     }
 
+    private boolean clientIsNotRenting(Client client) throws IOException {
+        return ConnectionPerfomance.excecuteValidation("http://localhost:9090/api/tests/Client="+client.getId()+"/isRenting").matches("true");
+    }
 }

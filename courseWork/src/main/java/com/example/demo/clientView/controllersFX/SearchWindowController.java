@@ -44,21 +44,31 @@ public class SearchWindowController {
             if (PhoneUtil.validPhone(phoneField.getText())){
                 Client client = clientExistence(phoneField.getText());
                 if (client.getId() != null){
-                    try {
-                        FXMLLoader loader = new FXMLLoader();
-                        loader.setLocation(JavaFxApplication.class.getResource("views/requirements.fxml"));
-                        AnchorPane page = loader.load();
-                        this.main.getPrimaryStage().setTitle("FILLING REQUIREMENTS");
-                        Scene scene = new Scene(page);
-                        this.main.getPrimaryStage().setScene(scene);
-                        RequirementsController controller = loader.getController();
-                        controller.setStage(this.main.getPrimaryStage());
-                        controller.setPerson((Client) main.getPersonData().stream().filter(item -> item.getPhoneNumber().equals(phoneField.getText())).toArray()[0]);
-                        controller.setMain(this.main);
-                        searchStage.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if (clientIsNotRenting(client)){
+                        try {
+                            FXMLLoader loader = new FXMLLoader();
+                            loader.setLocation(JavaFxApplication.class.getResource("views/requirements.fxml"));
+                            AnchorPane page = loader.load();
+                            this.main.getPrimaryStage().setTitle("FILLING REQUIREMENTS");
+                            Scene scene = new Scene(page);
+                            this.main.getPrimaryStage().setScene(scene);
+                            RequirementsController controller = loader.getController();
+                            controller.setStage(this.main.getPrimaryStage());
+                            controller.setPerson((Client) main.getPersonData().stream().filter(item -> item.getPhoneNumber().equals(phoneField.getText())).toArray()[0]);
+                            controller.setMain(this.main);
+                            searchStage.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }else{
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.initOwner(searchStage);
+                        alert.setTitle("Клиент уже арендует.");
+                        alert.setHeaderText("Клиент с данным номером уже арендует");
+                        alert.setContentText("Данный клиент уже арендует автомобиль. Он не может начать новую аренду");
+                        alert.showAndWait();
                     }
+
                 }else{
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.initOwner(searchStage);
@@ -106,6 +116,10 @@ public class SearchWindowController {
             client1.setLiscenceDate(jsonObject.get("liscenceDate").toString());
         }
         return client1;
+    }
+
+    private boolean clientIsNotRenting(Client client) throws IOException {
+        return ConnectionPerfomance.excecuteValidation("http://localhost:9090/api/tests/Client="+client.getId()+"/isRenting").matches("true");
     }
 }
 

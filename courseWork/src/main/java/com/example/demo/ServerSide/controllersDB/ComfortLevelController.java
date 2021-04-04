@@ -45,7 +45,7 @@ public class ComfortLevelController {
         current.setLevel(jsonObject.getString("level"));
         current.setDeposit(jsonObject.getLong("deposit"));
         current.setRentPrice(jsonObject.getLong("rentPrice"));
-        current.setMinExperience(jsonObject.getInt("rentPrice"));
+        current.setMinExperience(jsonObject.getInt("minExperience"));
         return this.comfortLevelRepository.save(current);
     }
 }
