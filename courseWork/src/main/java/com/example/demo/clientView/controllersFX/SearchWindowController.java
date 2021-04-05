@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -75,15 +76,14 @@ public class SearchWindowController {
                     alert.setTitle("No such a client");
                     alert.setHeaderText("Client Not found in the database");
                     alert.setContentText("Redirecting on adding a client...");
-                    alert.showAndWait();
-                    Client tempPerson = new Client();
-                    tempPerson.setPhoneNumber(phoneField.getText());
-                    //TODO: Make adding new client (why the id does not generates tho?
-                    /*if(main.showPersonEditDialog(tempPerson)){
-                        main.getPersonData().add(tempPerson);
-                    }*/
-                    searchStage.close();
-                    //Добавить переход с новым клиентом сразу на оформление требований
+                    ButtonType answer = alert.showAndWait().orElse(ButtonType.OK);
+                    if (answer.equals(ButtonType.OK)){
+                        Client tempPerson = new Client();
+                        tempPerson.setPhoneNumber(phoneField.getText());
+                        searchStage.close();
+                        this.main.showPersonOverview();
+                        this.main.showPersonEditDialog(tempPerson);
+                    }
                 }
             }else{
                 Alert alert = new Alert(Alert.AlertType.ERROR);

@@ -1,7 +1,10 @@
 package com.example.demo.ServerSide.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name = "Departments")
 public class Department{
@@ -61,6 +64,10 @@ public class Department{
 
     public String getAdditional() {
         return additional;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setAdress(String adress) {

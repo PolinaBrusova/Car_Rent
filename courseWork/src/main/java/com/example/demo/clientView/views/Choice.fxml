@@ -58,7 +58,7 @@
                         </GridPane>
                         <HBox layoutX="237.0" layoutY="258.0" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
                             <children>
-                                <Button mnemonicParsing="false" text="Оформить" />
+                                <Button mnemonicParsing="false" text="Оформить" onAction="#handleSubmitting"/>
                             </children>
                         </HBox>
                   <TitledPane layoutX="336.0" layoutY="28.0" prefHeight="364.0" prefWidth="478.0" text="Информация по клиенту">

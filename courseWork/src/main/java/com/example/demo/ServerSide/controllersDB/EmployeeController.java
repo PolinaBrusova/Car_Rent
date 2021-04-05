@@ -29,7 +29,7 @@ public class EmployeeController {
                             @RequestParam String passport, @RequestParam String adress,
                             @RequestParam Department department, @RequestParam Position position,
                             @RequestParam int sales) {
-        Employee employee = new Employee(firstName, lastName, phone, email, passport, adress, sales);
+        Employee employee = new Employee(firstName, lastName, phone, email, passport, adress);
         employee.setDepartment(departmentRepository.findDepartmentById(department.getId()));
         employee.setPosition(positionRepository.findPositionById(position.getId()));
         return this.employeeRepository.save(employee);
@@ -41,7 +41,12 @@ public class EmployeeController {
     }
 
     @GetMapping("/positionById={id}")
-    String getPositionById(@PathVariable Long id) {
-        return this.positionRepository.findPositionById(this.employeeRepository.findEmployeeById(id).getPosition().getId()).toString();
+    Position getPositionById(@PathVariable Long id) {
+        return this.positionRepository.findPositionById(this.employeeRepository.findEmployeeById(id).getPosition().getId());
+    }
+
+    @GetMapping("/departmentById={id}")
+    Department getDepartmentById(@PathVariable Long id) {
+        return this.departmentRepository.findDepartmentById(this.employeeRepository.findEmployeeById(id).getDepartment().getId());
     }
 }

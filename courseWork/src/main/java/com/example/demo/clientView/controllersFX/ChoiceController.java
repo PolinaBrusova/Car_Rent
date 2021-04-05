@@ -1,8 +1,6 @@
 package com.example.demo.clientView.controllersFX;
 
-import com.example.demo.ServerSide.models.Car;
-import com.example.demo.ServerSide.models.Client;
-import com.example.demo.ServerSide.models.Discount;
+import com.example.demo.ServerSide.models.*;
 import com.example.demo.clientView.JavaFxApplication;
 import com.example.demo.utils.ConnectionPerfomance;
 import com.example.demo.utils.DateUtil;
@@ -13,11 +11,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.HashMap;
 
@@ -158,4 +160,68 @@ public class ChoiceController {
         this.saleLabel.setText(discount.getId());
     }
 
+    @FXML
+    private void handleSubmitting() throws IOException {
+        if (carTable.getSelectionModel().getSelectedIndex()>-1){
+            try{
+                JSONObject rent = new JSONObject();
+                rent.put("startDate", start);
+                rent.put("endDate", end);
+                rent.put("totalSum", Float.parseFloat(finalLabel.getText()));
+                rent.put("employee", fillEmployee());
+                rent.put("discount", fillDiscount());
+                rent.put("client", fillClient());
+                rent.put("car", fillCar());
+                ConnectionPerfomance.excecutePost("http://localhost:9090/api/tests/addRent", rent);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.initOwner(main.getPrimaryStage());
+                alert.setTitle("Завершение");
+                alert.setHeaderText("Аренда успешно оформлена");
+                alert.setContentText("Аренда внесена в базу");
+                ButtonType answer = alert.showAndWait().orElse(ButtonType.OK);
+                if (answer.equals(ButtonType.OK)){
+                    this.stage.close();
+                    this.main.initRootLayout();
+                    this.main.showRentOwerview();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.initOwner(main.getPrimaryStage());
+                alert.setTitle("Ошибка записи аренды");
+                alert.setHeaderText("Что-то пошло не так");
+                alert.setContentText("Соединение с сервером было нестабильно, аренда не внесена в базу. Попробуйте снова.");
+                alert.showAndWait();
+            }
+
+        }else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(main.getPrimaryStage());
+            alert.setTitle("Ничего не выбрано");
+            alert.setHeaderText("Не выбрана машина");
+            alert.setContentText("Выберите машину для аренды");
+            alert.showAndWait();
+        }
+
+    }
+
+    private JSONObject fillEmployee() throws IOException {
+        JSONObject rawEmployee = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/getEmployee=", String.valueOf(main.getEmployeeId()), "Employee");
+        rawEmployee.put("department", ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/departmentById=", String.valueOf(main.getEmployeeId()), "Department"));
+        rawEmployee.put("position", ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/positionById=", String.valueOf(main.getEmployeeId()), "Position"));
+        return rawEmployee;
+    }
+
+    private JSONObject fillDiscount(){
+        return new JSONObject(this.discount.toString().replace("Discount", "").replace("=", ":"));
+    }
+
+    private JSONObject fillClient(){
+        return new JSONObject(client.toString().replace("Client", "").replace("=", ":"));
+    }
+
+    private JSONObject fillCar(){
+        Car car = carTable.getItems().get(carTable.getSelectionModel().getSelectedIndex());
+        return new JSONObject(car.toString().replace("Car", "").replace("=", ":").replace("ComfortLevel", ""));
+    }
 }

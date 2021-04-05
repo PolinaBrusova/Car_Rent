@@ -4,11 +4,13 @@ import com.example.demo.ServerSide.models.*;
 import com.example.demo.ServerSide.repositories.*;
 import com.example.demo.utils.DateUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,16 +35,16 @@ public class RentController {
     }
 
     @PostMapping("/addRent")
-    Rent createRent(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate,
-                    @RequestParam Employee employee, @RequestParam Client client,
-                    @RequestParam Discount discount, @RequestParam Car car) {
-        Rent rent = new Rent(startDate, endDate);
-        rent.setCar(carRepository.findCarById(car.getId()));
-        rent.setClient(clientRepository.findClientById(client.getId()));
-        rent.setDiscount(discountRepository.findDiscountById(discount.getId()));
-        rent.setEmployee(employeeRepository.findEmployeeById(employee.getId()));
-        rent.setTotalSumm(Period.between(endDate, startDate).getDays()*
-                car.getComfortLevel().getRentPrice()*(1-discount.getPercent())+car.getComfortLevel().getDeposit());
+    Rent createRent(@RequestBody String lineRent) {
+        Rent rent = new Rent();
+        JSONObject rawRent = new JSONObject(lineRent);
+        rent.setStartDate(DateUtil.parse(rawRent.getString("startDate")));
+        rent.setEndDate(DateUtil.parse(rawRent.getString("endDate")));
+        rent.setTotalSumm(rawRent.getFloat("totalSum"));
+        rent.setEmployee(this.employeeRepository.findEmployeeById(rawRent.getJSONObject("employee").getLong("id")));
+        rent.setClient(this.clientRepository.findClientById(rawRent.getJSONObject("client").getLong("id")));
+        rent.setCar(this.carRepository.findCarById(rawRent.getJSONObject("car").getLong("id")));
+        rent.setDiscount(this.discountRepository.findDiscountById(rawRent.getJSONObject("discount").getString("id")));
         return this.rentRepository.save(rent);
     }
 
