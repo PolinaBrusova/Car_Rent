@@ -109,6 +109,11 @@ public class RootManagerController {
     }
 
     @FXML
+    private void handleRents() throws IOException {
+        main.showRentOwerview();
+    }
+
+    @FXML
     private void handleClients(){
         main.showPersonOverview();
     }

@@ -1,6 +1,7 @@
 package com.example.demo.ServerSide.models;
 
 import com.example.demo.utils.DateUtil;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -9,6 +10,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.Objects;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name = "Clients")
 public class Client{

@@ -192,6 +192,19 @@ public class JavaFxApplication extends Application {
         }
     }
 
+    public void showRentOwerview() throws IOException {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(JavaFxApplication.class.getResource("views/rentOverview.fxml"));
+            AnchorPane rentOverview = loader.load();
+            rootLayout.setCenter(rentOverview);
+            RentOverviewController controller = loader.getController();
+            controller.setMain(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void showLevelOverview() throws IOException {
         try {
             FXMLLoader loader = new FXMLLoader();

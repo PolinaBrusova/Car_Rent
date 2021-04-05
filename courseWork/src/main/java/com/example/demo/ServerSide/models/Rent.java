@@ -1,6 +1,7 @@
 package com.example.demo.ServerSide.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import javafx.beans.property.SimpleStringProperty;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -104,6 +105,10 @@ public class Rent{
         return totalSumm;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
@@ -114,6 +119,14 @@ public class Rent{
 
     public void setTotalSumm(float totalSumm) {
         this.totalSumm = totalSumm;
+    }
+
+    public SimpleStringProperty getBrandProperty(){
+        return new SimpleStringProperty(this.car.getBrand());
+    }
+
+    public SimpleStringProperty getLastNameProperty(){
+        return new SimpleStringProperty(this.client.getFirstName());
     }
 
     @Override

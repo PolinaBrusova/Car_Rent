@@ -139,6 +139,21 @@ public class RentController {
         }
     }
 
+    @GetMapping("CarByRentId={id}")
+    Car getCarbyRentID(@PathVariable Long id){
+        return this.carRepository.findCarById(this.rentRepository.findRentById(id).getCar().getId());
+    }
+
+    @GetMapping("ClientByRentId={id}")
+    Client getClientbyRentID(@PathVariable Long id){
+        return this.clientRepository.findClientById(this.rentRepository.findRentById(id).getClient().getId());
+    }
+
+    @GetMapping("DiscountByRentId={id}")
+    Discount getDiscountbyRentID(@PathVariable Long id){
+        return this.discountRepository.findDiscountById(this.rentRepository.findRentById(id).getDiscount().getId());
+    }
+
     @GetMapping("Client={id}/isRenting")
     boolean getFreeClient(@PathVariable Long id){
         List<Rent> rents = this.rentRepository.findRentsByClientId(id);
@@ -148,6 +163,11 @@ public class RentController {
             rents.sort((u1, u2) -> u2.getEndDate().compareTo(u1.getEndDate()));
             return rents.get(0).getEndDate().isBefore(LocalDate.now());
         }
+    }
+
+    @GetMapping("AllRents")
+    List<Rent> getAllRents(){
+        return  this.rentRepository.findAll();
     }
 
     @GetMapping("discount_for_client={id}")

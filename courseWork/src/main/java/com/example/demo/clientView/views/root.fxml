@@ -12,7 +12,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#handleCars" text="Машины" />
                         <MenuItem mnemonicParsing="false" onAction="#handleClients" text="Клиенты" />
                         <MenuItem mnemonicParsing="false" onAction="#handleLevels" text="Категории" />
-                        <MenuItem mnemonicParsing="false" text="Договора" />
+                        <MenuItem mnemonicParsing="false" text="Договора" onAction="#handleRents"/>
                         <MenuItem mnemonicParsing="false" onAction="#handleClose" text="Закрыть" />
                     </items>
                 </Menu>
