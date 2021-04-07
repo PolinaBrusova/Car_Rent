@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 public class ConnectionPerfomance {
@@ -24,7 +25,7 @@ public class ConnectionPerfomance {
         httpURLConnection.setDoOutput(true);
         System.out.println(jsonObject);
         try(OutputStream os = httpURLConnection.getOutputStream()) {
-            byte[] input = jsonObject.toString().getBytes(StandardCharsets.UTF_8);
+            byte[] input =  URLEncoder.encode(jsonObject.toString(), StandardCharsets.UTF_8).getBytes(StandardCharsets.UTF_8);
             os.write(input, 0, input.length);
         }
         try(BufferedReader br = new BufferedReader(
@@ -56,7 +57,7 @@ public class ConnectionPerfomance {
         StringBuilder result = new StringBuilder();
         URL url;
         if (param!=null){
-            url = new URL(link+param);
+            url = new URL( link+URLEncoder.encode(param, StandardCharsets.UTF_8));
         }else{
             url = new URL(link);
         }

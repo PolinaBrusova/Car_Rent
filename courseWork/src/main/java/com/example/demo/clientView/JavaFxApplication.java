@@ -42,7 +42,7 @@ public class JavaFxApplication extends Application {
     public void initRootLayout() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(JavaFxApplication.class.getResource("views/root.fxml"));
+            loader.setLocation(JavaFxApplication.class.getResource("controllersFX/root.fxml"));
             rootLayout = loader.load();
             RootManagerController controller = loader.getController();
             controller.setDialogStage(primaryStage);
@@ -59,12 +59,13 @@ public class JavaFxApplication extends Application {
     public void showLoginPage() {
         try {
             Stage stage = new Stage();
-            stage.setTitle("Sign in");
+            stage.setTitle("Вход в систему");
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(primaryStage);
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(JavaFxApplication.class.getResource("views/employeeRegister.fxml"));
-            BorderPane register = loader.load();
+            loader.setLocation(JavaFxApplication.class.getResource("controllersFX/employeeRegister.fxml"));
+            AnchorPane register = loader.load();
+            register.setStyle("-fx-background-color: #FFEFD5");
             Scene scene = new Scene(register);
             stage.setScene(scene);
             EmployeeRegisterController controller = loader.getController();
@@ -116,7 +117,7 @@ public class JavaFxApplication extends Application {
                 personData.add(person);
             }
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(JavaFxApplication.class.getResource("views/main.fxml"));
+            loader.setLocation(JavaFxApplication.class.getResource("controllersFX/main.fxml"));
             AnchorPane personOverview = (AnchorPane) loader.load();
             rootLayout.setCenter(personOverview);
             PersonOverviewController controller = loader.getController();
@@ -130,7 +131,7 @@ public class JavaFxApplication extends Application {
         try {
             HashMap<Boolean, Client> dictionary = new HashMap<>();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(JavaFxApplication.class.getResource("views/PersonEditDialog.fxml"));
+            loader.setLocation(JavaFxApplication.class.getResource("controllersFX/PersonEditDialog.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Edit Person");
@@ -182,7 +183,7 @@ public class JavaFxApplication extends Application {
         findAllCars();
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(JavaFxApplication.class.getResource("views/carOverview.fxml"));
+            loader.setLocation(JavaFxApplication.class.getResource("controllersFX/carOverview.fxml"));
             AnchorPane carOverview = loader.load();
             rootLayout.setCenter(carOverview);
             CarOverviewController controller = loader.getController();
@@ -195,7 +196,7 @@ public class JavaFxApplication extends Application {
     public void showRentOwerview() throws IOException {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(JavaFxApplication.class.getResource("views/rentOverview.fxml"));
+            loader.setLocation(JavaFxApplication.class.getResource("controllersFX/rentOverview.fxml"));
             AnchorPane rentOverview = loader.load();
             rootLayout.setCenter(rentOverview);
             RentOverviewController controller = loader.getController();
@@ -208,7 +209,7 @@ public class JavaFxApplication extends Application {
     public void showLevelOverview() throws IOException {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(JavaFxApplication.class.getResource("views/comfortlevelOverview.fxml"));
+            loader.setLocation(JavaFxApplication.class.getResource("controllersFX/comfortlevelOverview.fxml"));
             AnchorPane comfortOverview = loader.load();
             rootLayout.setCenter(comfortOverview);
             ComfortOverviewController controller = loader.getController();

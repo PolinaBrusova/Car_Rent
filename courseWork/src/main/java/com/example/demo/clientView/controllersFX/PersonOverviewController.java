@@ -11,13 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 
@@ -91,7 +85,7 @@ public class PersonOverviewController {
             if (clientIsNotRenting(personTable.getItems().get(selectedIndex))){
                 try {
                     FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(JavaFxApplication.class.getResource("views/requirements.fxml"));
+                    loader.setLocation(JavaFxApplication.class.getResource("controllersFX/requirements.fxml"));
                     AnchorPane page = loader.load();
                     this.main.getPrimaryStage().setTitle("FILLING REQUIREMENTS");
                     Scene scene = new Scene(page);

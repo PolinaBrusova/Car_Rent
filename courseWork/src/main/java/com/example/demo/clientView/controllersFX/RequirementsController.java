@@ -15,7 +15,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.json.JSONArray;
@@ -137,7 +136,7 @@ public class RequirementsController {
                     stage.initModality(Modality.WINDOW_MODAL);
                     stage.initOwner(this.main.getPrimaryStage());
                     FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(JavaFxApplication.class.getResource("views/Choice.fxml"));
+                    loader.setLocation(JavaFxApplication.class.getResource("controllersFX/Choice.fxml"));
                     AnchorPane choice = loader.load();
                     Scene scene = new Scene(choice);
                     stage.setScene(scene);

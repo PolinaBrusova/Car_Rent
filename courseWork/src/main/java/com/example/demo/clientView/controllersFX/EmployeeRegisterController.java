@@ -3,10 +3,7 @@ package com.example.demo.clientView.controllersFX;
 import com.example.demo.clientView.JavaFxApplication;
 import com.example.demo.utils.ConnectionPerfomance;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -14,6 +11,10 @@ import java.io.IOException;
 public class EmployeeRegisterController {
 
     private JavaFxApplication main;
+    @FXML
+    private Label loginLabel;
+    @FXML
+    private Label passLabel;
     @FXML
     private TextField login;
     @FXML
@@ -33,8 +34,12 @@ public class EmployeeRegisterController {
 
     @FXML
     private void initialize() {
+        this.loginLabel.setStyle("-fx-font-family: 'Times New Roman'");
+        this.passLabel.setStyle("-fx-font-family: 'Times New Roman'");
         this.login.setPromptText("Personal Code");
+        this.login.setStyle("-fx-font-family: Didot");
         this.password.setPromptText("Personal Password");
+        this.password.setStyle("-fx-font-family: Didot");
     }
     
     @FXML
@@ -75,14 +80,17 @@ public class EmployeeRegisterController {
                 }
             }else {
                 password.setPromptText("FILL THE PASSWORD");
-                password.setStyle("-fx-prompt-text-fill: red");
+                password.setStyle("-fx-font-family: 'Times New Roman'");
+                password.setStyle("-fx-prompt-text-fill: #800000");
             }
         }else {
             login.setPromptText("FILL THE LOGIN");
-            login.setStyle("-fx-prompt-text-fill: red");
+            login.setStyle("-fx-font-family: 'Times New Roman'");
+            login.setStyle("-fx-prompt-text-fill: #800000");
             if (password.getText().isBlank()){
                 password.setPromptText("FILL THE PASSWORD");
-                password.setStyle("-fx-prompt-text-fill: red");
+                password.setStyle("-fx-font-family: 'Times New Roman'");
+                password.setStyle("-fx-prompt-text-fill: #800000");
             }else{
                 password.setText("");
             }

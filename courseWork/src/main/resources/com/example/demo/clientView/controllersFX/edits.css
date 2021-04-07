@@ -1,0 +1,35 @@
+.text-field{
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #F99D78;
+    -fx-font-size: 12px;
+}
+.label {
+    -fx-text-fill: #D2B48C;
+    -fx-font-family: Didot;
+    -fx-font-size: 12px;
+}
+.button {
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #CD853F 0%, #A0522D 100%),
+            #A0522D,
+            #FFF8DC,
+            radial-gradient(center 50% 50%, radius 100%, #FFF8DC, #FFFACD);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-text-fill: #8B4513;
+}
+.button:hover{
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #CD853F 0%, #A0522D 100%),
+            #A0522D,
+            #FFF8DC,
+            radial-gradient(center 50% 50%, radius 100%, #FFF8DC, #FFFACD);
+}
+.button:pressed {
+    -fx-padding: 10 15 13 15;
+    -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
+}

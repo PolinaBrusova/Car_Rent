@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.clientView.controllersFX.SalesInfoController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@edits.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.clientView.controllersFX.SalesInfoController">
    <children>
       <Button layoutX="501.0" layoutY="359.0" mnemonicParsing="false" onAction="#handleClose" text="Закрыть" />
       <Label contentDisplay="CENTER" layoutX="206.0" layoutY="14.0" prefHeight="27.0" prefWidth="216.0" text="СКИДКИ И ИНФОРМАЦИЯ ПО НИМ" />

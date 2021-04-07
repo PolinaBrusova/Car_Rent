@@ -48,7 +48,7 @@ public class SearchWindowController {
                     if (clientIsNotRenting(client)){
                         try {
                             FXMLLoader loader = new FXMLLoader();
-                            loader.setLocation(JavaFxApplication.class.getResource("views/requirements.fxml"));
+                            loader.setLocation(JavaFxApplication.class.getResource("controllersFX/requirements.fxml"));
                             AnchorPane page = loader.load();
                             this.main.getPrimaryStage().setTitle("FILLING REQUIREMENTS");
                             Scene scene = new Scene(page);

@@ -1,7 +1,6 @@
 package com.example.demo.clientView.controllersFX;
 
 import com.example.demo.ServerSide.models.Car;
-import com.example.demo.ServerSide.models.Client;
 import com.example.demo.clientView.JavaFxApplication;
 import com.example.demo.utils.ConnectionPerfomance;
 import javafx.collections.FXCollections;
@@ -100,7 +99,7 @@ public class CarOverviewController {
                     ObservableList<Car> cars = FXCollections.observableArrayList();
                     cars.add(carTable.getItems().get(selectedIndex));
                     FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(JavaFxApplication.class.getResource("views/PersonForBreakTrough.fxml"));
+                    loader.setLocation(JavaFxApplication.class.getResource("controllersFX/PersonForBreakTrough.fxml"));
                     AnchorPane page = loader.load();
                     Stage searchStage = new Stage();
                     searchStage.setTitle("Choose Person");
@@ -230,7 +229,7 @@ public class CarOverviewController {
         try {
             HashMap<Boolean, Car> dictionary = new HashMap<>();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(JavaFxApplication.class.getResource("views/CarEditDialog.fxml"));
+            loader.setLocation(JavaFxApplication.class.getResource("controllersFX/CarEditDialog.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Edit Car");

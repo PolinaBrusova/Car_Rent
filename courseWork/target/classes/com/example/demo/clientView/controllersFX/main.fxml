@@ -3,11 +3,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.clientView.controllersFX.PersonOverviewController">
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" stylesheets="@overview.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.clientView.controllersFX.PersonOverviewController">
     <children>
-        <SplitPane dividerPositions="0.29797979797979796" layoutX="144.0" layoutY="40.0" prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <SplitPane dividerPositions="0.29797979797979796" layoutX="144.0" layoutY="40.0" prefHeight="300.0" prefWidth="600.0" stylesheets="@overview.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="298.0" prefWidth="339.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="298.0" prefWidth="339.0" stylesheets="@overview.css">
                     <children>
                         <TableView fx:id="personTable" layoutX="-12.0" layoutY="14.0" prefHeight="298.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <columns>
@@ -20,7 +20,7 @@
                         </TableView>
                     </children>
                 </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" stylesheets="@overview.css">
                     <children>
                         <Label layoutX="14.0" layoutY="6.0" text="Информация по клиенту" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
                         <GridPane layoutX="14.0" layoutY="30.0" prefHeight="261.0" prefWidth="395.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="30.0">
@@ -61,4 +61,3 @@
         </SplitPane>
     </children>
 </AnchorPane>
-

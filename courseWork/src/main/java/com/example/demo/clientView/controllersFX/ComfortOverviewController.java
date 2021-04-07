@@ -104,7 +104,7 @@ public class ComfortOverviewController {
         try {
             HashMap<Boolean, ComfortLevel> dictionary = new HashMap<>();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(JavaFxApplication.class.getResource("views/comfortEditDialog.fxml"));
+            loader.setLocation(JavaFxApplication.class.getResource("controllersFX/comfortEditDialog.fxml"));
             AnchorPane page = loader.load();
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Edit Comfort Level");

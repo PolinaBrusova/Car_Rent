@@ -64,7 +64,7 @@ public class PersonForBeakTroughController {
                                 if(client.getExperience()>=cars.get(0).getComfortLevel().getMinExperience()){
                                     try {
                                         FXMLLoader loader = new FXMLLoader();
-                                        loader.setLocation(JavaFxApplication.class.getResource("views/choice.fxml"));
+                                        loader.setLocation(JavaFxApplication.class.getResource("controllersFX/choice.fxml"));
                                         AnchorPane page = loader.load();
                                         this.main.getPrimaryStage().setTitle("FILLING REQUIREMENTS");
                                         Scene scene = new Scene(page);

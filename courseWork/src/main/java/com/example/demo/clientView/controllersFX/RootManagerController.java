@@ -1,6 +1,5 @@
 package com.example.demo.clientView.controllersFX;
 
-import com.example.demo.ServerSide.models.Employee;
 import com.example.demo.clientView.JavaFxApplication;
 import com.example.demo.utils.ConnectionPerfomance;
 import javafx.fxml.FXML;
@@ -41,7 +40,7 @@ public class RootManagerController {
     private void handleSearch(){
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(JavaFxApplication.class.getResource("views/searchStage.fxml"));
+            loader.setLocation(JavaFxApplication.class.getResource("controllersFX/searchStage.fxml"));
             AnchorPane page = loader.load();
             searchStage = new Stage();
             searchStage.setTitle("Search");
@@ -67,7 +66,7 @@ public class RootManagerController {
     private void handleSales(){
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(JavaFxApplication.class.getResource("views/saleInfo.fxml"));
+            loader.setLocation(JavaFxApplication.class.getResource("controllersFX/saleInfo.fxml"));
             AnchorPane page = loader.load();
             Stage salesInfoStage = new Stage();
             salesInfoStage.setTitle("SALES");
@@ -87,7 +86,7 @@ public class RootManagerController {
     private void handleClientReq(){
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(JavaFxApplication.class.getResource("views/clientReq.fxml"));
+            loader.setLocation(JavaFxApplication.class.getResource("controllersFX/clientReq.fxml"));
             AnchorPane page = loader.load();
             Stage clientReqStage= new Stage();
             clientReqStage.setTitle("CLIENT REQUIREMENTS");
