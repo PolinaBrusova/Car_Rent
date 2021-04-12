@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="700" prefWidth="1200" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.clientView.controllersFX.ChoiceController">
+<AnchorPane prefHeight="700" prefWidth="1200" stylesheets="@overview.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.clientView.controllersFX.ChoiceController">
     <children>
         <SplitPane dividerPositions="0.29797979797979796" layoutX="144.0" layoutY="40.0" prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
@@ -58,7 +58,7 @@
                         </GridPane>
                         <HBox layoutX="237.0" layoutY="258.0" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
                             <children>
-                                <Button mnemonicParsing="false" text="Оформить" onAction="#handleSubmitting"/>
+                                <Button mnemonicParsing="false" onAction="#handleSubmitting" text="Оформить" />
                             </children>
                         </HBox>
                   <TitledPane layoutX="336.0" layoutY="28.0" prefHeight="364.0" prefWidth="478.0" text="Информация по клиенту">
@@ -87,8 +87,8 @@
                      <content>
                         <GridPane>
                           <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="285.0" minWidth="10.0" prefWidth="264.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="223.0" minWidth="10.0" prefWidth="191.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -98,16 +98,16 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label text="Количество дней аренды"/>
+                              <Label text="Количество дней аренды" />
                               <Label text="Сумма аренды без скидки" GridPane.rowIndex="1" />
                                <Label text="Скидка к заказу" GridPane.rowIndex="2" />
                                <Label text="Сумма скидки" GridPane.rowIndex="3" />
                                <Label text="Итого к оплате" GridPane.rowIndex="4" />
                               <Label fx:id="daysLabel" text="Label" GridPane.columnIndex="1" />
-                               <Label fx:id="priceLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                               <Label fx:id="saleLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                               <Label fx:id="saleSumLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-                               <Label fx:id="finalLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                               <Label fx:id="priceLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                               <Label fx:id="saleLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                               <Label fx:id="saleSumLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                               <Label fx:id="finalLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                            </children>
                         </GridPane>
                      </content>

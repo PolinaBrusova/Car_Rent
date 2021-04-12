@@ -2,9 +2,11 @@ package com.example.demo.clientView.controllersFX;
 
 import com.example.demo.ServerSide.models.Car;
 import com.example.demo.ServerSide.models.ComfortLevel;
+import com.example.demo.clientView.JavaFxApplication;
 import com.example.demo.utils.ConnectionPerfomance;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.json.JSONObject;
@@ -34,6 +36,7 @@ public class CarEditingController {
     private Stage dialogStage;
     private Car car;
     private boolean okClicked = false;
+    private JavaFxApplication main;
 
     @FXML
     private void initialize() {
@@ -41,6 +44,10 @@ public class CarEditingController {
 
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
+    }
+
+    public void setMain(JavaFxApplication main) {
+        this.main = main;
     }
 
     public void setCar(Car car) {
@@ -67,25 +74,44 @@ public class CarEditingController {
     public Car getCar() {return car;}
 
     @FXML
-    private void handleOk() throws IOException {
-        if (isInputValid()) {
-            car.setBrand(brandField.getText());
-            car.setCarcase(carcaseField.getText());
-            car.setColor(colorField.getText());
-            car.setDoorNumber(Integer.parseInt(doorField.getText()));
-            car.setGearbox(gearField.getText());
-            car.setReleaseYear(Integer.parseInt(releaseField.getText()));
-            car.setSeats(Integer.parseInt(seatsField.getText()));
-            JSONObject jsonObject = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/getComfortLevel/", comfortField.getText(), "ComfortLevel");
-            ComfortLevel comfortLevel = new ComfortLevel();
-            comfortLevel.setId(jsonObject.getString("id"));
-            comfortLevel.setLevel(jsonObject.getString("level"));
-            comfortLevel.setDeposit(jsonObject.getLong("deposit"));
-            comfortLevel.setRentPrice(jsonObject.getLong("rentPrice"));
-            comfortLevel.setMinExperience(jsonObject.getInt("minExperience"));
-            car.setComfortLevel(comfortLevel);
-            okClicked = true;
-            dialogStage.close();
+    private void handleOk(){
+        try {
+            if (isInputValid()) {
+                car.setBrand(brandField.getText());
+                car.setCarcase(carcaseField.getText());
+                car.setColor(colorField.getText());
+                car.setDoorNumber(Integer.parseInt(doorField.getText()));
+                car.setGearbox(gearField.getText());
+                car.setReleaseYear(Integer.parseInt(releaseField.getText()));
+                car.setSeats(Integer.parseInt(seatsField.getText()));
+                JSONObject jsonObject = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/getComfortLevel/", comfortField.getText(), "ComfortLevel");
+                ComfortLevel comfortLevel = new ComfortLevel();
+                comfortLevel.setId(jsonObject.getString("id"));
+                comfortLevel.setLevel(jsonObject.getString("level"));
+                comfortLevel.setDeposit(jsonObject.getLong("deposit"));
+                comfortLevel.setRentPrice(jsonObject.getLong("rentPrice"));
+                comfortLevel.setMinExperience(jsonObject.getInt("minExperience"));
+                car.setComfortLevel(comfortLevel);
+                okClicked = true;
+                dialogStage.close();
+            }
+        }catch (java.net.ConnectException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initOwner(this.dialogStage);
+            alert.setTitle("No connection");
+            alert.setHeaderText("Not established connection with the server");
+            alert.setContentText("Connection with the server was not established. try again later. Halting th system...");
+            ButtonType answer = alert.showAndWait().orElse(ButtonType.OK);
+            if (ButtonType.OK.equals(answer)) {
+                try {
+                    this.dialogStage.close();
+                    this.main.stop();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }catch (IOException e){
+            e.printStackTrace();
         }
     }
 
@@ -94,7 +120,7 @@ public class CarEditingController {
         dialogStage.close();
     }
 
-    private boolean isInputValid() throws IOException {
+    private boolean isInputValid(){
         String errorMessage = "";
 
         if (brandField.getText() == null || brandField.getText().length() == 0) {
@@ -126,9 +152,28 @@ public class CarEditingController {
         if (comfortField.getText() == null || comfortField.getText().length() == 0 ){
             errorMessage += "No valid comfort level!\n";
         }else{
-            JSONObject jsonObject = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/getComfortLevel/", comfortField.getText(), "ComfortLevel");
-            if (jsonObject.isEmpty()){
-                errorMessage += "No valid comfort level!\n";
+            try {
+                JSONObject jsonObject = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/getComfortLevel/", comfortField.getText(), "ComfortLevel");
+                if (jsonObject.isEmpty()) {
+                    errorMessage += "No valid comfort level!\n";
+                }
+            }catch (java.net.ConnectException e){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.initOwner(this.dialogStage);
+                alert.setTitle("No connection");
+                alert.setHeaderText("Not established connection with the server");
+                alert.setContentText("Connection with the server was not established. try again later. Halting th system...");
+                ButtonType answer = alert.showAndWait().orElse(ButtonType.OK);
+                if (ButtonType.OK.equals(answer)) {
+                    try {
+                        this.dialogStage.close();
+                        this.main.stop();
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+                }
+            }catch (IOException e){
+                e.printStackTrace();
             }
         }
 

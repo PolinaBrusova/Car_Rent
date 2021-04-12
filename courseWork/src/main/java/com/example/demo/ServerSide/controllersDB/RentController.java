@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -37,7 +39,7 @@ public class RentController {
     @PostMapping("/addRent")
     Rent createRent(@RequestBody String lineRent) {
         Rent rent = new Rent();
-        JSONObject rawRent = new JSONObject(lineRent);
+        JSONObject rawRent = new JSONObject(URLDecoder.decode(lineRent, StandardCharsets.UTF_8));
         rent.setStartDate(DateUtil.parse(rawRent.getString("startDate")));
         rent.setEndDate(DateUtil.parse(rawRent.getString("endDate")));
         rent.setTotalSumm(rawRent.getFloat("totalSum"));

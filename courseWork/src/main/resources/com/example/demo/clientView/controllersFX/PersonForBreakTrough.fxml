@@ -4,11 +4,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="280.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.clientView.controllersFX.PersonForBeakTroughController">
-    <children><GridPane layoutX="22.0" layoutY="42.0" prefHeight="168.0" prefWidth="343.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="42.0">
+<AnchorPane prefHeight="280.0" prefWidth="380.0" stylesheets="@pop_ups.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.clientView.controllersFX.PersonForBeakTroughController">
+    <children><GridPane layoutX="5.0" layoutY="57.0" prefHeight="172.0" prefWidth="495.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="57.0">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="175.0" minWidth="10.0" prefWidth="158.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="241.0" minWidth="10.0" prefWidth="185.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="298.0" minWidth="10.0" prefWidth="285.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="241.0" minWidth="10.0" prefWidth="209.0" />
         </columnConstraints>
         <rowConstraints>
             <RowConstraints maxHeight="97.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
@@ -19,16 +19,16 @@
             <Label text="    Номер:" />
             <Label text="    Дата начала аренды:" GridPane.rowIndex="1" />
             <Label text="    Дата окончания аренды:" GridPane.rowIndex="2" />
-            <TextField fx:id="phoneField" prefHeight="28.0" prefWidth="275.0" GridPane.columnIndex="1" />
+            <TextField fx:id="phoneField" prefHeight="35.0" prefWidth="299.0" GridPane.columnIndex="1" />
             <DatePicker fx:id="startDate" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <DatePicker fx:id="endDate" GridPane.columnIndex="1" GridPane.rowIndex="2" />
         </children>
     </GridPane>
         <HBox layoutX="197.1875" layoutY="241.0" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-        <Button layoutX="290.0" layoutY="231.0" mnemonicParsing="false" onAction="#handleSearch" prefHeight="27.0" prefWidth="62.0" text="Найти" textFill="#d34e15">
+        <Button layoutX="290.0" layoutY="231.0" mnemonicParsing="false" onAction="#handleSearch" prefHeight="41.0" prefWidth="209.0" text="Найти" textFill="#d34e15">
             <font>
                 <Font size="14.0" />
             </font>
         </Button>
-      <Label layoutX="60.0" layoutY="14.0" text="Необходимо выбрать клиента и даты аренды" />
+      <Label layoutX="38.0" layoutY="14.0" text="Необходимо выбрать клиента и даты аренды" />
     </children></AnchorPane>

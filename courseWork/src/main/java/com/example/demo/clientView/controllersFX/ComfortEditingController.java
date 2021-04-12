@@ -1,17 +1,11 @@
 package com.example.demo.clientView.controllersFX;
 
-import com.example.demo.ServerSide.models.Car;
 import com.example.demo.ServerSide.models.ComfortLevel;
-import com.example.demo.utils.ConnectionPerfomance;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.Calendar;
 
 public class ComfortEditingController {
     @FXML
@@ -54,7 +48,7 @@ public class ComfortEditingController {
     public ComfortLevel getLevel() {return comfortLevel;}
 
     @FXML
-    private void handleOk() throws IOException {
+    private void handleOk(){
         if (isInputValid()) {
             comfortLevel.setLevel(mainField.getText());
             comfortLevel.setDeposit(Long.parseLong(depositField.getText()));
@@ -70,7 +64,7 @@ public class ComfortEditingController {
         dialogStage.close();
     }
 
-    private boolean isInputValid() throws IOException {
+    private boolean isInputValid(){
         String errorMessage = "";
 
         if (mainField.getText() == null || mainField.getText().length() == 0) {

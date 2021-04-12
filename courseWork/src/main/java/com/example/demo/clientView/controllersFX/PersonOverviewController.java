@@ -12,6 +12,8 @@ import javafx.scene.layout.AnchorPane;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 
@@ -54,7 +56,7 @@ public class PersonOverviewController {
     }
 
     @FXML
-    private void handleDeletePerson() throws IOException {
+    private void handleDeletePerson(){
         int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -64,46 +66,58 @@ public class PersonOverviewController {
             alert.setContentText("Are you sure if you want to delete this client?");
             ButtonType answer = alert.showAndWait().orElse(ButtonType.OK);
             if (answer.equals(ButtonType.OK)){
-                ConnectionPerfomance.excecuteDELETE("http://localhost:9090/api/tests/deleteClient="+personTable.getItems().get(selectedIndex).getId());
-                this.main.showPersonOverview();
-            }
-        }
-        else{
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.initOwner(main.getPrimaryStage());
-            alert.setTitle("No selection");
-            alert.setHeaderText("No Person selection");
-            alert.setContentText("Please, select person in the table");
-            alert.showAndWait();
-        }
-    }
-
-    @FXML
-    private void handleBreakThrough() throws IOException {
-        int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
-        if (selectedIndex >= 0){
-            if (clientIsNotRenting(personTable.getItems().get(selectedIndex))){
                 try {
-                    FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(JavaFxApplication.class.getResource("controllersFX/requirements.fxml"));
-                    AnchorPane page = loader.load();
-                    this.main.getPrimaryStage().setTitle("FILLING REQUIREMENTS");
-                    Scene scene = new Scene(page);
-                    this.main.getPrimaryStage().setScene(scene);
-                    RequirementsController controller = loader.getController();
-                    controller.setStage(this.main.getPrimaryStage());
-                    controller.setPerson(personTable.getItems().get(selectedIndex));
-                    controller.setMain(this.main);
-                } catch (IOException e) {
+                    ConnectionPerfomance.excecuteDELETE("http://localhost:9090/api/tests/deleteClient=" + personTable.getItems().get(selectedIndex).getId());
+                    this.main.showPersonOverview();
+                }catch (java.net.ConnectException e){
+                    this.main.handleNoConnection();
+                }catch (IOException e){
                     e.printStackTrace();
                 }
-            }else{
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.initOwner(main.getPrimaryStage());
-                alert.setTitle("Клиент уже арендует");
-                alert.setHeaderText("Клиент на данные даты уже арендует машину");
-                alert.setContentText("Клиент арендует машину. Клиент должен прийти после окончания аренды.");
-                alert.showAndWait();
+            }
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(main.getPrimaryStage());
+            alert.setTitle("No selection");
+            alert.setHeaderText("No Person selection");
+            alert.setContentText("Please, select person in the table");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    private void handleBreakThrough(){
+        int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0){
+            try {
+                if (clientIsNotRenting(personTable.getItems().get(selectedIndex))) {
+                    try {
+                        FXMLLoader loader = new FXMLLoader();
+                        loader.setLocation(JavaFxApplication.class.getResource("controllersFX/requirements.fxml"));
+                        AnchorPane page = loader.load();
+                        this.main.getPrimaryStage().setTitle("FILLING REQUIREMENTS");
+                        Scene scene = new Scene(page);
+                        this.main.getPrimaryStage().setScene(scene);
+                        RequirementsController controller = loader.getController();
+                        controller.setStage(this.main.getPrimaryStage());
+                        controller.setPerson(personTable.getItems().get(selectedIndex));
+                        controller.setMain(this.main);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.initOwner(main.getPrimaryStage());
+                    alert.setTitle("Клиент уже арендует");
+                    alert.setHeaderText("Клиент на данные даты уже арендует машину");
+                    alert.setContentText("Клиент арендует машину. Клиент должен прийти после окончания аренды.");
+                    alert.showAndWait();
+                }
+            }catch (java.net.ConnectException e){
+                this.main.handleNoConnection();
+            }catch (IOException e){
+                e.printStackTrace();
             }
 
         }
@@ -118,7 +132,7 @@ public class PersonOverviewController {
     }
 
     @FXML
-    private void handleEditPerson() throws IOException {
+    private void handleEditPerson(){
         Client selectedPerson = personTable.getSelectionModel().getSelectedItem();
         if (selectedPerson != null) {
             HashMap<Boolean, Client> answer = main.showPersonEditDialog(selectedPerson);
@@ -132,9 +146,15 @@ public class PersonOverviewController {
                 jsonObject.put("phoneNumber", client.getPhoneNumber());
                 jsonObject.put("passport", client.getPassport());
                 jsonObject.put("liscenceDate", client.getLiscenceDate());
-                ConnectionPerfomance.excecutePUT("http://localhost:9090/api/tests/updateClient", jsonObject);
-                this.main.showPersonOverview();
-                showPersonsOverviewDetails(client);
+                try {
+                    ConnectionPerfomance.excecutePUT("http://localhost:9090/api/tests/updateClient", jsonObject);
+                    this.main.showPersonOverview();
+                    showPersonsOverviewDetails(client);
+                }catch (java.net.ConnectException e){
+                    this.main.handleNoConnection();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -148,20 +168,26 @@ public class PersonOverviewController {
     }
 
     @FXML
-    private void handleNewPerson() throws IOException {
+    private void handleNewPerson(){
         Client tempPerson = new Client();
         HashMap<Boolean, Client> answer = main.showPersonEditDialog(tempPerson);
         boolean okClicked = (boolean) answer.keySet().toArray()[0];
         Client client = answer.get(okClicked);
         if (okClicked) {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("firstName", client.getFirstName());
-            jsonObject.put("lastName", client.getLastName());
-            jsonObject.put("phoneNumber", client.getPhoneNumber());
-            jsonObject.put("passport", client.getPassport());
-            jsonObject.put("liscenceDate", client.getLiscenceDate());
-            ConnectionPerfomance.excecutePost("http://localhost:9090/api/tests/addClient", jsonObject);
-            this.main.showPersonOverview();
+            jsonObject.put("firstName", URLEncoder.encode(client.getFirstName(), StandardCharsets.UTF_8));
+            jsonObject.put("lastName", URLEncoder.encode(client.getLastName(), StandardCharsets.UTF_8));
+            jsonObject.put("phoneNumber", URLEncoder.encode(client.getPhoneNumber(), StandardCharsets.UTF_8));
+            jsonObject.put("passport", URLEncoder.encode(client.getPassport(), StandardCharsets.UTF_8));
+            jsonObject.put("liscenceDate", URLEncoder.encode(client.getLiscenceDate(), StandardCharsets.UTF_8));
+            try {
+                ConnectionPerfomance.excecutePost("http://localhost:9090/api/tests/addClient", jsonObject);
+                this.main.showPersonOverview();
+            }catch (java.net.ConnectException e){
+                this.main.handleNoConnection();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
         }
     }
 
@@ -182,7 +208,7 @@ public class PersonOverviewController {
         }
     }
 
-    private boolean clientIsNotRenting(Client client) throws IOException {
-        return ConnectionPerfomance.excecuteValidation("http://localhost:9090/api/tests/Client="+client.getId()+"/isRenting").matches("true");
+    private boolean clientIsNotRenting(Client client) throws IOException{
+        return ConnectionPerfomance.excecuteValidation("http://localhost:9090/api/tests/Client=" + client.getId() + "/isRenting").matches("true");
     }
 }

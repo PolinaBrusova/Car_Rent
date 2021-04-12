@@ -16,6 +16,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 public class ComfortOverviewController {
@@ -49,37 +52,43 @@ public class ComfortOverviewController {
         ); //при изменении слушатель изменит данные на новые из таблицы
 
     }
-    public void setMain(JavaFxApplication main) throws IOException {
+    public void setMain(JavaFxApplication main){
         this.main = main;
         comfortTable.setItems(getLevels());
     }
 
     @FXML
-    private void handleEditLevel() throws IOException {
-        ComfortLevel selectedLevel = comfortTable.getSelectionModel().getSelectedItem();
-        if (selectedLevel != null) {
-            HashMap<Boolean, ComfortLevel> answer = showComfortEditDialog(selectedLevel);
-            boolean okClicked = (boolean) answer.keySet().toArray()[0];
-            ComfortLevel comfortLevel = answer.get(okClicked);
-            if (okClicked) {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("id", comfortLevel.getId());
-                jsonObject.put("level", comfortLevel.getLevel());
-                jsonObject.put("deposit", comfortLevel.getDeposit());
-                jsonObject.put("rentPrice", comfortLevel.getRentPrice());
-                jsonObject.put("minExperience", comfortLevel.getMinExperience());
-                ConnectionPerfomance.excecutePUT("http://localhost:9090/api/tests/updateComfortLevel", jsonObject);
-                this.main.showCarOwerview();
-                showComfortOverviewDetails(comfortLevel);
-            }
-        } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.initOwner(main.getPrimaryStage());
-            alert.setTitle("No Selection");
-            alert.setHeaderText("No comfort level Selected");
-            alert.setContentText("Please select a comfort level in the table.");
+    private void handleEditLevel(){
+        try {
+            ComfortLevel selectedLevel = comfortTable.getSelectionModel().getSelectedItem();
+            if (selectedLevel != null) {
+                HashMap<Boolean, ComfortLevel> answer = showComfortEditDialog(selectedLevel);
+                boolean okClicked = (boolean) answer.keySet().toArray()[0];
+                ComfortLevel comfortLevel = answer.get(okClicked);
+                if (okClicked) {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("id", comfortLevel.getId());
+                    jsonObject.put("level", URLEncoder.encode(comfortLevel.getLevel(), StandardCharsets.UTF_8));
+                    jsonObject.put("deposit", comfortLevel.getDeposit());
+                    jsonObject.put("rentPrice", comfortLevel.getRentPrice());
+                    jsonObject.put("minExperience", comfortLevel.getMinExperience());
+                    ConnectionPerfomance.excecutePUT("http://localhost:9090/api/tests/updateComfortLevel", jsonObject);
+                    this.main.showCarOwerview();
+                    showComfortOverviewDetails(comfortLevel);
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.initOwner(main.getPrimaryStage());
+                alert.setTitle("No Selection");
+                alert.setHeaderText("No comfort level Selected");
+                alert.setContentText("Please select a comfort level in the table.");
 
-            alert.showAndWait();
+                alert.showAndWait();
+            }
+        }catch (java.net.ConnectException e){
+            this.main.handleNoConnection();
+        }catch (IOException e){
+            e.printStackTrace();
         }
     }
 
@@ -126,19 +135,27 @@ public class ComfortOverviewController {
         }
     }
 
-    public ObservableList<ComfortLevel> getLevels() throws IOException {
-        ObservableList<ComfortLevel> levels = FXCollections.observableArrayList();
-        JSONArray jsonArray = ConnectionPerfomance.excecuteManyGET("http://localhost:9090/api/tests/AllComfortLevels");
-        for (int i=0; i< jsonArray.length(); i++){
-            ComfortLevel comfortLevel = new ComfortLevel();
-            comfortLevel.setId(jsonArray.getJSONObject(i).get("id").toString());
-            comfortLevel.setLevel(jsonArray.getJSONObject(i).get("level").toString());
-            comfortLevel.setDeposit(Long.parseLong(jsonArray.getJSONObject(i).get("deposit").toString()));
-            comfortLevel.setRentPrice(Long.parseLong(jsonArray.getJSONObject(i).get("rentPrice").toString()));
-            comfortLevel.setMinExperience(Integer.parseInt(jsonArray.getJSONObject(i).get("minExperience").toString()));
-            levels.add(comfortLevel);
+    public ObservableList<ComfortLevel> getLevels(){
+        try {
+            ObservableList<ComfortLevel> levels = FXCollections.observableArrayList();
+            JSONArray jsonArray = ConnectionPerfomance.excecuteManyGET("http://localhost:9090/api/tests/AllComfortLevels");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                ComfortLevel comfortLevel = new ComfortLevel();
+                comfortLevel.setId(jsonArray.getJSONObject(i).get("id").toString());
+                comfortLevel.setLevel(URLDecoder.decode(jsonArray.getJSONObject(i).get("level").toString(), StandardCharsets.UTF_8));
+                comfortLevel.setDeposit(Long.parseLong(jsonArray.getJSONObject(i).get("deposit").toString()));
+                comfortLevel.setRentPrice(Long.parseLong(jsonArray.getJSONObject(i).get("rentPrice").toString()));
+                comfortLevel.setMinExperience(Integer.parseInt(jsonArray.getJSONObject(i).get("minExperience").toString()));
+                levels.add(comfortLevel);
+            }
+            return levels;
+        }catch (java.net.ConnectException e){
+            this.main.handleNoConnection();
+            return null;
+        }catch (IOException e){
+            e.printStackTrace();
+            return null;
         }
-        return levels;
     }
 
 }

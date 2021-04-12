@@ -4,24 +4,14 @@ import com.example.demo.ServerSide.models.*;
 import com.example.demo.clientView.JavaFxApplication;
 import com.example.demo.utils.ConnectionPerfomance;
 import com.example.demo.utils.DateUtil;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDate;
-import java.util.HashMap;
 
 public class ChoiceController {
     @FXML
@@ -111,7 +101,7 @@ public class ChoiceController {
         this.start = start;
     }
 
-    public void setClient(Client client) throws IOException {
+    public void setClient(Client client){
         this.client = client;
         this.FirstNameLabel.setText(client.getFirstName());
         this.LastNameLabel.setText(client.getLastName());
@@ -151,19 +141,26 @@ public class ChoiceController {
         }
     }
 
-    private void setSales() throws IOException {
-        JSONObject discountBody = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/discount_for_client=", String.valueOf(this.client.getId()), "discount");
-        Discount discount = new Discount();
-        discount.setId(discountBody.getString("id"));
-        discount.setPercent(discountBody.getFloat("percent"));
-        this.discount = discount;
-        this.saleLabel.setText(discount.getId());
+    private void setSales(){
+        try {
+            JSONObject discountBody = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/discount_for_client=", String.valueOf(this.client.getId()), "discount");
+            Discount discount = new Discount();
+            discount.setId(discountBody.getString("id"));
+            discount.setPercent(discountBody.getFloat("percent"));
+            this.discount = discount;
+            this.saleLabel.setText(discount.getId());
+        }catch (java.net.ConnectException e){
+            this.stage.close();
+            this.main.handleNoConnection();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     @FXML
-    private void handleSubmitting() throws IOException {
+    private void handleSubmitting(){
         if (carTable.getSelectionModel().getSelectedIndex()>-1){
-            try{
+            try {
                 JSONObject rent = new JSONObject();
                 rent.put("startDate", start);
                 rent.put("endDate", end);
@@ -179,11 +176,16 @@ public class ChoiceController {
                 alert.setHeaderText("Аренда успешно оформлена");
                 alert.setContentText("Аренда внесена в базу");
                 ButtonType answer = alert.showAndWait().orElse(ButtonType.OK);
-                if (answer.equals(ButtonType.OK)){
+                if (answer.equals(ButtonType.OK)) {
                     this.stage.close();
                     this.main.initRootLayout();
                     this.main.showRentOwerview();
                 }
+            }catch (java.net.ConnectException e){
+                this.stage.close();
+                this.main.handleNoConnection();
+            }catch (IOException e){
+                e.printStackTrace();
             }catch (Exception e){
                 e.printStackTrace();
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -205,11 +207,20 @@ public class ChoiceController {
 
     }
 
-    private JSONObject fillEmployee() throws IOException {
-        JSONObject rawEmployee = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/getEmployee=", String.valueOf(main.getEmployeeId()), "Employee");
-        rawEmployee.put("department", ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/departmentById=", String.valueOf(main.getEmployeeId()), "Department"));
-        rawEmployee.put("position", ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/positionById=", String.valueOf(main.getEmployeeId()), "Position"));
-        return rawEmployee;
+    private JSONObject fillEmployee(){
+        try {
+            JSONObject rawEmployee = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/getEmployee=", String.valueOf(main.getEmployeeId()), "Employee");
+            rawEmployee.put("department", ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/departmentById=", String.valueOf(main.getEmployeeId()), "Department"));
+            rawEmployee.put("position", ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/positionById=", String.valueOf(main.getEmployeeId()), "Position"));
+            return rawEmployee;
+        }catch (java.net.ConnectException e){
+            this.stage.close();
+            this.main.handleNoConnection();
+            return null;
+        }catch (IOException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private JSONObject fillDiscount(){

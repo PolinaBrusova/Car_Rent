@@ -25,7 +25,7 @@ public class ConnectionPerfomance {
         httpURLConnection.setDoOutput(true);
         System.out.println(jsonObject);
         try(OutputStream os = httpURLConnection.getOutputStream()) {
-            byte[] input =  URLEncoder.encode(jsonObject.toString(), StandardCharsets.UTF_8).getBytes(StandardCharsets.UTF_8);
+            byte[] input =  jsonObject.toString().getBytes(StandardCharsets.UTF_8);
             os.write(input, 0, input.length);
         }
         try(BufferedReader br = new BufferedReader(
@@ -82,15 +82,12 @@ public class ConnectionPerfomance {
         URL url = new URL(link);
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
         httpURLConnection.setRequestMethod("GET");
-        try (var reader = new BufferedReader(
-                new InputStreamReader(httpURLConnection.getInputStream()))) {
-            for (String line; (line = reader.readLine()) != null; ) {
+        var reader = new BufferedReader(
+                new InputStreamReader(httpURLConnection.getInputStream()));
+        for (String line; (line = reader.readLine()) != null; ) {
                 result.append(line);
             }
-            return result.toString();
-        }catch (Exception e){
-            return "exception";
-        }
+        return result.toString();
     }
 
     public static void excecuteDELETE(String link) throws IOException {

@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="700" prefWidth="1200" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.clientView.controllersFX.RequirementsController">
+<AnchorPane prefHeight="700" prefWidth="1200" stylesheets="@overview.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.clientView.controllersFX.RequirementsController">
    <children>
       <SplitPane dividerPositions="0.3235294117647059" layoutX="14.0" layoutY="7.0" prefHeight="386.0" prefWidth="580.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -41,13 +41,13 @@
                    <Label layoutX="122.0" layoutY="258.0" text="Количество мест" AnchorPane.leftAnchor="165.0" />
                    <Label layoutX="127.0" layoutY="341.0" text="Уровень комфорта" AnchorPane.leftAnchor="165.0" />
                    <Label layoutX="200.0" layoutY="425.0" text="Дата начала аренды" AnchorPane.leftAnchor="165.0" />
-                   <Label layoutX="200.0" layoutY="513.0" text="Дата завершения аренды" AnchorPane.leftAnchor="165.0"/>
+                   <Label layoutX="200.0" layoutY="513.0" text="Дата завершения аренды" AnchorPane.leftAnchor="165.0" />
                    <ComboBox fx:id="cb1" layoutX="486.0" layoutY="74.0" prefWidth="150.0" AnchorPane.rightAnchor="170.0" />
                    <ComboBox fx:id="cb2" layoutX="486.0" layoutY="160.0" prefWidth="150.0" AnchorPane.rightAnchor="170.0" />
                    <ComboBox fx:id="cb3" layoutX="486.0" layoutY="253.0" prefWidth="150.0" AnchorPane.rightAnchor="170.0" />
                    <ComboBox fx:id="cb4" layoutX="486.0" layoutY="336.0" prefWidth="150.0" AnchorPane.rightAnchor="170.0" />
-                  <DatePicker fx:id="startDatePicker" layoutX="487.0" layoutY="420.0" editable="false"/>
-                  <DatePicker fx:id="endDatePicker" layoutX="487.0" layoutY="508.0" editable="false"/>
+                  <DatePicker fx:id="startDatePicker" editable="false" layoutX="487.0" layoutY="420.0" />
+                  <DatePicker fx:id="endDatePicker" editable="false" layoutX="487.0" layoutY="508.0" />
 
                </children></AnchorPane>
         </items>

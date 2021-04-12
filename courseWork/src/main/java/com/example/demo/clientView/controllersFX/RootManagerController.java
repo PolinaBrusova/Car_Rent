@@ -5,6 +5,8 @@ import com.example.demo.utils.ConnectionPerfomance;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -103,12 +105,12 @@ public class RootManagerController {
     }
 
     @FXML
-    private void handleCars() throws IOException {
+    private void handleCars(){
         main.showCarOwerview();
     }
 
     @FXML
-    private void handleRents() throws IOException {
+    private void handleRents(){
         main.showRentOwerview();
     }
 
@@ -118,7 +120,7 @@ public class RootManagerController {
     }
 
     @FXML
-    private void handleLevels() throws IOException {
+    private void handleLevels(){
         main.showLevelOverview();
     }
 
@@ -133,9 +135,10 @@ public class RootManagerController {
             JSONObject jsonObject = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/getEmployee=", String.valueOf(main.getEmployeeId()), "Employee");
             JSONObject jsonObject1 = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/positionById=",  String.valueOf(jsonObject.getLong("id")),"Position");
             this.emplInfo.setText(jsonObject.getString("firstName")+" "+jsonObject.getString("lastName")+", "+jsonObject1.getString("name"));
-        }catch (Exception e){
+        }catch (java.net.ConnectException e){
+            this.main.handleNoConnection();
+        }catch (IOException e){
             e.printStackTrace();
-
         }
     }
 }

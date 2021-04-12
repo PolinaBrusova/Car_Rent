@@ -7,17 +7,13 @@ import com.example.demo.utils.DateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 public class RentOverviewController {
     @FXML
@@ -61,30 +57,38 @@ public class RentOverviewController {
         ); //при изменении слушатель изменит данные на новые из таблицы
 
     }
-    public void setMain(JavaFxApplication main) throws IOException {
+    public void setMain(JavaFxApplication main){
         this.main = main;
         rentTable.setItems(getAllRents());
     }
 
-    private ObservableList<Rent> getAllRents() throws IOException {
-        ObservableList<Rent> rents = FXCollections.observableArrayList();
-        JSONArray rawRents = ConnectionPerfomance.excecuteManyGET("http://localhost:9090/api/tests/AllRents");
-        for (int i=0; i<rawRents.length(); i++){
-            Rent rent = new Rent();
-            JSONObject rawRent = rawRents.getJSONObject(i);
-            rent.setId(rawRent.getLong("id"));
-            rent.setEndDate(DateUtil.parse(rawRent.getString("endDate")));
-            rent.setStartDate(DateUtil.parse(rawRent.getString("startDate")));
-            rent.setTotalSumm(rawRent.getFloat("totalSumm"));
-            JSONObject rawCar = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/CarByRentId=", String.valueOf(rent.getId()), "Car");
-            rent.setCar(fillCar(rawCar));
-            JSONObject rawClient = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/ClientByRentId=", String.valueOf(rent.getId()), "Client");
-            rent.setClient(fillClient(rawClient));
-            JSONObject rawDiscount = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/DiscountByRentId=", String.valueOf(rent.getId()), "Discount");
-            rent.setDiscount(fillDiscount(rawDiscount));
-            rents.add(rent);
+    private ObservableList<Rent> getAllRents(){
+        try {
+            ObservableList<Rent> rents = FXCollections.observableArrayList();
+            JSONArray rawRents = ConnectionPerfomance.excecuteManyGET("http://localhost:9090/api/tests/AllRents");
+            for (int i = 0; i < rawRents.length(); i++) {
+                Rent rent = new Rent();
+                JSONObject rawRent = rawRents.getJSONObject(i);
+                rent.setId(rawRent.getLong("id"));
+                rent.setEndDate(DateUtil.parse(rawRent.getString("endDate")));
+                rent.setStartDate(DateUtil.parse(rawRent.getString("startDate")));
+                rent.setTotalSumm(rawRent.getFloat("totalSumm"));
+                JSONObject rawCar = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/CarByRentId=", String.valueOf(rent.getId()), "Car");
+                rent.setCar(fillCar(rawCar));
+                JSONObject rawClient = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/ClientByRentId=", String.valueOf(rent.getId()), "Client");
+                rent.setClient(fillClient(rawClient));
+                JSONObject rawDiscount = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/DiscountByRentId=", String.valueOf(rent.getId()), "Discount");
+                rent.setDiscount(fillDiscount(rawDiscount));
+                rents.add(rent);
+            }
+            return rents;
+        }catch (java.net.ConnectException e){
+            this.main.handleNoConnection();
+            return null;
+        }catch (IOException e){
+            e.printStackTrace();
+            return null;
         }
-        return  rents;
     }
 
     private void showRentOverviewDetails(Rent rent){
@@ -112,35 +116,43 @@ public class RentOverviewController {
         }
     }
 
-    private Car fillCar(JSONObject rawCar) throws IOException {
-        Car car = new Car();
-        car.setId(rawCar.getLong("id"));
-        car.setBrand(rawCar.getString("brand"));
-        car.setCarcase(rawCar.getString("carcase"));
-        car.setGearbox(rawCar.getString("gearbox"));
-        car.setDoorNumber(rawCar.getInt("doorNumber"));
-        car.setSeats(rawCar.getInt("seats"));
-        car.setReleaseYear(rawCar.getInt("releaseYear"));
-        car.setColor(rawCar.getString("color"));
-        car.setAvailable(rawCar.getBoolean("available"));
-        JSONObject comf_lvl = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/LevelByCarId=", String.valueOf(rawCar.getLong("id")), "ComfortLevel");
-        ComfortLevel comfortLevel = new ComfortLevel();
-        comfortLevel.setId(comf_lvl.get("id").toString());
-        comfortLevel.setLevel(comf_lvl.get("level").toString());
-        comfortLevel.setDeposit(Long.parseLong(comf_lvl.get("deposit").toString()));
-        comfortLevel.setRentPrice(Long.parseLong(comf_lvl.get("rentPrice").toString()));
-        comfortLevel.setMinExperience(Integer.parseInt(comf_lvl.get("minExperience").toString()));
-        car.setComfortLevel(comfortLevel);
-        return car;
+    private Car fillCar(JSONObject rawCar){
+        try {
+            Car car = new Car();
+            car.setId(rawCar.getLong("id"));
+            car.setBrand(URLDecoder.decode(rawCar.getString("brand"), StandardCharsets.UTF_8));
+            car.setCarcase(URLDecoder.decode(rawCar.getString("carcase"), StandardCharsets.UTF_8));
+            car.setGearbox(URLDecoder.decode(rawCar.getString("gearbox"), StandardCharsets.UTF_8));
+            car.setDoorNumber(rawCar.getInt("doorNumber"));
+            car.setSeats(rawCar.getInt("seats"));
+            car.setReleaseYear(rawCar.getInt("releaseYear"));
+            car.setColor(URLDecoder.decode(rawCar.getString("color"), StandardCharsets.UTF_8));
+            car.setAvailable(rawCar.getBoolean("available"));
+            JSONObject comf_lvl = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/LevelByCarId=", String.valueOf(rawCar.getLong("id")), "ComfortLevel");
+            ComfortLevel comfortLevel = new ComfortLevel();
+            comfortLevel.setId(comf_lvl.get("id").toString());
+            comfortLevel.setLevel(URLDecoder.decode(comf_lvl.get("level").toString(), StandardCharsets.UTF_8));
+            comfortLevel.setDeposit(Long.parseLong(comf_lvl.get("deposit").toString()));
+            comfortLevel.setRentPrice(Long.parseLong(comf_lvl.get("rentPrice").toString()));
+            comfortLevel.setMinExperience(Integer.parseInt(comf_lvl.get("minExperience").toString()));
+            car.setComfortLevel(comfortLevel);
+            return car;
+        }catch (java.net.ConnectException e){
+            this.main.handleNoConnection();
+            return null;
+        }catch (IOException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private Client fillClient(JSONObject rawClient){
         Client client = new Client();
         client.setId(rawClient.getLong("id"));
-        client.setFirstName(rawClient.getString("firstName"));
-        client.setLastName(rawClient.getString("lastName"));
-        client.setPassport(rawClient.getString("passport"));
-        client.setPhoneNumber(rawClient.getString("phoneNumber"));
+        client.setFirstName(URLDecoder.decode(rawClient.getString("firstName"), StandardCharsets.UTF_8));
+        client.setLastName(URLDecoder.decode(rawClient.getString("lastName"), StandardCharsets.UTF_8));
+        client.setPassport(URLDecoder.decode(rawClient.getString("passport"), StandardCharsets.UTF_8));
+        client.setPhoneNumber(URLDecoder.decode(rawClient.getString("phoneNumber"), StandardCharsets.UTF_8));
         client.setLiscenceDate(rawClient.getString("liscenceDate"));
         return client;
     }
