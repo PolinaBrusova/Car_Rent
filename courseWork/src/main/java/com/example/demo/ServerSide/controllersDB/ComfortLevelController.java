@@ -1,6 +1,5 @@
 package com.example.demo.ServerSide.controllersDB;
 
-import com.example.demo.ServerSide.models.Car;
 import com.example.demo.ServerSide.models.ComfortLevel;
 import com.example.demo.ServerSide.repositories.ComfortLevelRepository;
 import org.json.JSONObject;

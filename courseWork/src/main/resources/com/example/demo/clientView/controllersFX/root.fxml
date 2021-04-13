@@ -18,14 +18,20 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Обработка">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleSearch" text="Поиск клиента" />
+                        <MenuItem mnemonicParsing="false" text="Получить статистику" onAction="#handleStatictics"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Для работника">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#handleSales" text="Информация о скидках" />
                         <MenuItem mnemonicParsing="false" onAction="#handleClientReq" text="Требования к клиенту" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleAbout" text="Об авторе" />
                         <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Выйти из системы" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Поиск">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleSearch" text="Поиск клиента" />
                     </items>
                 </Menu>
             </menus>

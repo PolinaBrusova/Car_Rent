@@ -141,4 +141,47 @@ public class RootManagerController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void handleAbout(){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(JavaFxApplication.class.getResource("controllersFX/about.fxml"));
+            AnchorPane page = loader.load();
+            Stage stage= new Stage();
+            stage.setTitle("ОБ АВТОРЕ");
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(main.getPrimaryStage());
+            Scene scene = new Scene(page);
+            stage.setScene(scene);
+            AboutController controller = loader.getController();
+            controller.setStage(stage);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleStatictics(){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(JavaFxApplication.class.getResource("controllersFX/statistics.fxml"));
+            AnchorPane page = loader.load();
+            Stage stage= new Stage();
+            stage.setTitle("СТАТИСТИКА");
+            stage.setResizable(false);
+            stage.initOwner(main.getPrimaryStage());
+            Scene scene = new Scene(page);
+            stage.setScene(scene);
+            StatisticsController controller = loader.getController();
+            controller.setStage(stage);
+            controller.setMain(this.main);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

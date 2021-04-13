@@ -1,18 +1,12 @@
 package com.example.demo.ServerSide.controllersDB;
 
 import com.example.demo.ServerSide.models.Car;
-import com.example.demo.ServerSide.models.Client;
-import com.example.demo.ServerSide.models.ComfortLevel;
 import com.example.demo.ServerSide.repositories.CarRepository;
 import com.example.demo.ServerSide.repositories.ComfortLevelRepository;
-import com.example.demo.utils.DateUtil;
 import org.json.JSONObject;
-import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

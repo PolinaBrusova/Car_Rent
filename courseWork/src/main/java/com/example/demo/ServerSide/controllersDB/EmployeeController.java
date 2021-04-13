@@ -23,18 +23,6 @@ public class EmployeeController {
         this.positionRepository=positionRepository;
     }
 
-    @PostMapping("/addEmployee")
-    Employee createEmployee(@RequestParam String firstName, @RequestParam String lastName,
-                            @RequestParam String phone, @RequestParam String email,
-                            @RequestParam String passport, @RequestParam String adress,
-                            @RequestParam Department department, @RequestParam Position position,
-                            @RequestParam int sales) {
-        Employee employee = new Employee(firstName, lastName, phone, email, passport, adress);
-        employee.setDepartment(departmentRepository.findDepartmentById(department.getId()));
-        employee.setPosition(positionRepository.findPositionById(position.getId()));
-        return this.employeeRepository.save(employee);
-    }
-
     @GetMapping("/getEmployee={id}")
     Employee getEmployee(@PathVariable Long id) {
         return this.employeeRepository.findEmployeeById(id);

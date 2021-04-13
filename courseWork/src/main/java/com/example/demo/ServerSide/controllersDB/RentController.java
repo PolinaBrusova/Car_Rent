@@ -3,7 +3,6 @@ package com.example.demo.ServerSide.controllersDB;
 import com.example.demo.ServerSide.models.*;
 import com.example.demo.ServerSide.repositories.*;
 import com.example.demo.utils.DateUtil;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -211,5 +210,21 @@ public class RentController {
                 }
             }
         }
+    }
+
+    @GetMapping("/statistics")
+    HashMap<String, Float> getStatistics(){
+        List<Rent> rents = this.rentRepository.findAll();
+        HashMap<String, Float> data = new HashMap<>();
+        for (Rent rent: rents){
+            if(rent.getStartDate().getYear()==2021){
+                if (data.containsKey(rent.getStartDate().getMonth().name())){
+                    data.replace(rent.getStartDate().getMonth().name(), data.get(rent.getStartDate().getMonth().name())+rent.getTotalSumm());
+                }else{
+                    data.put(rent.getStartDate().getMonth().name(), rent.getTotalSumm());
+                }
+            }
+        }
+        return data;
     }
 }
