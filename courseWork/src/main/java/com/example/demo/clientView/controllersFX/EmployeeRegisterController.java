@@ -7,6 +7,8 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 public class EmployeeRegisterController {
 
@@ -47,7 +49,7 @@ public class EmployeeRegisterController {
         try {
             if (!login.getText().isBlank()) {
                 if (!password.getText().isBlank()) {
-                    String result = ConnectionPerfomance.excecuteValidation("http://localhost:9090/api/tests/LogPas_Id=" + login.getText() + "_password=" + password.getText());
+                    String result = ConnectionPerfomance.excecuteValidation("http://localhost:9090/api/tests/LogPas_Id=" + login.getText() + "_password=" + URLEncoder.encode(password.getText(), StandardCharsets.UTF_8));
                     if (result.equals("true")) {
                         main.setEmployeeId(Long.parseLong(login.getText()));
                         main.initRootLayout();

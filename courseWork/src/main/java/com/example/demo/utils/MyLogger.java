@@ -18,7 +18,6 @@ public class MyLogger {
             writer.flush();
         }
         catch(IOException ex){
-
             System.out.println(ex.getMessage());
         }
     }

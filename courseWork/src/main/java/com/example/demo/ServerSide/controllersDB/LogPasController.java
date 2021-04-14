@@ -19,7 +19,7 @@ public class LogPasController {
         EmpLogPas worker = this.empLogPasReposiroty.findEmpLogPasById(id);
         MyLogger.inform("Обработан ввод пароля по логину "+id);
         if(worker != null){
-            return worker.getPassword().equals(password);
+            return worker.getPassword().equals(String.valueOf(password.hashCode()));
         }else{
             return false;
         }
