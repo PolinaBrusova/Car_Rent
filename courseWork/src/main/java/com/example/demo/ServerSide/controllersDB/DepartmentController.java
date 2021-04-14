@@ -14,14 +14,6 @@ public class DepartmentController {
         this.departmentRepository=departmentRepository;
     }
 
-    @PostMapping("/addDepartment")
-    Department createDepartment(@RequestParam String adress, @RequestParam String head,
-                                @RequestParam String phone, @RequestParam String email,
-                                @RequestParam String additional) {
-        Department department = new Department(adress,head,phone,email,additional);
-        return this.departmentRepository.save(department);
-    }
-
     @GetMapping("/getDepartment={id}")
     Department getDepartmant(@PathVariable Long id) {
         return this.departmentRepository.findDepartmentById(id);

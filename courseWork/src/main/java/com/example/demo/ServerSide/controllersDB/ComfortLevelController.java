@@ -2,6 +2,7 @@ package com.example.demo.ServerSide.controllersDB;
 
 import com.example.demo.ServerSide.models.ComfortLevel;
 import com.example.demo.ServerSide.repositories.ComfortLevelRepository;
+import com.example.demo.utils.MyLogger;
 import org.json.JSONObject;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -18,20 +19,15 @@ public class ComfortLevelController {
         this.comfortLevelRepository = comfortLevelRepository;
     }
 
-    @PostMapping("/addComfortLevel")
-    ComfortLevel createComfortLevel(@RequestParam String id, @RequestParam String level, @RequestParam Long deposit,
-                           @RequestParam Long rentPrice, @RequestParam Integer minExperience) {
-        ComfortLevel comfortLevel = new ComfortLevel(id, level, deposit, rentPrice, minExperience);
-        return this.comfortLevelRepository.save(comfortLevel);
-    }
-
     @GetMapping("/getComfortLevel/{id}")
     ComfortLevel getComfortLevel(@PathVariable String id) {
+        MyLogger.inform("Найден уровень комфорта по id "+id);
         return this.comfortLevelRepository.findComfortLevelById(id);
     }
 
     @GetMapping("/AllComfortLevels")
     List<ComfortLevel> getAllComfortLevels() {
+        MyLogger.inform("Выведен список всех уровней комфорта");
         return this.comfortLevelRepository.findAll();
     }
 
@@ -45,6 +41,7 @@ public class ComfortLevelController {
         current.setDeposit(jsonObject.getLong("deposit"));
         current.setRentPrice(jsonObject.getLong("rentPrice"));
         current.setMinExperience(jsonObject.getInt("minExperience"));
+        MyLogger.inform("Перезаписан уровень комфорта по id "+current.getId());
         return this.comfortLevelRepository.save(current);
     }
 }

@@ -48,9 +48,6 @@ public class Client{
         this.passport=passport;
         this.liscenceDate = liscenceDate;
         try{
-            System.out.println(DateUtil.parse(liscenceDate));
-            System.out.println(LocalDate.now());
-            System.out.println(Period.between(Objects.requireNonNull(DateUtil.parse(liscenceDate)), LocalDate.now()).getYears());
             this.experience = Period.between(Objects.requireNonNull(DateUtil.parse(liscenceDate)), LocalDate.now()).getYears();
         }catch (NullPointerException e){
             this.experience = 0;

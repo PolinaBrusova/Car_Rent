@@ -2,6 +2,7 @@ package com.example.demo.ServerSide.controllersDB;
 
 import com.example.demo.ServerSide.models.Discount;
 import com.example.demo.ServerSide.repositories.DiscountRepository;
+import com.example.demo.utils.MyLogger;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,14 +15,9 @@ public class DiscountController {
         this.discountRepository = discountRepository;
     }
 
-    @PostMapping("/addDiscount")
-    Discount createDiscount(@RequestParam String id, @RequestParam float percent) {
-        Discount discount = new Discount(id, percent);
-        return this.discountRepository.save(discount);
-    }
-
     @GetMapping("/getDiscount/{id}")
     Discount getDiscount(@PathVariable String id) {
+        MyLogger.inform("Получена скидка по id "+id);
         return this.discountRepository.findDiscountById(id);
     }
 }

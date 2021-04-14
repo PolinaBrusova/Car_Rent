@@ -58,7 +58,7 @@ public class SearchWindowController {
                                 this.main.getPrimaryStage().setScene(scene);
                                 RequirementsController controller = loader.getController();
                                 controller.setStage(this.main.getPrimaryStage());
-                                controller.setPerson((Client) main.getPersonData().stream().filter(item -> item.getPhoneNumber().equals(phoneField.getText())).toArray()[0]);
+                                controller.setPerson(client);
                                 controller.setMain(this.main);
                                 searchStage.close();
                             } catch (IOException e) {
@@ -114,7 +114,7 @@ public class SearchWindowController {
     }
 
     private Client clientExistence(String phone) throws IOException{
-            JSONObject jsonObject = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/getClient/phone=", URLEncoder.encode(phone, StandardCharsets.UTF_8), "");
+            JSONObject jsonObject = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/getClient/phone=", URLEncoder.encode(phone, StandardCharsets.UTF_8), "Client");
             Client client1 = new Client();
             if (!jsonObject.isEmpty()) {
                 client1.setId(Long.valueOf(jsonObject.get("id").toString()));

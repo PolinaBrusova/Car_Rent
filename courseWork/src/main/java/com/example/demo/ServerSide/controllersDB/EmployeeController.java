@@ -6,6 +6,7 @@ import com.example.demo.ServerSide.models.Position;
 import com.example.demo.ServerSide.repositories.DepartmentRepository;
 import com.example.demo.ServerSide.repositories.EmployeeRepository;
 import com.example.demo.ServerSide.repositories.PositionRepository;
+import com.example.demo.utils.MyLogger;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,16 +26,19 @@ public class EmployeeController {
 
     @GetMapping("/getEmployee={id}")
     Employee getEmployee(@PathVariable Long id) {
+        MyLogger.inform("Выведен работник по id "+id);
         return this.employeeRepository.findEmployeeById(id);
     }
 
     @GetMapping("/positionById={id}")
     Position getPositionById(@PathVariable Long id) {
+        MyLogger.inform("Выведена должность работника по его id "+id);
         return this.positionRepository.findPositionById(this.employeeRepository.findEmployeeById(id).getPosition().getId());
     }
 
     @GetMapping("/departmentById={id}")
     Department getDepartmentById(@PathVariable Long id) {
+        MyLogger.inform("Выведен департамент работника по его id "+id);
         return this.departmentRepository.findDepartmentById(this.employeeRepository.findEmployeeById(id).getDepartment().getId());
     }
 }

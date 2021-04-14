@@ -112,7 +112,7 @@ public class JavaFxApplication extends Application {
                 person.setFirstName(URLDecoder.decode(jsonArray.getJSONObject(i).get("firstName").toString(), StandardCharsets.UTF_8));
                 person.setLastName(URLDecoder.decode(jsonArray.getJSONObject(i).get("lastName").toString(), StandardCharsets.UTF_8));
                 person.setPassport(URLDecoder.decode(jsonArray.getJSONObject(i).get("passport").toString(), StandardCharsets.UTF_8));
-                person.setPhoneNumber(URLDecoder.decode(jsonArray.getJSONObject(i).get("phoneNumber").toString(), StandardCharsets.UTF_8));
+                person.setPhoneNumber("+"+URLDecoder.decode(jsonArray.getJSONObject(i).get("phoneNumber").toString(), StandardCharsets.UTF_8));
                 person.setLiscenceDate(jsonArray.getJSONObject(i).get("liscenceDate").toString());
                 personData.add(person);
             }

@@ -3,6 +3,7 @@ package com.example.demo.ServerSide.controllersDB;
 import com.example.demo.ServerSide.models.*;
 import com.example.demo.ServerSide.repositories.*;
 import com.example.demo.utils.DateUtil;
+import com.example.demo.utils.MyLogger;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,11 +47,13 @@ public class RentController {
         rent.setClient(this.clientRepository.findClientById(rawRent.getJSONObject("client").getLong("id")));
         rent.setCar(this.carRepository.findCarById(rawRent.getJSONObject("car").getLong("id")));
         rent.setDiscount(this.discountRepository.findDiscountById(rawRent.getJSONObject("discount").getString("id")));
+        MyLogger.inform("Сохранена новая сущность аренды");
         return this.rentRepository.save(rent);
     }
 
     @GetMapping("/getRent={id}")
     Rent getRent(@PathVariable Long id) {
+        MyLogger.inform("Выведена аренда по ее id "+id);
         return this.rentRepository.findRentById(id);
     }
 
@@ -123,17 +126,20 @@ public class RentController {
                 }
             }
         }
+        MyLogger.inform("Выведен список подходящих по критериям машин");
         return finalList;
     }
 
     @GetMapping("Client={id}/rents")
     int getNumberOfRents(@PathVariable Long id){
+        MyLogger.inform("Выведено количество аренд клиента по его id "+id);
         return this.rentRepository.findRentsByClientId(id).size();
     }
 
     @GetMapping("Car={id}/rents")
     boolean getFreeCar(@PathVariable Long id){
         List<Rent> rents = this.rentRepository.findRentsByCarId(id);
+        MyLogger.inform("Обработана свободность машины по ее id "+id);
         if (rents.size()==0){
             return true;
         }else{
@@ -144,22 +150,26 @@ public class RentController {
 
     @GetMapping("CarByRentId={id}")
     Car getCarbyRentID(@PathVariable Long id){
+        MyLogger.inform("Выведена машина по id аренды "+id);
         return this.carRepository.findCarById(this.rentRepository.findRentById(id).getCar().getId());
     }
 
     @GetMapping("ClientByRentId={id}")
     Client getClientbyRentID(@PathVariable Long id){
+        MyLogger.inform("Выведен клинет по id аренды "+id);
         return this.clientRepository.findClientById(this.rentRepository.findRentById(id).getClient().getId());
     }
 
     @GetMapping("DiscountByRentId={id}")
     Discount getDiscountbyRentID(@PathVariable Long id){
+        MyLogger.inform("Выведена скидка по id аренды "+id);
         return this.discountRepository.findDiscountById(this.rentRepository.findRentById(id).getDiscount().getId());
     }
 
     @GetMapping("Client={id}/isRenting")
     boolean getFreeClient(@PathVariable Long id){
         List<Rent> rents = this.rentRepository.findRentsByClientId(id);
+        MyLogger.inform("Обработана свободность клиента для аренды машины по его id"+id);
         if (rents.size()==0){
             return true;
         }else{
@@ -170,6 +180,7 @@ public class RentController {
 
     @GetMapping("AllRents")
     List<Rent> getAllRents(){
+        MyLogger.inform("Выведен список всех аренд");
         return  this.rentRepository.findAll();
     }
 
@@ -177,6 +188,7 @@ public class RentController {
     Discount getDiscountForClient(@PathVariable Long id){
         int rents = getNumberOfRents(id);
         Client client = this.clientRepository.findClientById(id);
+        MyLogger.inform("Подобрана скидка клиенту по его id "+id);
         try{
             if (Period.between(Objects.requireNonNull(DateUtil.parse(client.getLiscenceDate())), LocalDate.now()).getYears()>=7) {
                 return this.discountRepository.findDiscountById("PROFI");
@@ -225,6 +237,7 @@ public class RentController {
                 }
             }
         }
+        MyLogger.inform("Собран материал бля прибыльной статистики");
         return data;
     }
 }

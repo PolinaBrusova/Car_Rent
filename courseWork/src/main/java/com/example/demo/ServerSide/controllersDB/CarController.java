@@ -3,6 +3,7 @@ package com.example.demo.ServerSide.controllersDB;
 import com.example.demo.ServerSide.models.Car;
 import com.example.demo.ServerSide.repositories.CarRepository;
 import com.example.demo.ServerSide.repositories.ComfortLevelRepository;
+import com.example.demo.utils.MyLogger;
 import org.json.JSONObject;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -35,27 +36,32 @@ public class CarController {
         car.setReleaseYear(jsonObject.getInt("releaseYear"));
         car.setSeats(jsonObject.getInt("seats"));
         car.setComfortLevel(comfortLevelRepository.findComfortLevelById(jsonObject.getJSONObject("comfortLevel").getString("id")));
+        MyLogger.inform("Успешно добавлена машина");
         return this.carRepository.save(car);
     }
 
     @GetMapping("/getCar={id}")
     Car getCar(@PathVariable Long id) {
+        MyLogger.inform("Найдена машина по id "+id);
         return this.carRepository.findCarById(id);
     }
 
     @GetMapping("/AllCars")
     List<Car> getAllCars() {
+        MyLogger.inform("Выведен список всех машин");
         return this.carRepository.findAll();
     }
 
     @GetMapping("/LevelByCarId={id}")
     String getLevelByCarId(@PathVariable Long id) {
+        MyLogger.inform("Найдена уровень комфорта по id машины "+id);
         return this.comfortLevelRepository.findComfortLevelById(this.carRepository.findCarById(id).getComfortLevel().getId()).toString();
     }
 
     @Transactional
     @DeleteMapping("/deleteCar={id}")
     public void deleteCar(@PathVariable Long id){
+        MyLogger.inform("Удалена машина по id "+id);
         this.carRepository.deleteCarById(id);
     }
 
@@ -73,6 +79,7 @@ public class CarController {
         current.setReleaseYear(jsonObject.getInt("releaseYear"));
         current.setSeats(jsonObject.getInt("seats"));
         current.setComfortLevel(comfortLevelRepository.findComfortLevelById(new JSONObject(jsonObject.getString("comfortLevel")).getString("id")));
+        MyLogger.inform("Перезаписана машина по id "+current.getId());
         return this.carRepository.save(current);
     }
 }
