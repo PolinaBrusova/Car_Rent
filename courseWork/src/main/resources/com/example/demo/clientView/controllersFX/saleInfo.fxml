@@ -32,9 +32,9 @@
              <Label text="У клиента &gt; 10 аренд" GridPane.columnIndex="1" GridPane.rowIndex="2" />
              <Label text="Опыт вождения &gt; 7 лет" GridPane.columnIndex="1" GridPane.rowIndex="3" />
              <Label text="на 20/30/40 и тд поездки" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-             <Label text="5%" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-             <Label text="10%" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-             <Label text="7%" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+             <Label text="3%" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+             <Label text="5%" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+             <Label text="10%" GridPane.columnIndex="2" GridPane.rowIndex="3" />
              <Label text="50%" GridPane.columnIndex="2" GridPane.rowIndex="4" />
          </children>
       </GridPane>

@@ -38,7 +38,7 @@ public class JavaFxApplication extends Application {
     public void start(Stage primaryStage){
         this.primaryStage = primaryStage;
         this.primaryStage.setResizable(false);
-        this.primaryStage.setTitle("Address Application");
+        this.primaryStage.setTitle("Rent-A-Car Москва");
 
         showLoginPage();
     }
@@ -112,7 +112,7 @@ public class JavaFxApplication extends Application {
                 person.setFirstName(URLDecoder.decode(jsonArray.getJSONObject(i).get("firstName").toString(), StandardCharsets.UTF_8));
                 person.setLastName(URLDecoder.decode(jsonArray.getJSONObject(i).get("lastName").toString(), StandardCharsets.UTF_8));
                 person.setPassport(URLDecoder.decode(jsonArray.getJSONObject(i).get("passport").toString(), StandardCharsets.UTF_8));
-                person.setPhoneNumber("+"+URLDecoder.decode(jsonArray.getJSONObject(i).get("phoneNumber").toString(), StandardCharsets.UTF_8));
+                person.setPhoneNumber(("+"+URLDecoder.decode(jsonArray.getJSONObject(i).get("phoneNumber").toString(), StandardCharsets.UTF_8)).replace(" ",""));
                 person.setLiscenceDate(jsonArray.getJSONObject(i).get("liscenceDate").toString());
                 personData.add(person);
             }
@@ -136,7 +136,7 @@ public class JavaFxApplication extends Application {
             loader.setLocation(JavaFxApplication.class.getResource("controllersFX/PersonEditDialog.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Edit Person");
+            dialogStage.setTitle("Заполнение клиента");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
@@ -239,9 +239,9 @@ public class JavaFxApplication extends Application {
     public void handleNoConnection(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.initOwner(primaryStage);
-        alert.setTitle("No connection");
-        alert.setHeaderText("Not established connection with the server");
-        alert.setContentText("Connection with the server was not established. try again later. Halting th system...");
+        alert.setTitle("Соединение потеряно");
+        alert.setHeaderText("Соединение с сервером не установлено");
+        alert.setContentText("В процессе соединение с сервером было разорвано или изначально не установлено. Закрываю приложение...");
         ButtonType answer = alert.showAndWait().orElse(ButtonType.OK);
         if (ButtonType.OK.equals(answer)) {
             try {

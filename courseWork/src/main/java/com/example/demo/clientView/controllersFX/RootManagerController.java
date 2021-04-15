@@ -45,7 +45,7 @@ public class RootManagerController {
             loader.setLocation(JavaFxApplication.class.getResource("controllersFX/searchStage.fxml"));
             AnchorPane page = loader.load();
             searchStage = new Stage();
-            searchStage.setTitle("Search");
+            searchStage.setTitle("Поиск");
             searchStage.initModality(Modality.WINDOW_MODAL);
             searchStage.initOwner(main.getPrimaryStage());
             Scene scene = new Scene(page);
@@ -71,7 +71,7 @@ public class RootManagerController {
             loader.setLocation(JavaFxApplication.class.getResource("controllersFX/saleInfo.fxml"));
             AnchorPane page = loader.load();
             Stage salesInfoStage = new Stage();
-            salesInfoStage.setTitle("SALES");
+            salesInfoStage.setTitle("Скидки");
             salesInfoStage.initModality(Modality.WINDOW_MODAL);
             salesInfoStage.initOwner(main.getPrimaryStage());
             Scene scene = new Scene(page);
@@ -91,7 +91,7 @@ public class RootManagerController {
             loader.setLocation(JavaFxApplication.class.getResource("controllersFX/clientReq.fxml"));
             AnchorPane page = loader.load();
             Stage clientReqStage= new Stage();
-            clientReqStage.setTitle("CLIENT REQUIREMENTS");
+            clientReqStage.setTitle("Требования к клиенту сервиса проката");
             clientReqStage.initModality(Modality.WINDOW_MODAL);
             clientReqStage.initOwner(main.getPrimaryStage());
             Scene scene = new Scene(page);
@@ -149,7 +149,7 @@ public class RootManagerController {
             loader.setLocation(JavaFxApplication.class.getResource("controllersFX/about.fxml"));
             AnchorPane page = loader.load();
             Stage stage= new Stage();
-            stage.setTitle("ОБ АВТОРЕ");
+            stage.setTitle("Об авторе");
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(main.getPrimaryStage());
             Scene scene = new Scene(page);
@@ -169,7 +169,7 @@ public class RootManagerController {
             loader.setLocation(JavaFxApplication.class.getResource("controllersFX/statistics.fxml"));
             AnchorPane page = loader.load();
             Stage stage= new Stage();
-            stage.setTitle("СТАТИСТИКА");
+            stage.setTitle("Статистика по прибыльности");
             stage.setResizable(false);
             stage.initOwner(main.getPrimaryStage());
             Scene scene = new Scene(page);

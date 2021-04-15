@@ -73,9 +73,9 @@ public class CarOverviewController {
         if (selectedIndex >= 0){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.initOwner(main.getPrimaryStage());
-            alert.setTitle("Submit deleting");
-            alert.setHeaderText("Delete this car?");
-            alert.setContentText("Are you sure if you want to delete this car?");
+            alert.setTitle("Подтвердите удаление");
+            alert.setHeaderText("Удалить автомобиль?");
+            alert.setContentText("Вы действительно хотите удалить данный автомобиль?");
             ButtonType answer = alert.showAndWait().orElse(ButtonType.OK);
             if (answer.equals(ButtonType.OK)){
                 try {
@@ -91,9 +91,9 @@ public class CarOverviewController {
         else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(main.getPrimaryStage());
-            alert.setTitle("No selection");
-            alert.setHeaderText("No car selection");
-            alert.setContentText("Please, select car in the table");
+            alert.setTitle("Нет выделения");
+            alert.setHeaderText("Автомобиль не выбран");
+            alert.setContentText("Пожалуйста, выберите автомобиль в таблице");
             alert.showAndWait();
         }
     }
@@ -111,7 +111,7 @@ public class CarOverviewController {
                         loader.setLocation(JavaFxApplication.class.getResource("controllersFX/PersonForBreakTrough.fxml"));
                         AnchorPane page = loader.load();
                         Stage searchStage = new Stage();
-                        searchStage.setTitle("Choose Person");
+                        searchStage.setTitle("Выбор клиента");
                         searchStage.initModality(Modality.WINDOW_MODAL);
                         searchStage.initOwner(this.main.getPrimaryStage());
                         Scene scene = new Scene(page);
@@ -141,9 +141,9 @@ public class CarOverviewController {
         } else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(main.getPrimaryStage());
-            alert.setTitle("No selection");
-            alert.setHeaderText("No car selection");
-            alert.setContentText("Please, select car in the table");
+            alert.setTitle("Нет выделения");
+            alert.setHeaderText("Автомобиль не выбран");
+            alert.setContentText("Пожалуйста, выберите автомобиль в таблице");
             alert.showAndWait();
         }
     }
@@ -180,9 +180,9 @@ public class CarOverviewController {
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(main.getPrimaryStage());
-            alert.setTitle("No Selection");
-            alert.setHeaderText("No car Selected");
-            alert.setContentText("Please select a car in the table.");
+            alert.setTitle("Нет выделения");
+            alert.setHeaderText("Автомобиль не выбран");
+            alert.setContentText("Пожалуйста, выберите автомобиль в таблице");
 
             alert.showAndWait();
         }
@@ -258,7 +258,7 @@ public class CarOverviewController {
             loader.setLocation(JavaFxApplication.class.getResource("controllersFX/CarEditDialog.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Edit Car");
+            dialogStage.setTitle("Заполнение автомобиля");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(main.getPrimaryStage());
             Scene scene = new Scene(page);

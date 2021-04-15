@@ -61,9 +61,9 @@ public class PersonOverviewController {
         if (selectedIndex >= 0){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.initOwner(main.getPrimaryStage());
-            alert.setTitle("Submit deleting");
-            alert.setHeaderText("Delete this client?");
-            alert.setContentText("Are you sure if you want to delete this client?");
+            alert.setTitle("Подтвердите удаление");
+            alert.setHeaderText("Удалить клиента?");
+            alert.setContentText("Вы действительно хотите удалить данного клиента?");
             ButtonType answer = alert.showAndWait().orElse(ButtonType.OK);
             if (answer.equals(ButtonType.OK)){
                 try {
@@ -79,9 +79,9 @@ public class PersonOverviewController {
         else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(main.getPrimaryStage());
-            alert.setTitle("No selection");
-            alert.setHeaderText("No Person selection");
-            alert.setContentText("Please, select person in the table");
+            alert.setTitle("Нет выделения");
+            alert.setHeaderText("Клиент не выбран");
+            alert.setContentText("Пожалуйста, выберите клиента в таблице");
             alert.showAndWait();
         }
     }
@@ -96,7 +96,7 @@ public class PersonOverviewController {
                         FXMLLoader loader = new FXMLLoader();
                         loader.setLocation(JavaFxApplication.class.getResource("controllersFX/requirements.fxml"));
                         AnchorPane page = loader.load();
-                        this.main.getPrimaryStage().setTitle("FILLING REQUIREMENTS");
+                        this.main.getPrimaryStage().setTitle("Заполнение требований");
                         Scene scene = new Scene(page);
                         this.main.getPrimaryStage().setScene(scene);
                         RequirementsController controller = loader.getController();
@@ -124,9 +124,9 @@ public class PersonOverviewController {
         else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(main.getPrimaryStage());
-            alert.setTitle("No selection");
-            alert.setHeaderText("No Person selection");
-            alert.setContentText("Please, select person in the table");
+            alert.setTitle("Нет выделения");
+            alert.setHeaderText("Клиент не выбран");
+            alert.setContentText("Пожалуйста, выберите клиента в таблице");
             alert.showAndWait();
         }
     }
@@ -159,9 +159,9 @@ public class PersonOverviewController {
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(main.getPrimaryStage());
-            alert.setTitle("No Selection");
-            alert.setHeaderText("No Person Selected");
-            alert.setContentText("Please select a person in the table.");
+            alert.setTitle("Нет выделения");
+            alert.setHeaderText("Клиент не выбран");
+            alert.setContentText("Пожалуйста, выберите клиента в таблице");
 
             alert.showAndWait();
         }

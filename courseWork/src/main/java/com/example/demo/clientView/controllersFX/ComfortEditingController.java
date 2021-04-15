@@ -68,19 +68,37 @@ public class ComfortEditingController {
         String errorMessage = "";
 
         if (mainField.getText() == null || mainField.getText().length() == 0) {
-            errorMessage += "No valid level name!\n";
+            errorMessage += "Заполните расшифровку уровня комфорта!\n";
         }
 
         if (depositField.getText() == null || depositField.getText().length() == 0) {
-            errorMessage += "No valid deposit value!\n";
+            errorMessage += "Заполните сумму депозита!\n";
+        }else {
+            try{
+                Float.parseFloat(depositField.getText());
+            }catch (NumberFormatException e){
+                errorMessage += "Сумма депозита должна быть числом!\n";
+            }
         }
 
         if (priceField.getText() == null || priceField.getText().length() == 0) {
-            errorMessage += "No valid rent price value!\n";
+            errorMessage += "Заполните стоимость суток аренды!\n";
+        }else {
+            try{
+                Float.parseFloat(priceField.getText());
+            }catch (NumberFormatException e){
+                errorMessage += "Стоимость суток аренды должна быть числом!\n";
+            }
         }
 
         if (expField.getText() == null || expField.getText().length() == 0) {
-            errorMessage += "No valid minimal experience value!\n";
+            errorMessage += "Заполните минимальный отпыт вождения!\n";
+        }else {
+            try{
+                Integer.parseInt(expField.getText());
+            }catch (NumberFormatException e){
+                errorMessage += "Минимальный опыт вождения должен быть целым числом!\n";
+            }
         }
 
         if (errorMessage.length() == 0) {
@@ -88,8 +106,8 @@ public class ComfortEditingController {
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.initOwner(dialogStage);
-            alert.setTitle("Invalid Fields");
-            alert.setHeaderText("Please correct invalid fields");
+            alert.setTitle("Некорректные поля");
+            alert.setHeaderText("Пожалуйста, корректно заполните все поля");
             alert.setContentText(errorMessage);
 
             alert.showAndWait();

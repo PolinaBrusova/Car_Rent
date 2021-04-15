@@ -88,6 +88,12 @@ public class RequirementsController {
                 alertmessage.append("Введите дату окончания аренды!\n");
             }
         }else{
+            if(startDatePicker.getValue().isBefore(LocalDate.now())){
+                alertmessage.append("Дата начала аренды должна быть не раньше сегодняшнего дня!");
+            }
+            if(endDatePicker.getValue().isBefore(LocalDate.now()) || endDatePicker.getValue().equals(LocalDate.now())){
+                alertmessage.append("Дата окончания аренды должна быть не раньше завтрашнего дня!");
+            }
             if(startDatePicker.getValue().isAfter(endDatePicker.getValue())){
                 alertmessage.append("Дата окончания аренды должна быть позже даты начала!");
             }
@@ -105,7 +111,7 @@ public class RequirementsController {
                 if (suitableCars.isEmpty()) {
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.initOwner(main.getPrimaryStage());
-                    alert.setTitle("NO ACRS FOUND");
+                    alert.setTitle("Машин не найдено");
                     alert.setHeaderText("Машин по Ваши требованиям не найдено");
                     alert.setContentText("Пожалуйста, поменяйте свои требования в каких-то позициях, если можете");
 
@@ -134,7 +140,7 @@ public class RequirementsController {
                     }
                     try {
                         Stage stage = new Stage();
-                        stage.setTitle("RENT");
+                        stage.setTitle("Аренда");
                         stage.initModality(Modality.WINDOW_MODAL);
                         stage.initOwner(this.main.getPrimaryStage());
                         FXMLLoader loader = new FXMLLoader();

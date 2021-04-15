@@ -5,6 +5,7 @@ import com.example.demo.ServerSide.models.Client;
 import com.example.demo.clientView.JavaFxApplication;
 import com.example.demo.utils.ConnectionPerfomance;
 import com.example.demo.utils.PhoneUtil;
+import com.sun.xml.bind.api.impl.NameConverter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,6 +19,8 @@ import javafx.stage.Stage;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 
 public class PersonForBeakTroughController {
@@ -67,7 +70,7 @@ public class PersonForBeakTroughController {
                                             FXMLLoader loader = new FXMLLoader();
                                             loader.setLocation(JavaFxApplication.class.getResource("controllersFX/choice.fxml"));
                                             AnchorPane page = loader.load();
-                                            this.main.getPrimaryStage().setTitle("FILLING REQUIREMENTS");
+                                            this.main.getPrimaryStage().setTitle("Заполнение требований");
                                             Scene scene = new Scene(page);
                                             this.main.getPrimaryStage().setScene(scene);
                                             ChoiceController controller = loader.getController();
@@ -102,9 +105,9 @@ public class PersonForBeakTroughController {
                             } else {
                                 Alert alert = new Alert(Alert.AlertType.ERROR);
                                 alert.initOwner(searchStage);
-                                alert.setTitle("No such a client");
-                                alert.setHeaderText("Client Not found in the database");
-                                alert.setContentText("Redirecting on adding a client...");
+                                alert.setTitle("Клиент не найден");
+                                alert.setHeaderText("Система не нашла клиента с таким номером телефона");
+                                alert.setContentText("Создание нового клиента...");
                                 alert.showAndWait();
                                 Client tempPerson = new Client();
                                 tempPerson.setPhoneNumber(phoneField.getText());
@@ -142,24 +145,24 @@ public class PersonForBeakTroughController {
             }else{
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.initOwner(searchStage);
-                alert.setTitle("Invalid Nubmer");
-                alert.setHeaderText("Entered an invalid phone number");
-                alert.setContentText("Write the phone number correctly using the folowing formats:\n+79878767653\nOR\n89878767653");
+                alert.setTitle("Некорректный номер");
+                alert.setHeaderText("номер телефона введен некорректно");
+                alert.setContentText("Напишите корректный номер телефона по формату:\n+79878767653");
                 alert.showAndWait();
             }
 
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.initOwner(searchStage);
-            alert.setTitle("Empty field");
-            alert.setHeaderText("Fill an empty field");
-            alert.setContentText("Fill the telephone number for the search");
+            alert.setTitle("Пустые поля");
+            alert.setHeaderText("Заполните пустые поля");
+            alert.setContentText("Заполните номер телефона для поиска клиента");
             alert.showAndWait();
         }
     }
 
     private Client clientExistence(String phone) throws IOException{
-            JSONObject jsonObject = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/getClient/phone=", phone, "");
+            JSONObject jsonObject = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/getClient/phone=", URLEncoder.encode(phone, StandardCharsets.UTF_8), "Client");
             Client client1 = new Client();
             if (!jsonObject.isEmpty()) {
                 client1.setId(Long.valueOf(jsonObject.get("id").toString()));

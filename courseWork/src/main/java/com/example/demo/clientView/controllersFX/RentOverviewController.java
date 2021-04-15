@@ -99,7 +99,7 @@ public class RentOverviewController {
             startLabel.setText(DateUtil.formatForPeople(rent.getStartDate()));
             endLabel.setText(DateUtil.formatForPeople(rent.getEndDate()));
             clientLabel.setText(rent.getClient().getLastName()+" "+rent.getClient().getFirstName());
-            phoneLabel.setText(rent.getClient().getPhoneNumber());
+            phoneLabel.setText(("+"+rent.getClient().getPhoneNumber()).replace(" ", ""));
             saleLabel.setText(rent.getDiscount().getId());
             finalLabel.setText(String.valueOf(rent.getTotalSumm()));
         }

@@ -2,6 +2,7 @@ package com.example.demo.clientView.controllersFX;
 
 import com.example.demo.ServerSide.models.Client;
 import com.example.demo.utils.DateUtil;
+import com.example.demo.utils.PhoneUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -40,8 +41,8 @@ public class PersonEditingController {
         lastNameField.setText(person.getLastName());
         phoneField.setText(person.getPhoneNumber());
         passportField.setText(person.getPassport());
-        liscenceField.setText(person.getLiscenceDate());
-        liscenceField.setPromptText("dd.mm.yyyy");
+        liscenceField.setText(DateUtil.formatForPeople(DateUtil.parse(person.getLiscenceDate())));
+        liscenceField.setPromptText("дд.мм.гггг");
     }
 
     public boolean isOkClicked() {
@@ -73,24 +74,31 @@ public class PersonEditingController {
         String errorMessage = "";
 
         if (firstNameField.getText() == null || firstNameField.getText().length() == 0) {
-            errorMessage += "No valid first name!\n";
+            errorMessage += "Заполните имя клиента!\n";
         }
         if (lastNameField.getText() == null || lastNameField.getText().length() == 0) {
-            errorMessage += "No valid last name!\n";
+            errorMessage += "Заполните фамилию клиента!\n";
         }
         if (phoneField.getText() == null || phoneField.getText().length() == 0) {
-            errorMessage += "No valid street!\n";
+            errorMessage += "Заполните мобильный телефон!\n";
+        }else{
+            if (!PhoneUtil.validPhone(phoneField.getText())) {
+                errorMessage += "Мобильный номер введен неверно!\n";
+            }
         }
 
         if (passportField.getText() == null || passportField.getText().length() == 0) {
-            errorMessage += "No valid postal code!\n";
+            errorMessage += "Заполните поле пасспорта!\n";
+        }else{
+            if(passportField.getText().length()>10){
+                errorMessage += "Введите корректный идентификатор пасспорта!\n";
+            }
         }
-
         if (liscenceField.getText() == null || liscenceField.getText().length() == 0) {
-            errorMessage += "No valid liscence date!\n";
+            errorMessage += "Заполните поле даты получения прав!\n";
         } else {
             if (!DateUtil.validDate(liscenceField.getText())) {
-                errorMessage += "No valid liscence date. Use the format dd.mm.yyyy!\n";
+                errorMessage += "Неверно заполнена дата получения прав. Используйте формат дд.мм.гггг!\n";
             }
         }
 
@@ -100,8 +108,8 @@ public class PersonEditingController {
             // Показываем сообщение об ошибке.
             Alert alert = new Alert(AlertType.ERROR);
             alert.initOwner(dialogStage);
-            alert.setTitle("Invalid Fields");
-            alert.setHeaderText("Please correct invalid fields");
+            alert.setTitle("Неверно заполненные поля");
+            alert.setHeaderText("Пожалуйста, корректно заполните все необходимые поля!");
             alert.setContentText(errorMessage);
 
             alert.showAndWait();

@@ -53,7 +53,7 @@ public class SearchWindowController {
                                 FXMLLoader loader = new FXMLLoader();
                                 loader.setLocation(JavaFxApplication.class.getResource("controllersFX/requirements.fxml"));
                                 AnchorPane page = loader.load();
-                                this.main.getPrimaryStage().setTitle("FILLING REQUIREMENTS");
+                                this.main.getPrimaryStage().setTitle("Заполнение требований");
                                 Scene scene = new Scene(page);
                                 this.main.getPrimaryStage().setScene(scene);
                                 RequirementsController controller = loader.getController();
@@ -76,9 +76,9 @@ public class SearchWindowController {
                     } else {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.initOwner(searchStage);
-                        alert.setTitle("No such a client");
-                        alert.setHeaderText("Client Not found in the database");
-                        alert.setContentText("Redirecting on adding a client...");
+                        alert.setTitle("Клиент не найден");
+                        alert.setHeaderText("Система не нашла клиента с таким номером телефона");
+                        alert.setContentText("Создание нового клиента...");
                         ButtonType answer = alert.showAndWait().orElse(ButtonType.OK);
                         if (answer.equals(ButtonType.OK)) {
                             Client tempPerson = new Client();
@@ -97,18 +97,18 @@ public class SearchWindowController {
             }else{
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.initOwner(searchStage);
-                alert.setTitle("Invalid Nubmer");
-                alert.setHeaderText("Entered an invalid phone number");
-                alert.setContentText("Write the phone number correctly using the folowing formats:\n+79878767653\nOR\n89878767653");
+                alert.setTitle("Некорректный номер");
+                alert.setHeaderText("номер телефона введен некорректно");
+                alert.setContentText("Напишите корректный номер телефона по формату:\n+79878767653");
                 alert.showAndWait();
             }
 
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.initOwner(searchStage);
-            alert.setTitle("Empty field");
-            alert.setHeaderText("Fill an empty field");
-            alert.setContentText("Fill the telephone number for the search");
+            alert.setTitle("Пустые поля");
+            alert.setHeaderText("Заполните пустые поля");
+            alert.setContentText("Заполните номер телефона для поиска клиента");
             alert.showAndWait();
         }
     }

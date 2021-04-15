@@ -6,7 +6,6 @@ import com.example.demo.clientView.JavaFxApplication;
 import com.example.demo.utils.ConnectionPerfomance;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.json.JSONObject;
@@ -58,7 +57,7 @@ public class CarEditingController {
         doorField.setText(String.valueOf(car.getDoorNumber()));
         gearField.setText(car.getGearbox());
         releaseField.setText(String.valueOf(car.getReleaseYear()));
-        releaseField.setPromptText("yyyy");
+        releaseField.setPromptText("гггг");
         seatsField.setText(String.valueOf(car.getSeats()));
         if (car.getComfortLevel() == null){
             comfortField.setText("");
@@ -96,20 +95,7 @@ public class CarEditingController {
                 dialogStage.close();
             }
         }catch (java.net.ConnectException e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.initOwner(this.dialogStage);
-            alert.setTitle("No connection");
-            alert.setHeaderText("Not established connection with the server");
-            alert.setContentText("Connection with the server was not established. try again later. Halting th system...");
-            ButtonType answer = alert.showAndWait().orElse(ButtonType.OK);
-            if (ButtonType.OK.equals(answer)) {
-                try {
-                    this.dialogStage.close();
-                    this.main.stop();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
-            }
+            this.main.handleNoConnection();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -124,66 +110,79 @@ public class CarEditingController {
         String errorMessage = "";
 
         if (brandField.getText() == null || brandField.getText().length() == 0) {
-            errorMessage += "No valid brand name!\n";
+            errorMessage += "Введите название марки машины!\n";
         }
         if (carcaseField.getText() == null || carcaseField.getText().length() == 0) {
-            errorMessage += "No valid carcase name!\n";
+            errorMessage += "Введите тип кузова машины!\n";
         }
         if (colorField.getText() == null || colorField.getText().length() == 0) {
-            errorMessage += "No valid color!\n";
+            errorMessage += "Введите цвет корпуса машины!\n";
         }
 
-        if (doorField.getText() == null || doorField.getText().length() == 0 || Integer.parseInt(doorField.getText())<2 || Integer.parseInt(doorField.getText())>10) {
-            errorMessage += "No valid number of doors!\n";
+        if (doorField.getText() == null || doorField.getText().length() == 0) {
+            errorMessage += "Заполните поле с количеством дверей!\n";
+        }else {
+            try{
+                if(Integer.parseInt(doorField.getText())<2 || Integer.parseInt(doorField.getText())>10){
+                    errorMessage += "Введите корректное число дверей!\n";
+                }
+            }catch (NumberFormatException e){
+                errorMessage += "Число дверей должно быть целым числом!\n";
+            }
         }
 
-        if (gearField.getText() == null || gearField.getText().length() == 0 || (!gearField.getText().matches("Auto") && !gearField.getText().matches("Mech"))) {
-            errorMessage += "No valid gearbox mane!\n";
+        if (gearField.getText() == null || gearField.getText().length() == 0) {
+            errorMessage += "Заполните тип коробки передач!\n";
+        }else{
+            if(!gearField.getText().matches("Auto") && !gearField.getText().matches("Mech")){
+                errorMessage += "Корректно заполните тип коробки передач: Auto/Mech!\n";
+            }
         }
 
-        if (releaseField.getText() == null || releaseField.getText().length() == 0 || Integer.parseInt(releaseField.getText()) < 1887 || Integer.parseInt(releaseField.getText()) > Calendar.getInstance().get(Calendar.YEAR)){
-            errorMessage += "No valid release year!\n";
+        if (releaseField.getText() == null || releaseField.getText().length() == 0){
+            errorMessage += "Заполните год выпуска автомобиля!\n";
+        }else{
+            try{
+                if(Integer.parseInt(releaseField.getText()) < 1887 || Integer.parseInt(releaseField.getText()) > Calendar.getInstance().get(Calendar.YEAR)){
+                    errorMessage += "Введите корректный год выпуска!!\n";
+                }
+            }catch (NumberFormatException e){
+                errorMessage += "год выпуска должен быть четырехзначным числом!\n";
+            }
         }
 
-        if (seatsField.getText() == null || seatsField.getText().length() == 0 || Integer.parseInt(seatsField.getText()) < 2 || Integer.parseInt(seatsField.getText()) > 60){
-            errorMessage += "No valid number of seats!\n";
+        if (seatsField.getText() == null || seatsField.getText().length() == 0){
+            errorMessage += "Заполните количество мест!\n";
+        }else{
+            try{
+                if(Integer.parseInt(seatsField.getText()) < 2 || Integer.parseInt(seatsField.getText()) > 60){
+                    errorMessage += "Введите корректное количество мест!\n";}
+            }catch (NumberFormatException e){
+                errorMessage += "Количество мест должно быть цеоым числом!\n";
+            }
         }
 
         if (comfortField.getText() == null || comfortField.getText().length() == 0 ){
-            errorMessage += "No valid comfort level!\n";
+            errorMessage += "Заполните уровень комфорта автомобиля!\n";
         }else{
             try {
                 JSONObject jsonObject = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/getComfortLevel/", comfortField.getText(), "ComfortLevel");
                 if (jsonObject.isEmpty()) {
-                    errorMessage += "No valid comfort level!\n";
+                    errorMessage += "Заполните существующий уровень комфорта!\n";
                 }
             }catch (java.net.ConnectException e){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.initOwner(this.dialogStage);
-                alert.setTitle("No connection");
-                alert.setHeaderText("Not established connection with the server");
-                alert.setContentText("Connection with the server was not established. try again later. Halting th system...");
-                ButtonType answer = alert.showAndWait().orElse(ButtonType.OK);
-                if (ButtonType.OK.equals(answer)) {
-                    try {
-                        this.dialogStage.close();
-                        this.main.stop();
-                    } catch (Exception exception) {
-                        exception.printStackTrace();
-                    }
-                }
+                this.main.handleNoConnection();
             }catch (IOException e){
                 e.printStackTrace();
             }
         }
-
         if (errorMessage.length() == 0) {
             return true;
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.initOwner(dialogStage);
-            alert.setTitle("Invalid Fields");
-            alert.setHeaderText("Please correct invalid fields");
+            alert.setTitle("Некорректные данные");
+            alert.setHeaderText("Пожалуйста, исправьте некорректные поля!");
             alert.setContentText(errorMessage);
 
             alert.showAndWait();

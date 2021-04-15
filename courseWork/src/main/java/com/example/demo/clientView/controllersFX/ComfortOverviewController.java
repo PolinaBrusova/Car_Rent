@@ -79,9 +79,9 @@ public class ComfortOverviewController {
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.initOwner(main.getPrimaryStage());
-                alert.setTitle("No Selection");
-                alert.setHeaderText("No comfort level Selected");
-                alert.setContentText("Please select a comfort level in the table.");
+                alert.setTitle("Нет выделения");
+                alert.setHeaderText("Уровень комфорта не выбран");
+                alert.setContentText("Пожалуйста, выберите уровень комфорта в таблице");
 
                 alert.showAndWait();
             }
@@ -116,7 +116,7 @@ public class ComfortOverviewController {
             loader.setLocation(JavaFxApplication.class.getResource("controllersFX/comfortEditDialog.fxml"));
             AnchorPane page = loader.load();
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Edit Comfort Level");
+            dialogStage.setTitle("Заполнение уровня комфорта");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(main.getPrimaryStage());
             Scene scene = new Scene(page);
