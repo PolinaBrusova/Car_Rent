@@ -17,6 +17,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 
 public class SearchWindowController {
 
@@ -45,7 +46,6 @@ public class SearchWindowController {
     private void handleSearch(){
         if (!phoneField.getText().isBlank()) {
             if (PhoneUtil.validPhone(phoneField.getText())){
-                try {
                     Client client = clientExistence(phoneField.getText());
                     if (client != null && client.getId() != null) {
                         if (clientIsNotRenting(client)) {
@@ -85,15 +85,27 @@ public class SearchWindowController {
                             tempPerson.setPhoneNumber(phoneField.getText());
                             searchStage.close();
                             this.main.showPersonOverview();
-                            this.main.showPersonEditDialog(tempPerson);
+                            HashMap<Boolean, Client> result =this.main.showPersonEditDialog(tempPerson);
+                            boolean okClicked = (boolean) result.keySet().toArray()[0];
+                            Client editedClient = result.get(okClicked);
+                            if (okClicked) {
+                                JSONObject jsonObject = new JSONObject();
+                                jsonObject.put("firstName", URLEncoder.encode(editedClient.getFirstName(), StandardCharsets.UTF_8));
+                                jsonObject.put("lastName", URLEncoder.encode(editedClient.getLastName(), StandardCharsets.UTF_8));
+                                jsonObject.put("phoneNumber", URLEncoder.encode(editedClient.getPhoneNumber(), StandardCharsets.UTF_8));
+                                jsonObject.put("passport", URLEncoder.encode(editedClient.getPassport(), StandardCharsets.UTF_8));
+                                jsonObject.put("liscenceDate", URLEncoder.encode(editedClient.getLiscenceDate(), StandardCharsets.UTF_8));
+                                try {
+                                    ConnectionPerfomance.excecutePost("http://localhost:9090/api/tests/addClient", jsonObject);
+                                    this.main.showPersonOverview();
+                                }catch (java.net.ConnectException e){
+                                    this.main.handleNoConnection();
+                                }catch (IOException e){
+                                    e.printStackTrace();
+                                }
+                            }
                         }
                     }
-                }catch (java.net.ConnectException e){
-                    this.searchStage.close();
-                    this.main.handleNoConnection();
-                }catch (IOException e){
-                    e.printStackTrace();
-                }
             }else{
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.initOwner(searchStage);
@@ -113,7 +125,8 @@ public class SearchWindowController {
         }
     }
 
-    private Client clientExistence(String phone) throws IOException{
+    private Client clientExistence(String phone){
+        try {
             JSONObject jsonObject = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/getClient/phone=", URLEncoder.encode(phone, StandardCharsets.UTF_8), "Client");
             Client client1 = new Client();
             if (!jsonObject.isEmpty()) {
@@ -125,6 +138,13 @@ public class SearchWindowController {
                 client1.setLiscenceDate(jsonObject.get("liscenceDate").toString());
             }
             return client1;
+        }catch (java.net.ConnectException e){
+            this.main.handleNoConnection();
+            return null;
+        }catch (IOException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private boolean clientIsNotRenting(Client client){

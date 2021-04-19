@@ -46,17 +46,41 @@ public class EmployeeRegisterController {
     
     @FXML
     private void handleEnter(){
-        try {
             if (!login.getText().isBlank()) {
                 if (!password.getText().isBlank()) {
-                    String result = ConnectionPerfomance.excecuteValidation("http://localhost:9090/api/tests/LogPas_Id=" + login.getText() + "_password=" + URLEncoder.encode(password.getText(), StandardCharsets.UTF_8));
-                    if (result.equals("true")) {
-                        main.setEmployeeId(Long.parseLong(login.getText()));
-                        main.initRootLayout();
-                        main.showPersonOverview();
-                        this.registerStage.close();
-                    } else if (result.equals("false")) {
-                        this.login.setText(login.getText());
+                    try {
+                        String result = ConnectionPerfomance.excecuteValidation("http://localhost:9090/api/tests/LogPas_Id=" + login.getText() + "_password=" + URLEncoder.encode(password.getText(), StandardCharsets.UTF_8));
+                        if (result.equals("true")) {
+                            main.setEmployeeId(Long.parseLong(login.getText()));
+                            main.initRootLayout();
+                            main.showPersonOverview();
+                            this.registerStage.close();
+                        } else if (result.equals("false")) {
+                            this.login.setText(login.getText());
+                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                            alert.initOwner(this.registerStage);
+                            alert.setTitle("Sign In failed");
+                            alert.setHeaderText("Wrong Login or Password");
+                            alert.setContentText("Please, enter the correct login and password. Login is an " +
+                                    "employee's company system code");
+                            alert.showAndWait();
+                        } else {
+                                Alert alert = new Alert(Alert.AlertType.ERROR);
+                                alert.initOwner(this.registerStage);
+                                alert.setTitle("No connection");
+                                alert.setHeaderText("Not established connection with the server");
+                                alert.setContentText("Connection with the server was not established. try again later. Halting th system...");
+                                alert.showAndWait();
+
+                        }
+                    }catch (java.net.ConnectException e){
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.initOwner(this.registerStage);
+                        alert.setTitle("No connection");
+                        alert.setHeaderText("Not established connection with the server");
+                        alert.setContentText("Connection with the server was not established. try again later. Halting th system...");
+                        alert.showAndWait();
+                    }catch (IOException e){
                         Alert alert = new Alert(Alert.AlertType.WARNING);
                         alert.initOwner(this.registerStage);
                         alert.setTitle("Sign In failed");
@@ -64,21 +88,6 @@ public class EmployeeRegisterController {
                         alert.setContentText("Please, enter the correct login and password. Login is an " +
                                 "employee's company system code");
                         alert.showAndWait();
-                    } else {
-                        try {
-                            Alert alert = new Alert(Alert.AlertType.ERROR);
-                            alert.initOwner(this.registerStage);
-                            alert.setTitle("No connection");
-                            alert.setHeaderText("Not established connection with the server");
-                            alert.setContentText("Connection with the server was not established. try again later. Halting th system...");
-                            ButtonType answer = alert.showAndWait().orElse(ButtonType.OK);
-                            if (ButtonType.OK.equals(answer)) {
-                                this.registerStage.close();
-                                this.main.stop();
-                            }
-                        } catch (Exception k) {
-                            k.printStackTrace();
-                        }
                     }
                 } else {
                     password.setPromptText("FILL THE PASSWORD");
@@ -97,10 +106,5 @@ public class EmployeeRegisterController {
                     password.setText("");
                 }
             }
-        }catch (java.net.ConnectException e){
-            this.main.handleNoConnection();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
     }
 }

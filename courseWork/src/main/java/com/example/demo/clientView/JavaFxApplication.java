@@ -144,6 +144,7 @@ public class JavaFxApplication extends Application {
             PersonEditingController controller = loader.getController();
             controller.setDialogStage(dialogStage);
             controller.setPerson(person);
+            controller.setMain(this);
             dialogStage.showAndWait();
             dictionary.put(controller.isOkClicked(), controller.getPerson());
             return dictionary;
@@ -242,14 +243,6 @@ public class JavaFxApplication extends Application {
         alert.setTitle("Соединение потеряно");
         alert.setHeaderText("Соединение с сервером не установлено");
         alert.setContentText("В процессе соединение с сервером было разорвано или изначально не установлено. Закрываю приложение...");
-        ButtonType answer = alert.showAndWait().orElse(ButtonType.OK);
-        if (ButtonType.OK.equals(answer)) {
-            try {
-                this.primaryStage.close();
-                this.stop();
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-        }
+        alert.showAndWait();
     }
 }

@@ -1,6 +1,8 @@
 package com.example.demo.clientView.controllersFX;
 
 import com.example.demo.ServerSide.models.Client;
+import com.example.demo.clientView.JavaFxApplication;
+import com.example.demo.utils.ConnectionPerfomance;
 import com.example.demo.utils.DateUtil;
 import com.example.demo.utils.PhoneUtil;
 import javafx.fxml.FXML;
@@ -8,6 +10,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 public class PersonEditingController {
 
@@ -25,6 +32,7 @@ public class PersonEditingController {
 
     private Stage dialogStage;
     private Client person;
+    private JavaFxApplication main;
     private boolean okClicked = false;
 
     @FXML
@@ -41,7 +49,11 @@ public class PersonEditingController {
         lastNameField.setText(person.getLastName());
         phoneField.setText(person.getPhoneNumber());
         passportField.setText(person.getPassport());
-        liscenceField.setText(DateUtil.formatForPeople(DateUtil.parse(person.getLiscenceDate())));
+        try {
+            liscenceField.setText(DateUtil.formatForPeople(DateUtil.parse(person.getLiscenceDate())));
+        }catch (NullPointerException e){
+            liscenceField.setText("");
+        }
         liscenceField.setPromptText("дд.мм.гггг");
     }
 
@@ -50,6 +62,10 @@ public class PersonEditingController {
     }
 
     public Client getPerson() {return person;}
+
+    public void setMain(JavaFxApplication main) {
+        this.main = main;
+    }
 
     @FXML
     private void handleOk() {
@@ -75,15 +91,35 @@ public class PersonEditingController {
 
         if (firstNameField.getText() == null || firstNameField.getText().length() == 0) {
             errorMessage += "Заполните имя клиента!\n";
+        }else{
+            if (!firstNameField.getText().matches("[А-ЯA-Z]+([ '-][а-яa-zА-ЯA-Z]+)*")){
+                errorMessage += "Имя клиента содержит недопустимые символы!\n";
+            }
         }
         if (lastNameField.getText() == null || lastNameField.getText().length() == 0) {
             errorMessage += "Заполните фамилию клиента!\n";
+        }else{
+            if (!lastNameField.getText().matches("[А-ЯA-Z]+([ '-][а-яa-zА-ЯA-Z]+)*")){
+                errorMessage += "Фамилия клиента содержит недопустимые символы!\n";
+            }
         }
         if (phoneField.getText() == null || phoneField.getText().length() == 0) {
             errorMessage += "Заполните мобильный телефон!\n";
         }else{
             if (!PhoneUtil.validPhone(phoneField.getText())) {
                 errorMessage += "Мобильный номер введен неверно!\n";
+            }
+            else{
+                try {
+                    JSONObject jsonObject = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/getClient/phone=", URLEncoder.encode(phoneField.getText(), StandardCharsets.UTF_8), "Client");
+                    if (!jsonObject.isEmpty()) {
+                        errorMessage += "Клиент с таким номером уже есть в базе!\n";
+                    }
+                }catch (java.net.ConnectException e){
+                    this.main.handleNoConnection();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
             }
         }
 
