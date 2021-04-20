@@ -18,7 +18,8 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Обработка">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Получить статистику" onAction="#handleStatictics"/>
+                        <MenuItem mnemonicParsing="false" text="Статистика по прибыли" onAction="#handleIncomeStatictics"/>
+                        <MenuItem mnemonicParsing="false" text="Статистика по длительности аренд" onAction="#handleLengthStatictics"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Для работника">

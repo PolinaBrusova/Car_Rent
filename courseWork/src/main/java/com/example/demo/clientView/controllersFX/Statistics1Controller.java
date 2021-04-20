@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class StatisticsController {
+public class Statistics1Controller {
     @FXML
     private LineChart<String, Float> chart;
     final CategoryAxis x = new CategoryAxis();
@@ -20,7 +20,7 @@ public class StatisticsController {
     private Stage stage;
     private JavaFxApplication main;
 
-    public StatisticsController(){ }
+    public Statistics1Controller(){ }
 
     @FXML
     private void initialize() {

@@ -5,8 +5,6 @@ import com.example.demo.utils.ConnectionPerfomance;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -163,10 +161,10 @@ public class RootManagerController {
     }
 
     @FXML
-    private void handleStatictics(){
+    private void handleIncomeStatictics(){
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(JavaFxApplication.class.getResource("controllersFX/statistics.fxml"));
+            loader.setLocation(JavaFxApplication.class.getResource("controllersFX/statistics1.fxml"));
             AnchorPane page = loader.load();
             Stage stage= new Stage();
             stage.setTitle("Статистика по прибыльности");
@@ -174,7 +172,28 @@ public class RootManagerController {
             stage.initOwner(main.getPrimaryStage());
             Scene scene = new Scene(page);
             stage.setScene(scene);
-            StatisticsController controller = loader.getController();
+            Statistics1Controller controller = loader.getController();
+            controller.setStage(stage);
+            controller.setMain(this.main);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleLengthStatictics(){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(JavaFxApplication.class.getResource("controllersFX/statistics2.fxml"));
+            AnchorPane page = loader.load();
+            Stage stage= new Stage();
+            stage.setTitle("Статистика по длительности аренды");
+            stage.setResizable(false);
+            stage.initOwner(main.getPrimaryStage());
+            Scene scene = new Scene(page);
+            stage.setScene(scene);
+            Statistics2Controller controller = loader.getController();
             controller.setStage(stage);
             controller.setMain(this.main);
             stage.showAndWait();

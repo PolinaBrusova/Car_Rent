@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 @RestController
 @RequestMapping("api/tests")
 public class RentController {
@@ -237,7 +239,23 @@ public class RentController {
                 }
             }
         }
-        MyLogger.inform("Собран материал бля прибыльной статистики");
+        MyLogger.inform("Собран материал для прибыльной статистики");
+        return data;
+    }
+
+    @GetMapping("/lengthStatistics")
+    HashMap<Long, Integer> getLengthStatistics(){
+        List<Rent> rents = this.rentRepository.findAll();
+        HashMap<Long, Integer> data = new HashMap<>();
+        for (Rent rent: rents){
+            long days = DAYS.between(rent.getStartDate(), rent.getEndDate())+1;
+            if (data.containsKey(days)){
+                data.put(days, data.get(days)+1);
+            }else{
+                data.put(days, 1);
+            }
+        }
+        MyLogger.inform("Собран материал для статистики длительности аренд");
         return data;
     }
 }
