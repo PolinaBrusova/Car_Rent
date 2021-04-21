@@ -10,6 +10,9 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.Objects;
 
+/**
+ * Client entity
+ */
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name = "Clients")
@@ -41,6 +44,15 @@ public class Client{
     @Column(name = "Experience", nullable = false)
     private int experience;
 
+    /**
+     * Initializes Client and assigns all parameters
+     * @param firstName String value of the first name
+     * @param lastName String value of the last name
+     * @param phoneNumber String value of phone number
+     * @param passport String value of passport code
+     * @param liscenceDate String value of the date of obtaining a licence
+     * Experience parameter is calculated from the licence date
+     */
     public Client(String firstName, String lastName, String phoneNumber, String passport, String liscenceDate){
         this.firstName=firstName;
         this.lastName=lastName;
@@ -54,6 +66,9 @@ public class Client{
         }
     }
 
+    /**
+     * Empty initializer
+     */
     public Client(){}
 
     public Long getId() {

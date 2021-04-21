@@ -13,6 +13,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+/**
+ * JavaFX scene controller
+ */
 public class RootManagerController {
 
     private JavaFxApplication main;
@@ -36,6 +39,9 @@ public class RootManagerController {
         this.searchStage = searchStage;
     }
 
+    /**
+     * Handles action on "Search" button loading search stage
+     */
     @FXML
     private void handleSearch(){
         try {
@@ -57,11 +63,17 @@ public class RootManagerController {
         }
     }
 
+    /**
+     * Handles  action on "Close" button shutting the application down
+     */
     @FXML
     private  void handleClose(){
         main.getPrimaryStage().close();
     }
 
+    /**
+     * Handles action on "Discount Info" button loading information about possible discounts
+     */
     @FXML
     private void handleSales(){
         try {
@@ -82,6 +94,9 @@ public class RootManagerController {
         }
     }
 
+    /**
+     * Handle action on "Requirements for the clients" button loading requirements
+     */
     @FXML
     private void handleClientReq(){
         try {
@@ -102,32 +117,50 @@ public class RootManagerController {
         }
     }
 
+    /**
+     * Handle action on "Cars" button loading car overview
+     */
     @FXML
     private void handleCars(){
         main.showCarOwerview();
     }
 
+    /**
+     * Handle action on "Rents" button loading car overview
+     */
     @FXML
     private void handleRents(){
         main.showRentOwerview();
     }
 
+    /**
+     * Handle action on "Clients" button loading car overview
+     */
     @FXML
     private void handleClients(){
         main.showPersonOverview();
     }
 
+    /**
+     * Handle action on "Comfort Levels" button loading car overview
+     */
     @FXML
     private void handleLevels(){
         main.showLevelOverview();
     }
 
+    /**
+     * Handle action on "exit" button loading login stage
+     */
     @FXML
     private void handleExit(){
         this.main.getPrimaryStage().close();
         this.main.showLoginPage();
     }
 
+    /**
+     * Sets the signed in employee information
+     */
     private void setEmplInfo(){
         try{
             JSONObject jsonObject = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/getEmployee=", String.valueOf(main.getEmployeeId()), "Employee");
@@ -140,6 +173,9 @@ public class RootManagerController {
         }
     }
 
+    /**
+     * Handle action on "About" button loading About stage
+     */
     @FXML
     private void handleAbout(){
         try {
@@ -160,6 +196,9 @@ public class RootManagerController {
         }
     }
 
+    /**
+     * Handle action on "Income statistics" button loading income Statistics stage
+     */
     @FXML
     private void handleIncomeStatictics(){
         try {
@@ -181,6 +220,9 @@ public class RootManagerController {
         }
     }
 
+    /**
+     * Handle action on "Rent length statistics" button loading Rent length statistics stage
+     */
     @FXML
     private void handleLengthStatictics(){
         try {

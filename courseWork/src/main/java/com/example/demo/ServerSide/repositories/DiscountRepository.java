@@ -7,10 +7,23 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Interface that extends JpaRepository<Discount, Integer>
+ */
 @Repository
 @Service
 public interface DiscountRepository extends JpaRepository<Discount, Integer> {
-    public List<Discount> findAll();
 
-    public  Discount findDiscountById(String id);
+    /**
+     * Finds all rows from the table
+     * @return List<Discount> with all found rows
+     */
+    List<Discount> findAll();
+
+    /**
+     * Finds a Department by its id from the table
+     * @param id String value of the id
+     * @return Discount object found (or null - if not found)
+     */
+    Discount findDiscountById(String id);
 }

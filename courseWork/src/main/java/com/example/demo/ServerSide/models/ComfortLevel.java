@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Comfort Level entity
+ */
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name = "ComfortLevels")
 public class ComfortLevel{
@@ -25,6 +28,14 @@ public class ComfortLevel{
     @Column(name = "MinExperience", nullable = false)
     private int minExperience;
 
+    /**
+     * Initializes Comfort Level and assigns all parameters
+     * @param id String value of the id
+     * @param level String value of the full name of the level
+     * @param deposit Integer value of the deposit sum
+     * @param rentPrice Integer value of the rent price per day
+     * @param minExperience Integer value of the minimum experience required
+     */
     public ComfortLevel(String id, String level, Long deposit, long rentPrice, int minExperience){
         this.id = id;
         this.level = level;
@@ -33,6 +44,9 @@ public class ComfortLevel{
         this.minExperience = minExperience;
     }
 
+    /**
+     * Empty initializer
+     */
     public ComfortLevel(){}
 
     public String getId(){

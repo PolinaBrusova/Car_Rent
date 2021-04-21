@@ -7,10 +7,23 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Interface that extends JpaRepository<Department, Integer>
+ */
 @Repository
 @Service
 public interface DepartmentRepository extends JpaRepository<Department, Integer> {
-    public List<Department> findAll();
 
-    public Department findDepartmentById(Long id);
+    /**
+     * Finds all rows from the table
+     * @return List<Department> with all found rows
+     */
+    List<Department> findAll();
+
+    /**
+     * Finds a Department by its id from the table
+     * @param id Long value of the id
+     * @return Department object found (or null - if not found)
+     */
+    Department findDepartmentById(Long id);
 }

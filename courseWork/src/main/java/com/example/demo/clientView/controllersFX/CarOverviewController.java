@@ -19,6 +19,9 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
+/**
+ * JavaFX scene controller
+ */
 public class CarOverviewController {
     @FXML
     private TableView<Car> carTable;
@@ -49,6 +52,9 @@ public class CarOverviewController {
 
     public CarOverviewController(){}
 
+    /**
+     * fills the table columns with data
+     */
     @FXML
     private void initialize(){
 
@@ -61,12 +67,16 @@ public class CarOverviewController {
         ); //при изменении слушатель изменит данные на новые из таблицы
 
     }
+
     public void setMain(JavaFxApplication main){
         this.main = main;
         carTable.setItems(main.getExistingCars());
     }
 
 
+    /**
+     * Handles action on "delete" button with further possible deleting the Car entity from the database
+     */
     @FXML
     private void handleDeleteCar(){
         int selectedIndex = carTable.getSelectionModel().getSelectedIndex();
@@ -98,6 +108,9 @@ public class CarOverviewController {
         }
     }
 
+    /**
+     * Handles action on "form" button with launchin client search
+     */
     @FXML
     private void handleBreakTrough(){
         int selectedIndex = carTable.getSelectionModel().getSelectedIndex();
@@ -148,6 +161,9 @@ public class CarOverviewController {
         }
     }
 
+    /**
+     * Handles action on "Edit" with launching editing window and further editing entity in the database
+     */
     @FXML
     private void handleEditCar(){
         Car selectedCar = carTable.getSelectionModel().getSelectedItem();
@@ -188,6 +204,9 @@ public class CarOverviewController {
         }
     }
 
+    /**
+     * Handles action on "New" button with launching editing window and further adding entity in the database
+     */
     @FXML
     private void handleNewCar(){
         Car tempCar = new Car();
@@ -222,6 +241,10 @@ public class CarOverviewController {
         main.showCarOwerview();
     }
 
+    /**
+     * Shows the details of the selected element from table
+     * @param car selected Car
+     */
     private void showCarOverviewDetails(Car car){
         if(car != null){
             brandLabel.setText(car.getBrand());
@@ -251,6 +274,11 @@ public class CarOverviewController {
         }
     }
 
+    /**
+     * Shows edit dialog
+     * @param car Car for edit (Car with no parameters for creating new)
+     * @return HashMap<Boolean, Car> with the status of clicking on "Ok" button and edited Car object
+     */
     private HashMap<Boolean, Car> showCarEditDialog(Car car){
         try {
             HashMap<Boolean, Car> dictionary = new HashMap<>();
@@ -277,6 +305,13 @@ public class CarOverviewController {
             return dictionary;
         }
     }
+
+    /**
+     * validation if the car is available and is not in rent
+     * @param car Car for the validation
+     * @return boolean result of validation
+     * @throws IOException if the connection executes with errors
+     */
     private boolean validCar(Car car) throws IOException{
         if(car.isAvailable()){
             String free = ConnectionPerfomance.excecuteValidation("http://localhost:9090/api/tests/Car=" + car.getId() + "/rents");

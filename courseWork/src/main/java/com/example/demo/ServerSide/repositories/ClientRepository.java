@@ -7,14 +7,35 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Interface that extends JpaRepository<Client, Integer>
+ */
 @Repository
 @Service
 public interface ClientRepository extends JpaRepository<Client, Integer> {
-    public List<Client> findAll();
+    /**
+     * Finds all rows from the table
+     * @return List<Client> with all found rows
+     */
+    List<Client> findAll();
 
-    public Client findClientById(Long id);
+    /**
+     * Finds a Client by its id from the table
+     * @param id Long value of the id
+     * @return Client object found (or null - if not found)
+     */
+    Client findClientById(Long id);
 
-    public  Client findClientByPhoneNumber(String phone);
+    /**
+     * Finds a Client by its phone number from the table
+     * @param phone String value of the phone number
+     * @return Client object found (or null - if not found)
+     */
+    Client findClientByPhoneNumber(String phone);
 
-    public int deleteClientById(Long id);
+    /**
+     * Deletes a Client by its id from the table
+     * @param id Long value of the id
+     */
+    void deleteClientById(Long id);
 }

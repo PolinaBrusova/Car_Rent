@@ -16,7 +16,9 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
-
+/**
+ * JavaFX scene controller
+ */
 public class PersonOverviewController {
     @FXML
     private TableView<Client> personTable;
@@ -38,6 +40,9 @@ public class PersonOverviewController {
 
     public PersonOverviewController(){}
 
+    /**
+     * fills the table columns with data
+     */
     @FXML
     private void initialize(){
 
@@ -55,6 +60,9 @@ public class PersonOverviewController {
         personTable.setItems(main.getPersonData());
     }
 
+    /**
+     * Handles action on "delete" button with further possible deleting the Car entity from the database
+     */
     @FXML
     private void handleDeletePerson(){
         int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
@@ -86,6 +94,9 @@ public class PersonOverviewController {
         }
     }
 
+    /**
+     * Handles action on "Form" button with car verification and loading a requirement page
+     */
     @FXML
     private void handleBreakThrough(){
         int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
@@ -131,6 +142,9 @@ public class PersonOverviewController {
         }
     }
 
+    /**
+     * Shows edit dialog for the selected client from the table
+     */
     @FXML
     private void handleEditPerson(){
         Client selectedPerson = personTable.getSelectionModel().getSelectedItem();
@@ -167,6 +181,9 @@ public class PersonOverviewController {
         }
     }
 
+    /**
+     * Handles action on "New" button with launching editing window and further adding entity in the database
+     */
     @FXML
     private void handleNewPerson(){
         Client tempPerson = new Client();
@@ -191,6 +208,10 @@ public class PersonOverviewController {
         }
     }
 
+    /**
+     * Shows the details of the selected element from table
+     * @param person selected Client
+     */
     private void showPersonsOverviewDetails(Client person){
         if(person != null){
             firstNameLabel.setText(person.getFirstName());
@@ -208,6 +229,12 @@ public class PersonOverviewController {
         }
     }
 
+    /**
+     * verification if the client if renting something at the moment
+     * @param client Client object for the verification
+     * @return boolean result of the verification
+     * @throws IOException if the connection executed with errors
+     */
     private boolean clientIsNotRenting(Client client) throws IOException{
         return ConnectionPerfomance.excecuteValidation("http://localhost:9090/api/tests/Client=" + client.getId() + "/isRenting").matches("true");
     }

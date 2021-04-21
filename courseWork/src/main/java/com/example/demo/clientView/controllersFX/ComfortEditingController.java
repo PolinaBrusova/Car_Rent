@@ -7,6 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+/**
+ * JavaFX scene controller
+ */
 public class ComfortEditingController {
     @FXML
     private Label idField;
@@ -47,6 +50,9 @@ public class ComfortEditingController {
 
     public ComfortLevel getLevel() {return comfortLevel;}
 
+    /**
+     * Handles action on "Ok" button validating the fields and closing the datge
+     */
     @FXML
     private void handleOk(){
         if (isInputValid()) {
@@ -59,11 +65,18 @@ public class ComfortEditingController {
         }
     }
 
+    /**
+     * Handle clicking on "Cancel" button closing the stage
+     */
     @FXML
     private void handleCancel() {
         dialogStage.close();
     }
 
+    /**
+     * Validates the fields and shows an error message if any issues were met
+     * @return boolean result of validation
+     */
     private boolean isInputValid(){
         String errorMessage = "";
 

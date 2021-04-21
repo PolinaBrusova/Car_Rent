@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
+/**
+ * Discount entity
+ */
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name = "Discounts")
@@ -14,11 +17,9 @@ public class Discount{
     @Column(name = "Percent", nullable = false)
     private float percent;
 
-    public Discount(String id, float percent){
-        this.id=id;
-        this.percent=percent;
-    }
-
+    /**
+     * Empty initializer
+     */
     public Discount(){}
 
     public String getId() {

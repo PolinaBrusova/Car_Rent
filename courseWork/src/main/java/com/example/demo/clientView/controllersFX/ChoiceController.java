@@ -13,6 +13,9 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.time.LocalDate;
 
+/**
+ * JavaFX scene controller
+ */
 public class ChoiceController {
     @FXML
     private TableView<Car> carTable;
@@ -70,6 +73,9 @@ public class ChoiceController {
 
     public ChoiceController(){}
 
+    /**
+     * fills the table with variants for the rent
+     */
     @FXML
     private void initialize(){
 
@@ -112,6 +118,10 @@ public class ChoiceController {
         setSales();
     }
 
+    /**
+     * shows details of the selected car from the table
+     * @param car selected Car
+     */
     private void showCarOverviewDetails(Car car){
         if(car != null){
             brandLabel.setText(car.getBrand());
@@ -141,6 +151,9 @@ public class ChoiceController {
         }
     }
 
+    /**
+     * Set the values of text fields with sales
+     */
     private void setSales(){
         try {
             JSONObject discountBody = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/discount_for_client=", String.valueOf(this.client.getId()), "discount");
@@ -157,6 +170,9 @@ public class ChoiceController {
         }
     }
 
+    /**
+     * Handles action on "OK" button
+     */
     @FXML
     private void handleSubmitting(){
         if (carTable.getSelectionModel().getSelectedIndex()>-1){
@@ -207,6 +223,10 @@ public class ChoiceController {
 
     }
 
+    /**
+     * converts Employee entity to a JSONObject
+     * @return JSONObject from the entity
+     */
     private JSONObject fillEmployee(){
         try {
             JSONObject rawEmployee = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/getEmployee=", String.valueOf(main.getEmployeeId()), "Employee");
@@ -223,14 +243,26 @@ public class ChoiceController {
         }
     }
 
+    /**
+     * converts Discount entity to a JSONObject
+     * @return JSONObject from the entity
+     */
     private JSONObject fillDiscount(){
         return new JSONObject(this.discount.toString().replace("Discount", "").replace("=", ":"));
     }
 
+    /**
+     * converts Client entity to a JSONObject
+     * @return JSONObject from the entity
+     */
     private JSONObject fillClient(){
         return new JSONObject(client.toString().replace("Client", "").replace("=", ":"));
     }
 
+    /**
+     * converts Car entity to a JSONObject
+     * @return JSONObject from the entity
+     */
     private JSONObject fillCar(){
         Car car = carTable.getItems().get(carTable.getSelectionModel().getSelectedIndex());
         return new JSONObject(car.toString().replace("Car", "").replace("=", ":").replace("ComfortLevel", ""));

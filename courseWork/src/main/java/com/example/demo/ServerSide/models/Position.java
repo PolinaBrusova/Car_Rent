@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
+/**
+ * Position Entity
+ */
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name = "Positions")
@@ -29,13 +32,9 @@ public class Position{
     @Column(name = "NumberOfWorkingDays")
     private int numberOfWorkingDays;
 
-    public Position(String name, int salary, int numberOfWorkingDays, int numberOfDaysOff){
-        this.name = name;
-        this.salary = salary;
-        this.numberOfDaysOff = numberOfDaysOff;
-        this.numberOfWorkingDays = numberOfWorkingDays;
-    }
-
+    /**
+     * Empty initializer
+     */
     public Position(){}
 
     public Long getId() {

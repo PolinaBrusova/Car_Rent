@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
+/**
+ * Department entity
+ */
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name = "Departments")
@@ -32,14 +35,9 @@ public class Department{
     @Column(name = "Additional", nullable = false)
     private String additional;
 
-    public Department(String adress, String head, String phone, String email, String additional){
-        this.adress=adress;
-        this.head=head;
-        this.phone=phone;
-        this.email=email;
-        this.additional=additional;
-    }
-
+    /**
+     * Empty initializer
+     */
     public Department(){}
 
     public Long getId() {

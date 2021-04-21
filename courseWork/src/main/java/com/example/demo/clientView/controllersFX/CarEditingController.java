@@ -13,6 +13,9 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Calendar;
 
+/**
+ * JavaFX scene controller
+ */
 public class CarEditingController {
     @FXML
     private TextField brandField;
@@ -49,6 +52,10 @@ public class CarEditingController {
         this.main = main;
     }
 
+    /**
+     * Fills the scene text fields with the Car's attributes
+     * @param car Car object
+     */
     public void setCar(Car car) {
         this.car = car;
         brandField.setText(car.getBrand());
@@ -72,6 +79,9 @@ public class CarEditingController {
 
     public Car getCar() {return car;}
 
+    /**
+     * Handles action on "OK" button with validation of the fields
+     */
     @FXML
     private void handleOk(){
         try {
@@ -101,11 +111,18 @@ public class CarEditingController {
         }
     }
 
+    /**
+     * Handle action on "cancel" button with closing the stage
+     */
     @FXML
     private void handleCancel() {
         dialogStage.close();
     }
 
+    /**
+     * validates the fields and alert the user if there are any incorrect fields
+     * @return boolean result of validation
+     */
     private boolean isInputValid(){
         String errorMessage = "";
 

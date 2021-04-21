@@ -2,6 +2,9 @@ package com.example.demo.ServerSide.models;
 
 import javax.persistence.*;
 
+/**
+ * EmpLogPas Entity
+ */
 @Entity
 @Table(name = "EmpLogPas")
 public class EmpLogPas{
@@ -11,11 +14,9 @@ public class EmpLogPas{
     @Column(name = "password", nullable = false)
     private String password;
 
-    public EmpLogPas(Long id, String password){
-        this.id=id;
-        this.password=password;
-    }
-
+    /**
+     * Empty initializer
+     */
     public EmpLogPas(){}
 
     public Long getId() {

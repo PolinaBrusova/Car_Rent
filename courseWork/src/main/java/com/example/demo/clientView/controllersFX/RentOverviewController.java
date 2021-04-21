@@ -15,6 +15,9 @@ import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * JavaFX scene controller
+ */
 public class RentOverviewController {
     @FXML
     private TableView<Rent> rentTable;
@@ -45,6 +48,9 @@ public class RentOverviewController {
 
     public RentOverviewController(){}
 
+    /**
+     * fills the table columns with data
+     */
     @FXML
     private void initialize(){
 
@@ -62,6 +68,10 @@ public class RentOverviewController {
         rentTable.setItems(getAllRents());
     }
 
+    /**
+     * Loads data from the database via request
+     * @return ObservableList<Rent> with received data
+     */
     private ObservableList<Rent> getAllRents(){
         try {
             ObservableList<Rent> rents = FXCollections.observableArrayList();
@@ -91,6 +101,10 @@ public class RentOverviewController {
         }
     }
 
+    /**
+     * Shows the details of the selected element from table
+     * @param rent selected Rent
+     */
     private void showRentOverviewDetails(Rent rent){
         if(rent != null){
             brandLabel.setText(rent.getCar().getBrand());
@@ -116,6 +130,11 @@ public class RentOverviewController {
         }
     }
 
+    /**
+     * Converts JSONObject to a Car object
+     * @param rawCar JSONObject with Car parameters
+     * @return created and filled Car object
+     */
     private Car fillCar(JSONObject rawCar){
         try {
             Car car = new Car();
@@ -146,6 +165,11 @@ public class RentOverviewController {
         }
     }
 
+    /**
+     * Converts JSONObject to a Client object
+     * @param rawClient JSONObject with Client parameters
+     * @return created and filled Client object
+     */
     private Client fillClient(JSONObject rawClient){
         Client client = new Client();
         client.setId(rawClient.getLong("id"));
@@ -157,6 +181,11 @@ public class RentOverviewController {
         return client;
     }
 
+    /**
+     * Converts JSONObject to a Discount object
+     * @param rawDiscount JSONObject with Discount parameters
+     * @return created and filled Discount object
+     */
     private Discount fillDiscount(JSONObject rawDiscount){
         Discount discount = new Discount();
         discount.setId(rawDiscount.getString("id"));

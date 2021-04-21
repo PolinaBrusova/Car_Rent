@@ -7,10 +7,22 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Interface that extends JpaRepository<Position, Integer>
+ */
 @Repository
 @Service
 public interface PositionRepository extends JpaRepository<Position, Integer> {
-    public List<Position> findAll();
+    /**
+     * Finds all rows from the table
+     * @return List<Position> with all found rows
+     */
+    List<Position> findAll();
 
-    public  Position findPositionById(Long id);
+    /**
+     * Finds a Position by its id from the table
+     * @param id Long value of the id
+     * @return Position object found (or null - if not found)
+     */
+    Position findPositionById(Long id);
 }

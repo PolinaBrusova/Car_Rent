@@ -12,6 +12,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+/**
+ * JavaFX scene controller
+ */
 public class Statistics1Controller {
     @FXML
     private LineChart<String, Float> chart;
@@ -22,6 +25,9 @@ public class Statistics1Controller {
 
     public Statistics1Controller(){ }
 
+    /**
+     * Gets data from the database and loads it into LineChart
+     */
     @FXML
     private void initialize() {
         try{
@@ -108,6 +114,9 @@ public class Statistics1Controller {
         this.main = main;
     }
 
+    /**
+     * Handles action on "Close" button closing the stage
+     */
     @FXML
     private void handleClose(){
         this.stage.close();

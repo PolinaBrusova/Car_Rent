@@ -5,7 +5,6 @@ import com.example.demo.ServerSide.models.Client;
 import com.example.demo.clientView.JavaFxApplication;
 import com.example.demo.utils.ConnectionPerfomance;
 import com.example.demo.utils.PhoneUtil;
-import com.sun.xml.bind.api.impl.NameConverter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -23,6 +22,9 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 
+/**
+ * JavaFX scene controller
+ */
 public class PersonForBeakTroughController {
     private ObservableList<Car> cars = FXCollections.observableArrayList();
     private JavaFxApplication main;
@@ -55,11 +57,19 @@ public class PersonForBeakTroughController {
         this.cars = cars;
     }
 
+    /**
+     * Handles clicking on "Search" button validating the field and requesting data from the database
+     * If data si found - loads new stage
+     * Else transfers to adding entity stage
+     */
     @FXML
     private void handleSearch(){
         if (!phoneField.getText().isBlank()) {
             if (PhoneUtil.validPhone(phoneField.getText())){
-                if (startDate.getValue()!=null && endDate.getValue()!=null && (startDate.getValue().isAfter(LocalDate.now()) || startDate.getValue().equals(LocalDate.now())) && endDate.getValue().isAfter(LocalDate.now())){
+                if (startDate.getValue()!=null && endDate.getValue()!=null &&
+                        (startDate.getValue().isAfter(LocalDate.now()) ||
+                                startDate.getValue().equals(LocalDate.now()))
+                        && endDate.getValue().isAfter(LocalDate.now())){
                     if (startDate.getValue().isBefore(endDate.getValue())){
                         try {
                             Client client = clientExistence(phoneField.getText());
@@ -68,7 +78,8 @@ public class PersonForBeakTroughController {
                                     if (client.getExperience() >= cars.get(0).getComfortLevel().getMinExperience()) {
                                         try {
                                             FXMLLoader loader = new FXMLLoader();
-                                            loader.setLocation(JavaFxApplication.class.getResource("controllersFX/choice.fxml"));
+                                            loader.setLocation(JavaFxApplication.class
+                                                    .getResource("controllersFX/choice.fxml"));
                                             AnchorPane page = loader.load();
                                             this.main.getPrimaryStage().setTitle("Заполнение требований");
                                             Scene scene = new Scene(page);
@@ -107,16 +118,11 @@ public class PersonForBeakTroughController {
                                 alert.initOwner(searchStage);
                                 alert.setTitle("Клиент не найден");
                                 alert.setHeaderText("Система не нашла клиента с таким номером телефона");
-                                alert.setContentText("Создание нового клиента...");
+                                alert.setContentText("Создайте клиента и оформите ему машину в разделе КЛИНЕТЫ");
                                 alert.showAndWait();
                                 Client tempPerson = new Client();
                                 tempPerson.setPhoneNumber(phoneField.getText());
-                                //TODO: Make adding new client (why the id does not generates tho?
-                        /*if(main.showPersonEditDialog(tempPerson)){
-                            main.getPersonData().add(tempPerson);
-                        }*/
                                 searchStage.close();
-                                //Добавить переход с новым клиентом сразу на оформление требований
                             }
                         }catch (java.net.ConnectException e){
                             this.searchStage.close();
@@ -161,8 +167,15 @@ public class PersonForBeakTroughController {
         }
     }
 
+    /**
+     * Checks if the Client is in the database by sending a request and managing the answer
+     * @param phone String value of the supposed client's phone number
+     * @return Client that was found (null if none was found)
+     * @throws IOException if the connection executed with errors
+     */
     private Client clientExistence(String phone) throws IOException{
-            JSONObject jsonObject = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/getClient/phone=", URLEncoder.encode(phone, StandardCharsets.UTF_8), "Client");
+            JSONObject jsonObject = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/" +
+                    "tests/getClient/phone=", URLEncoder.encode(phone, StandardCharsets.UTF_8), "Client");
             Client client1 = new Client();
             if (!jsonObject.isEmpty()) {
                 client1.setId(Long.valueOf(jsonObject.get("id").toString()));
@@ -175,7 +188,14 @@ public class PersonForBeakTroughController {
             return client1;
     }
 
+    /**
+     * Checks if the client is renting something right at the moment
+     * @param client Client object for the check
+     * @return boolean result of the check
+     * @throws IOException if the connection executed with errors
+     */
     private boolean clientIsNotRenting(Client client) throws IOException{
-        return ConnectionPerfomance.excecuteValidation("http://localhost:9090/api/tests/Client=" + client.getId() + "/isRenting").matches("true");
+        return ConnectionPerfomance.excecuteValidation("http://localhost:9090/api/tests/Client=" +
+                client.getId() + "/isRenting").matches("true");
     }
 }

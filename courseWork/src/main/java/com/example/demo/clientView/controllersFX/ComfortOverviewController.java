@@ -21,6 +21,9 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
+/**
+ * JavaFX scene controller
+ */
 public class ComfortOverviewController {
     @FXML
     private TableView<ComfortLevel> comfortTable;
@@ -41,6 +44,9 @@ public class ComfortOverviewController {
 
     public ComfortOverviewController(){}
 
+    /**
+     * fills the table columns with data
+     */
     @FXML
     private void initialize(){
 
@@ -57,6 +63,9 @@ public class ComfortOverviewController {
         comfortTable.setItems(getLevels());
     }
 
+    /**
+     * Handles action on "Edit" button
+     */
     @FXML
     private void handleEditLevel(){
         try {
@@ -92,6 +101,10 @@ public class ComfortOverviewController {
         }
     }
 
+    /**
+     * Shows detail of the chosen item from table
+     * @param comfortLevel chosen comfort level item
+     */
     private void showComfortOverviewDetails(ComfortLevel comfortLevel){
         if(comfortLevel != null){
             letterLabel.setText(comfortLevel.getId());
@@ -109,6 +122,11 @@ public class ComfortOverviewController {
         }
     }
 
+    /**
+     * Shows edit dialog
+     * @param comfortLevel ComfortLevel for edit
+     * @return HashMap<Boolean, ComfortLevel> with the status of clicking on "Ok" button and edited Comfort Level object
+     */
     private HashMap<Boolean, ComfortLevel> showComfortEditDialog(ComfortLevel comfortLevel){
         try {
             HashMap<Boolean, ComfortLevel> dictionary = new HashMap<>();
@@ -135,6 +153,10 @@ public class ComfortOverviewController {
         }
     }
 
+    /**
+     * gets data from the database to fill the table
+     * @return ObservableList<ComfortLevel> with received data
+     */
     public ObservableList<ComfortLevel> getLevels(){
         try {
             ObservableList<ComfortLevel> levels = FXCollections.observableArrayList();

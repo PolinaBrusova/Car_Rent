@@ -19,6 +19,9 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
+/**
+ * JavaFX scene controller
+ */
 public class SearchWindowController {
 
     private JavaFxApplication main;
@@ -42,6 +45,12 @@ public class SearchWindowController {
         this.searchStage = searchStage;
     }
 
+    /**
+     * Handles action on "Search" button
+     * Verification of the phone number field
+     * Loads Requirements page if owner of the number is found
+     * Loads Creating Client if nothing is found
+     */
     @FXML
     private void handleSearch(){
         if (!phoneField.getText().isBlank()) {
@@ -125,6 +134,11 @@ public class SearchWindowController {
         }
     }
 
+    /**
+     * Verification of the existence of the client with specified phone number
+     * @param phone String value of the phone number
+     * @return Client object found (null if not found)
+     */
     private Client clientExistence(String phone){
         try {
             JSONObject jsonObject = ConnectionPerfomance.excecuteOnlyGET("http://localhost:9090/api/tests/getClient/phone=", URLEncoder.encode(phone, StandardCharsets.UTF_8), "Client");
@@ -147,6 +161,11 @@ public class SearchWindowController {
         }
     }
 
+    /**
+     * Checks if the client is renting something right at the moment
+     * @param client Client object for the check
+     * @return boolean result of the check
+     */
     private boolean clientIsNotRenting(Client client){
         try{
             return ConnectionPerfomance.excecuteValidation("http://localhost:9090/api/tests/Client="+client.getId()+"/isRenting").matches("true");

@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * JavaFX scene controller
+ */
 public class EmployeeRegisterController {
 
     private JavaFxApplication main;
@@ -34,6 +37,9 @@ public class EmployeeRegisterController {
         this.registerStage = registerStage;
     }
 
+    /**
+     * set fonts for the fiels
+     */
     @FXML
     private void initialize() {
         this.loginLabel.setStyle("-fx-font-family: 'Times New Roman'");
@@ -43,13 +49,18 @@ public class EmployeeRegisterController {
         this.password.setPromptText("Personal Password");
         this.password.setStyle("-fx-font-family: Didot");
     }
-    
+
+    /**
+     * Handles action on "Enter" button with validation of the fields and sending a request for the database
+     */
     @FXML
     private void handleEnter(){
             if (!login.getText().isBlank()) {
                 if (!password.getText().isBlank()) {
                     try {
-                        String result = ConnectionPerfomance.excecuteValidation("http://localhost:9090/api/tests/LogPas_Id=" + login.getText() + "_password=" + URLEncoder.encode(password.getText(), StandardCharsets.UTF_8));
+                        String result = ConnectionPerfomance.excecuteValidation("http://localhost:9090/api/tests/" +
+                                "LogPas_Id=" + login.getText() + "_password=" +
+                                URLEncoder.encode(password.getText(), StandardCharsets.UTF_8));
                         if (result.equals("true")) {
                             main.setEmployeeId(Long.parseLong(login.getText()));
                             main.initRootLayout();

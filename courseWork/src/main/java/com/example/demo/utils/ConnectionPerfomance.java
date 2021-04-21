@@ -12,10 +12,19 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Util for http requests
+ */
 public class ConnectionPerfomance {
 
     public ConnectionPerfomance(){}
 
+    /**
+     * Sends a POST-request for adding an entity in the database
+     * @param link String value of the url
+     * @param jsonObject JSONObject with all entity parameters (encoded with UTF-8 already)
+     * @throws IOException when connection executes with errors
+     */
     public static void excecutePost(String link, JSONObject jsonObject) throws IOException {
         URL url = new URL(link);
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -39,6 +48,12 @@ public class ConnectionPerfomance {
         }
     }
 
+    /**
+     * Sends a GET-request with the link and no other parameters to get a list of objects
+     * @param link String value of the url
+     * @return JSONArray with JSONObject containing entities with the same class
+     * @throws IOException when connection executes with errors
+     */
     public static JSONArray excecuteManyGET(String link) throws IOException {
         StringBuilder result = new StringBuilder();
         URL url = new URL(link);
@@ -53,6 +68,14 @@ public class ConnectionPerfomance {
         return new JSONArray(result.toString());
     }
 
+    /**
+     * Sends a GET-request with the link and parameters to get a single object
+     * @param link String value of the url
+     * @param param required parameter to send together with the link (UTF-8 encoded already)
+     * @param exctract Entity name of the expected receive entity
+     * @return JSONObject of the received answer
+     * @throws IOException when connection executes with errors
+     */
     public static JSONObject excecuteOnlyGET(String link, String param, String exctract) throws IOException {
         StringBuilder result = new StringBuilder();
         URL url;
@@ -77,6 +100,12 @@ public class ConnectionPerfomance {
         }
     }
 
+    /**
+     * Sends a GET-request with the link to receive a validation result from the server
+     * @param link String value of the url
+     * @return String representation of the boolean result of validation
+     * @throws IOException when connection executes with errors
+     */
     public static String excecuteValidation(String link) throws IOException {
         StringBuilder result = new StringBuilder();
         URL url = new URL(link);
@@ -90,6 +119,11 @@ public class ConnectionPerfomance {
         return result.toString();
     }
 
+    /**
+     * Sends a DELETE-request to delete an entity from the database. Entity id should be mentioned in the link
+     * @param link String value of the url
+     * @throws IOException when connection executes with errors
+     */
     public static void excecuteDELETE(String link) throws IOException {
         URL url = new URL(link);
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -109,6 +143,12 @@ public class ConnectionPerfomance {
         }
     }
 
+    /**
+     * Sends a PUT-request to update entity in the database
+     * @param link String value of the url
+     * @param jsonObject JSONObject with all entity parameters (encoded with UTF-8 already)
+     * @throws IOException when connection executes with errors
+     */
     public static void excecutePUT(String link, JSONObject jsonObject) throws IOException {
         URL url = new URL(link);
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();

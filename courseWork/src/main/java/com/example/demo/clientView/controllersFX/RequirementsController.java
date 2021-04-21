@@ -24,6 +24,9 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.time.LocalDate;
 
+/**
+ * JavaFX scene controller
+ */
 public class RequirementsController {
     private JavaFxApplication main;
     private Client client;
@@ -80,6 +83,11 @@ public class RequirementsController {
         this.stage=stage;
     }
 
+    /**
+     * Handles action on "Search" button validating the fields
+     * Loads Choice Stage if appropriate variants were found
+     * Shows error message if nothing was found
+     */
     public void handleSearch(){
         StringBuilder alertmessage = new StringBuilder();
         if (startDatePicker.getValue()==null){
@@ -180,11 +188,18 @@ public class RequirementsController {
 
     }
 
+    /**
+     * Handles action on "Back" button closing the stage
+     */
+    @FXML
     public void handleBack(){
         this.main.initRootLayout();
         this.main.showPersonOverview();
     }
 
+    /**
+     * Creates Lists with possible variants for the ComboBoxes
+     */
     private void createLists(){
         this.gearbox = FXCollections.observableArrayList();
         this.doorNumber = FXCollections.observableArrayList();
@@ -199,6 +214,9 @@ public class RequirementsController {
 
     }
 
+    /**
+     * Loads possible variants from the existing car list
+     */
     private void fillCarInfo(){
         for (Car car: this.main.getExistingCars()){
             if(car.getComfortLevel().getMinExperience()<=this.client.getExperience()){
@@ -210,6 +228,9 @@ public class RequirementsController {
         }
     }
 
+    /**
+     * Sets up ComboBoxes
+     */
     private void setupComboB(){
         cb1.setItems(gearbox);
         cb1.setValue(gearbox.get(0));

@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
+/**
+ * Employee Entity
+ */
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name = "Employees")
 public class Employee{
@@ -34,15 +37,9 @@ public class Employee{
     @Column(name = "Adress", nullable = false)
     private String adress;
 
-    public Employee(String firstName, String lastName, String phone, String email, String passport, String adress){
-        this.firstName=firstName;
-        this.lastName=lastName;
-        this.phone=phone;
-        this.email=email;
-        this.passport=passport;
-        this.adress=adress;
-    }
-
+    /**
+     * Empty initializer
+     */
     public Employee(){}
 
     public Long getId() {

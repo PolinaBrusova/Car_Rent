@@ -6,6 +6,9 @@ import javafx.beans.property.SimpleStringProperty;
 
 import javax.persistence.*;
 
+/**
+ * Car entity
+ */
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "Cars")
@@ -43,6 +46,16 @@ public class Car{
     @Column(name = "Available", nullable = false)
     private boolean available;
 
+    /**
+     * Initializes Car and assigns all parameters
+     * @param brand String value of the brand
+     * @param carcase String value of the carcase
+     * @param gearbox String value of the gearbox
+     * @param doorNumber Integer value of the number of doors
+     * @param seats Integer value of the number of seats
+     * @param releaseYear Integer value of the year (4 characters)
+     * @param color String value of the color
+     */
     public Car(String brand, String carcase, String gearbox, Integer doorNumber, Integer seats,
                Integer releaseYear, String color) {
         this.brand=brand;
@@ -54,6 +67,10 @@ public class Car{
         this.color=color;
         this.available = true;
     }
+
+    /**
+     * Empty initializer
+     */
     public Car(){}
 
     public Long getId(){

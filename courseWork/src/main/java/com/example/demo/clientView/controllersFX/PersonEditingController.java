@@ -16,6 +16,9 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * JavaFX scene controller
+ */
 public class PersonEditingController {
 
     @FXML
@@ -67,6 +70,9 @@ public class PersonEditingController {
         this.main = main;
     }
 
+    /**
+     * Handles action on "OK" button validating the fields
+     */
     @FXML
     private void handleOk() {
         if (isInputValid()) {
@@ -81,25 +87,33 @@ public class PersonEditingController {
         }
     }
 
+    /**
+     * Handles action on "Cancel" button closing the stage
+     */
     @FXML
     private void handleCancel() {
         dialogStage.close();
     }
 
+    /**
+     * Validates filled fields and shows an error message is there were any issues
+     * @return boolean result of validation
+     */
     private boolean isInputValid() {
         String errorMessage = "";
+        String regex = "^\\p{L}+[\\p{L}\\p{Z}\\p{P}]*";
 
         if (firstNameField.getText() == null || firstNameField.getText().length() == 0) {
             errorMessage += "Заполните имя клиента!\n";
         }else{
-            if (!firstNameField.getText().matches("[А-ЯA-Z]+([ '-][а-яa-zА-ЯA-Z]+)*")){
+            if (!firstNameField.getText().matches(regex)){
                 errorMessage += "Имя клиента содержит недопустимые символы!\n";
             }
         }
         if (lastNameField.getText() == null || lastNameField.getText().length() == 0) {
             errorMessage += "Заполните фамилию клиента!\n";
         }else{
-            if (!lastNameField.getText().matches("[А-ЯA-Z]+([ '-][а-яa-zА-ЯA-Z]+)*")){
+            if (!lastNameField.getText().matches(regex)){
                 errorMessage += "Фамилия клиента содержит недопустимые символы!\n";
             }
         }
@@ -141,7 +155,6 @@ public class PersonEditingController {
         if (errorMessage.length() == 0) {
             return true;
         } else {
-            // Показываем сообщение об ошибке.
             Alert alert = new Alert(AlertType.ERROR);
             alert.initOwner(dialogStage);
             alert.setTitle("Неверно заполненные поля");

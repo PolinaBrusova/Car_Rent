@@ -9,6 +9,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+/**
+ * JavaFX scene controller
+ */
 public class Statistics2Controller {
     @FXML
     private BarChart<String, Integer> chart;
@@ -19,6 +22,9 @@ public class Statistics2Controller {
 
     public Statistics2Controller(){ }
 
+    /**
+     * Gets data from the database and loads it into BarChart
+     */
     @FXML
     private void initialize() {
         try{
@@ -48,6 +54,9 @@ public class Statistics2Controller {
         this.main = main;
     }
 
+    /**
+     * Handles action on "Close" button closing the stage
+     */
     @FXML
     private void handleClose(){
         this.stage.close();

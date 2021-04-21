@@ -7,6 +7,9 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.Period;
 
+/**
+ * Rent Entity
+ */
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name = "Rents")
 public class Rent{
@@ -80,6 +83,11 @@ public class Rent{
     @Column(name = "total_summ", nullable = false)
     private float totalSumm;
 
+    /**
+     * Initializes Rent and assigns all parameters
+     * @param startDate LocalDate value of the start day of the renting
+     * @param endDate LocalDate value of the end day of the renting
+     */
     public Rent(LocalDate startDate, LocalDate endDate){
         this.startDate=startDate;
         this.endDate=endDate;
@@ -87,6 +95,9 @@ public class Rent{
                 car.getComfortLevel().getRentPrice()*(1-discount.getPercent())+car.getComfortLevel().getDeposit();
     }
 
+    /**
+     * Empty initializer
+     */
     public Rent(){}
 
     public Long getId() {
