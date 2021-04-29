@@ -48,6 +48,9 @@ public class RentOverviewController {
 
     private JavaFxApplication main;
 
+    /**
+     * Empty initializer
+     */
     public RentOverviewController(){}
 
     /**
@@ -77,7 +80,7 @@ public class RentOverviewController {
 
     /**
      * Loads data from the database via request
-     * @return ObservableList<Rent> with received data
+     * @return ObservableList of Rent with received data
      */
     private ObservableList<Rent> getAllRents(){
         try {

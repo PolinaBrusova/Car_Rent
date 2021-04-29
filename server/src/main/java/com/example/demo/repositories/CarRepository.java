@@ -7,13 +7,13 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * Interface that extends JpaRepository<Car, Integer>
+ * Interface that extends JpaRepository of Car, Integer
  */
 @Repository
 public interface CarRepository extends JpaRepository<Car, Integer> {
     /**
      * Finds all rows from the table
-     * @return List<Car> with all found rows
+     * @return List of Car with all found rows
      */
     List<Car> findAll();
 
@@ -36,7 +36,7 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
      * @param doorNumber Integer value of the doorNumber
      * @param seats Integer value of the seats
      * @param available boolean value that equals true
-     * @return List<Car> with all found rows
+     * @return List of Car with all found rows
      */
     List<Car> findCarsByGearboxAndAndDoorNumberAndSeatsAndAvailable(String gearbox, int doorNumber,
                                                                     int seats, boolean available);

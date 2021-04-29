@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Interface that extends JpaRepository<Employee, Integer>
+ * Interface that extends JpaRepository of Employee, Integer
  */
 @Repository
 @Service
@@ -16,7 +16,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
     /**
      * Finds all rows from the table
-     * @return List<Employee> with all found rows
+     * @return List of Employee with all found rows
      */
     List<Employee> findAll();
 

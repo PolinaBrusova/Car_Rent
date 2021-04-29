@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Interface that extends JpaRepository<Discount, Integer>
+ * Interface that extends JpaRepository of Discount, Integer
  */
 @Repository
 @Service
@@ -16,7 +16,7 @@ public interface DiscountRepository extends JpaRepository<Discount, Integer> {
 
     /**
      * Finds all rows from the table
-     * @return List<Discount> with all found rows
+     * @return List of Discount with all found rows
      */
     List<Discount> findAll();
 

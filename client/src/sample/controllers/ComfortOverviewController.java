@@ -133,7 +133,7 @@ public class ComfortOverviewController {
     /**
      * Shows edit dialog
      * @param comfortLevel ComfortLevel for edit
-     * @return HashMap<Boolean, ComfortLevel> with the status of clicking on "Ok" button and edited Comfort Level object
+     * @return HashMap of Boolean, ComfortLevel with the status of clicking on "Ok" button and edited Comfort Level object
      */
     private HashMap<Boolean, ComfortLevel> showComfortEditDialog(ComfortLevel comfortLevel){
         try {
@@ -163,7 +163,7 @@ public class ComfortOverviewController {
 
     /**
      * gets data from the database to fill the table
-     * @return ObservableList<ComfortLevel> with received data
+     * @return ObservableList of ComfortLevel with received data
      */
     public ObservableList<ComfortLevel> getLevels(){
         try {

@@ -38,6 +38,9 @@ public class PersonOverviewController {
     private Label liscenceLabel;
     private JavaFxApplication main;
 
+    /**
+     * Empty initializer
+     */
     public PersonOverviewController(){}
 
     /**

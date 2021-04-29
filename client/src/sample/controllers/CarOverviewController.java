@@ -284,7 +284,7 @@ public class CarOverviewController {
     /**
      * Shows edit dialog
      * @param car Car for edit (Car with no parameters for creating new)
-     * @return HashMap<Boolean, Car> with the status of clicking on "Ok" button and edited Car object
+     * @return HashMap of Boolean, Car with the status of clicking on "Ok" button and edited Car object
      */
     private HashMap<Boolean, Car> showCarEditDialog(Car car){
         try {

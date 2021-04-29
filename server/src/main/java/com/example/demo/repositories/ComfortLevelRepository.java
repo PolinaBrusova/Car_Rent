@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * Interface that extends JpaRepository<ComfortLevel, Integer>
+ * Interface that extends JpaRepository of ComfortLevel, Integer
  */
 @Repository
 public interface ComfortLevelRepository extends JpaRepository<ComfortLevel, Integer> {
@@ -21,7 +21,7 @@ public interface ComfortLevelRepository extends JpaRepository<ComfortLevel, Inte
 
     /**
      * Finds all rows from the table
-     * @return List<ComfortLevel> with all found rows
+     * @return List of ComfortLevel with all found rows
      */
     List<ComfortLevel> findAll();
 }

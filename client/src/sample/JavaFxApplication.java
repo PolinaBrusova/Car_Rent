@@ -122,7 +122,7 @@ public class JavaFxApplication extends Application {
 
     /**
      * returns the data for the tableView
-     * @return ObservableList<Client> personData
+     * @return ObservableList of Client personData
      */
     public ObservableList<Client> getPersonData() {
         return personData;
@@ -130,7 +130,7 @@ public class JavaFxApplication extends Application {
 
     /**
      * returns the list of cars
-     * @return ObservableList<Car> existingCars
+     * @return ObservableList of Car existingCars
      */
     public ObservableList<Car> getExistingCars() {
         return existingCars;
@@ -169,7 +169,7 @@ public class JavaFxApplication extends Application {
     /**
      * Loads editing window
      * @param person selected Client from the table
-     * @return HashMap<Boolean, Client> where boolean reference for clicking on "OK" button
+     * @return HashMap with Boolean, Client where boolean reference for clicking on "OK" button
      * and Client contains edited client
      */
     public HashMap<Boolean, Client> showPersonEditDialog(Client person) {
@@ -294,7 +294,7 @@ public class JavaFxApplication extends Application {
 
     /**
      * Enter point
-     * @param args
+     * @param args arguments
      */
     public static void main(String[] args) {
         launch(args);

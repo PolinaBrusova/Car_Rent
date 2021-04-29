@@ -17,6 +17,9 @@ import java.nio.charset.StandardCharsets;
  */
 public class ConnectionPerfomance {
 
+    /**
+     * Empty initializer
+     */
     public ConnectionPerfomance(){}
 
     /**

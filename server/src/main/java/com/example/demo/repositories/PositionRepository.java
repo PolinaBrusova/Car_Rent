@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Interface that extends JpaRepository<Position, Integer>
+ * Interface that extends JpaRepository of Position, Integer
  */
 @Repository
 @Service
 public interface PositionRepository extends JpaRepository<Position, Integer> {
     /**
      * Finds all rows from the table
-     * @return List<Position> with all found rows
+     * @return List of Position with all found rows
      */
     List<Position> findAll();
 

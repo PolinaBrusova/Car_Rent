@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Interface that extends JpaRepository<Client, Integer>
+ * Interface that extends JpaRepository of Client, Integer
  */
 @Repository
 @Service
 public interface ClientRepository extends JpaRepository<Client, Integer> {
     /**
      * Finds all rows from the table
-     * @return List<Client> with all found rows
+     * @return List of Client with all found rows
      */
     List<Client> findAll();
 

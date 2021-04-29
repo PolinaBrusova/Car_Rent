@@ -64,7 +64,7 @@ public class PersonForBeakTroughController {
 
     /**
      * sets elements for this.cars
-     * @param cars ObservableList<Car>
+     * @param cars ObservableList of Car
      */
     public void setCars(ObservableList<Car> cars) {
         this.cars = cars;

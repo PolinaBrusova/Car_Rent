@@ -27,7 +27,7 @@ public class AboutController {
     }
 
     /**
-     * Handles action on "close" button with ckosing the stage
+     * Handles action on "close" button with closing the stage
      */
     @FXML
     private void handleClose(){

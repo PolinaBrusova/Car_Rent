@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 /**
- * Interface that extends JpaRepository<EmpLogPas, Integer>
+ * Interface that extends JpaRepository of EmpLogPas, Integer
  */
 public interface EmpLogPasReposiroty extends JpaRepository<EmpLogPas, Integer> {
 

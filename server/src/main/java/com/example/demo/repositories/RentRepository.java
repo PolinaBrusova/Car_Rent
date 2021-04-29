@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Interface that extends JpaRepository<Rent, Integer>
+ * Interface that extends JpaRepository of Rent, Integer
  */
 @Repository
 @Service
@@ -17,13 +17,13 @@ public interface RentRepository extends JpaRepository<Rent, Integer> {
     /**
      * Finds all Rents by Car's id from the table
      * @param id Long value of the id
-     * @return List<Rent> with found rents (or null - if not found)
+     * @return List of Rent with found rents (or null - if not found)
      */
     List<Rent> findRentsByCarId(Long id);
 
     /**
      * Finds all rows from the table
-     * @return List<Rent> with all found rows
+     * @return List of Rent with all found rows
      */
     List<Rent> findAll();
 
@@ -37,7 +37,7 @@ public interface RentRepository extends JpaRepository<Rent, Integer> {
     /**
      * Finds all Rents by Client's id from the table
      * @param id Long value of the id
-     * @return List<Rent> with found rents (or null - if not found)
+     * @return List of Rent with found rents (or null - if not found)
      */
     List<Rent> findRentsByClientId(Long id);
 }
