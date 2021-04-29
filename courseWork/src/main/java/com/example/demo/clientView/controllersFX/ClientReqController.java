@@ -9,12 +9,19 @@ import javafx.stage.Stage;
 public class ClientReqController {
     private Stage clientReqStage;
 
+    /**
+     * Empty initializer
+     */
     public ClientReqController(){ }
 
     @FXML
     private void initialize() {
     }
 
+    /**
+     * sets the stage for this controller
+     * @param stage Javafx stage
+     */
     public void setClientReqStage(Stage stage) {
         this.clientReqStage = stage;
     }

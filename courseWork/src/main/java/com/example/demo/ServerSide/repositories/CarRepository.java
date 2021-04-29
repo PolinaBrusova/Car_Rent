@@ -38,5 +38,6 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
      * @param available boolean value that equals true
      * @return List<Car> with all found rows
      */
-    List<Car> findCarsByGearboxAndAndDoorNumberAndSeatsAndAvailable(String gearbox, int doorNumber, int seats, boolean available);
+    List<Car> findCarsByGearboxAndAndDoorNumberAndSeatsAndAvailable(String gearbox, int doorNumber,
+                                                                    int seats, boolean available);
 }

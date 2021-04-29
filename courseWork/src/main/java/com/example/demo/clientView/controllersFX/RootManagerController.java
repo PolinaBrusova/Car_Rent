@@ -24,8 +24,15 @@ public class RootManagerController {
     @FXML
     private Label emplInfo;
 
+    /**
+     * Empty initializer
+     */
     public RootManagerController(){ }
 
+    /**
+     * sets the main for this controller
+     * @param main JavaFxApplication main
+     */
     public void setMain(JavaFxApplication main){
         this.main = main;
         setEmplInfo();
@@ -35,6 +42,10 @@ public class RootManagerController {
     private void initialize() {
     }
 
+    /**
+     * sets the stage for this controller
+     * @param searchStage Javafx stage
+     */
     public void setDialogStage(Stage searchStage) {
         this.searchStage = searchStage;
     }

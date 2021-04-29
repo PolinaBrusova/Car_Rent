@@ -73,78 +73,159 @@ public class Car{
      */
     public Car(){}
 
+    /**
+     * return the id value
+     * @return Long id
+     */
     public Long getId(){
         return id;
     }
 
+    /**
+     * return the brand value
+     * @return String brand
+     */
     public String getBrand() {
         return brand;
     }
 
+    /**
+     * return the gearbox value
+     * @return String id
+     */
     public String getGearbox() {
         return gearbox;
     }
 
+    /**
+     * return the number of doors value
+     * @return Integer doorNumber
+     */
     public int getDoorNumber() {
         return doorNumber;
     }
 
+    /**
+     * return the number of seats value
+     * @return Integer seats
+     */
     public int getSeats() {
         return seats;
     }
 
+    /**
+     * return the carcase value
+     * @return String carcase
+     */
     public String getCarcase() {
         return carcase;
     }
 
+    /**
+     * return the release year value
+     * @return Integer releaseYear
+     */
     public int getReleaseYear() {
         return releaseYear;
     }
 
+    /**
+     * return the color value
+     * @return String color
+     */
     public String getColor() {
         return color;
     }
 
+    /**
+     * return the available value
+     * @return boolean isAvailable
+     */
     public boolean isAvailable() {
         return available;
     }
 
+    /**
+     * return the property for brand
+     * @return created SimpleStringProperty
+     */
     public SimpleStringProperty getBrandProperty(){return new SimpleStringProperty(brand);}
 
+    /**
+     * return the property for gearbox
+     * @return created SimpleStringProperty
+     */
     public SimpleStringProperty getGearProperty(){return new SimpleStringProperty(gearbox);}
 
+
+    /**
+     * Sets the value for id field
+     * @param id Long value for id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * Sets the value for brand field
+     * @param brand String value for brand
+     */
     public void setBrand(String brand) {
         this.brand = brand;
     }
 
+    /**
+     * Sets the value for carcase field
+     * @param carcase String value for carcase
+     */
     public void setCarcase(String carcase) {
         this.carcase = carcase;
     }
 
+    /**
+     * Sets the value for color field
+     * @param color String value for color
+     */
     public void setColor(String color) {
         this.color = color;
     }
 
+    /**
+     * Sets the value for gearbox field
+     * @param gearbox String value for gearbox
+     */
     public void setGearbox(String gearbox) {
         this.gearbox = gearbox;
     }
 
+    /**
+     * Sets the value for doorNumber field
+     * @param doorNumber Integer value for doorNumber
+     */
     public void setDoorNumber(int doorNumber) {
         this.doorNumber = doorNumber;
     }
 
+    /**
+     * Sets the value for releaseYear field
+     * @param releaseYear Integer value for releaseYear
+     */
     public void setReleaseYear(int releaseYear) {
         this.releaseYear = releaseYear;
     }
 
+    /**
+     * Sets the value for seats field
+     * @param seats Integer value for seats
+     */
     public void setSeats(int seats) {
         this.seats = seats;
     }
 
+    /**
+     * Sets the value for available field
+     * @param available Boolean value for available
+     */
     public void setAvailable(boolean available) {
         this.available = available;
     }
@@ -154,14 +235,26 @@ public class Car{
     @JsonIgnore
     private ComfortLevel comfortLevel;
 
+    /**
+     * return the comfort level assigned to the car value
+     * @return ComfortLevel comfortlevel
+     */
     public ComfortLevel getComfortLevel() {
         return comfortLevel;
     }
 
+    /**
+     * Sets the value for comfortLevel field
+     * @param comfortLevel ComfortLevel value for comfortLevel
+     */
     public void setComfortLevel(ComfortLevel comfortLevel) {
         this.comfortLevel = comfortLevel;
     }
 
+    /**
+     * Converts information to String object
+     * @return String representation of the Car object
+     */
     @Override
     public String toString() {
         return "Car{" +

@@ -9,12 +9,19 @@ import javafx.stage.Stage;
 public class AboutController {
     private Stage stage;
 
+    /**
+     * Empty initializer
+     */
     public AboutController(){ }
 
     @FXML
     private void initialize() {
     }
 
+    /**
+     * sets the stage for this controller
+     * @param stage Javafx stage
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }

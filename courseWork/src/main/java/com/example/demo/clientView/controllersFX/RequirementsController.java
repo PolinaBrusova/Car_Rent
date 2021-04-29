@@ -59,17 +59,28 @@ public class RequirementsController {
     private ObservableList<String> seats;
     private ObservableList<String> levels;
 
+    /**
+     * Empty initializer
+     */
     public RequirementsController(){}
 
     @FXML
     private void initialize(){
     }
 
+    /**
+     * sets the main for this controller
+     * @param main JavaFxApplication main
+     */
     public void setMain(JavaFxApplication main){
         this.main = main;
         this.createLists();
     }
 
+    /**
+     * sets the value for the person variable
+     * @param person Client object
+     */
     public void setPerson(Client person) {
         this.client = person;
         FirstNameLabel.setText(person.getFirstName());
@@ -79,6 +90,10 @@ public class RequirementsController {
         LiscenceLabel.setText(DateUtil.formatForPeople(DateUtil.parse(person.getLiscenceDate())));
     }
 
+    /**
+     * sets the stage for this controller
+     * @param stage Javafx stage
+     */
     public void setStage(Stage stage) {
         this.stage=stage;
     }

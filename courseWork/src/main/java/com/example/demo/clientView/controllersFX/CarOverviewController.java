@@ -50,6 +50,9 @@ public class CarOverviewController {
 
     private JavaFxApplication main;
 
+    /**
+     * Empty initializer
+     */
     public CarOverviewController(){}
 
     /**
@@ -68,6 +71,10 @@ public class CarOverviewController {
 
     }
 
+    /**
+     * sets the main for this controller
+     * @param main JavaFxApplication main
+     */
     public void setMain(JavaFxApplication main){
         this.main = main;
         carTable.setItems(main.getExistingCars());

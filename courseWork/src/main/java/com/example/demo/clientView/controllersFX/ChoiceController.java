@@ -71,6 +71,9 @@ public class ChoiceController {
 
     private Discount discount;
 
+    /**
+     * Empty initializer
+     */
     public ChoiceController(){}
 
     /**
@@ -87,26 +90,51 @@ public class ChoiceController {
         ); //при изменении слушатель изменит данные на новые из таблицы
 
     }
+
+    /**
+     * sets the main for this controller
+     * @param main JavaFxApplication main
+     */
     public void setMain(JavaFxApplication main){
         this.main = main;
     }
 
+    /**
+     * sets the stage for this controller
+     * @param stage Javafx stage
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
+    /**
+     * sets elements for this.carTable
+     * @param cars ObservableList<Car>
+     */
     public void setCars(ObservableList<Car> cars) {
         this.carTable.setItems(cars);
     }
 
+    /**
+     * Sets value for the end date of the rent
+     * @param end LocalDate
+     */
     public void setEnd(LocalDate end) {
         this.end = end;
     }
 
+    /**
+     * Sets value for the start date of the rent
+     * @param start LocalDate
+     */
     public void setStart(LocalDate start) {
         this.start = start;
     }
 
+    /**
+     * sets vakue for the client of the rent
+     * @param client Client
+     */
     public void setClient(Client client){
         this.client = client;
         this.FirstNameLabel.setText(client.getFirstName());

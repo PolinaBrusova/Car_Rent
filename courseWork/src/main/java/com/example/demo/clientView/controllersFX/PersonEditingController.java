@@ -42,10 +42,18 @@ public class PersonEditingController {
     private void initialize() {
     }
 
+    /**
+     * sets the stage for this controller
+     * @param dialogStage Javafx stage
+     */
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
 
+    /**
+     * sets the value for the person variable
+     * @param person Client object
+     */
     public void setPerson(Client person) {
         this.person = person;
         firstNameField.setText(person.getFirstName());
@@ -60,12 +68,24 @@ public class PersonEditingController {
         liscenceField.setPromptText("дд.мм.гггг");
     }
 
+    /**
+     * returns the value of the isOkClicked variable
+     * @return boolean isOkClicked
+     */
     public boolean isOkClicked() {
         return okClicked;
     }
 
+    /**
+     * returns the value of the person variable
+     * @return Client object
+     */
     public Client getPerson() {return person;}
 
+    /**
+     * sets the main for this controller
+     * @param main JavaFxApplication main
+     */
     public void setMain(JavaFxApplication main) {
         this.main = main;
     }

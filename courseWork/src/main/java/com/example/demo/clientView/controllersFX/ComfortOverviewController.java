@@ -42,6 +42,9 @@ public class ComfortOverviewController {
 
     private JavaFxApplication main;
 
+    /**
+     * Empty initializer
+     */
     public ComfortOverviewController(){}
 
     /**
@@ -49,15 +52,17 @@ public class ComfortOverviewController {
      */
     @FXML
     private void initialize(){
-
         letterColumn.setCellValueFactory(cellData -> cellData.getValue().getLetterProperty());
-
-        showComfortOverviewDetails(null); //очищаем справа
+        showComfortOverviewDetails(null);
         comfortTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable,oldValue,newValue) -> showComfortOverviewDetails(newValue)
-        ); //при изменении слушатель изменит данные на новые из таблицы
-
+        );
     }
+
+    /**
+     * sets the main for this controller
+     * @param main JavaFxApplication main
+     */
     public void setMain(JavaFxApplication main){
         this.main = main;
         comfortTable.setItems(getLevels());

@@ -44,10 +44,18 @@ public class CarEditingController {
     private void initialize() {
     }
 
+    /**
+     * sets the stage for this controller
+     * @param dialogStage Javafx stage
+     */
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
 
+    /**
+     * sets the main for this controller
+     * @param main JavaFxApplication main
+     */
     public void setMain(JavaFxApplication main) {
         this.main = main;
     }
@@ -73,10 +81,18 @@ public class CarEditingController {
         }
     }
 
+    /**
+     * returns the value of the isOkClicked variable
+     * @return boolean isOkClicked
+     */
     public boolean isOkClicked() {
         return okClicked;
     }
 
+    /**
+     * returns edited car
+     * @return Car car
+     */
     public Car getCar() {return car;}
 
     /**

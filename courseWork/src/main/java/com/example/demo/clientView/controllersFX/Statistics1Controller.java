@@ -23,6 +23,9 @@ public class Statistics1Controller {
     private Stage stage;
     private JavaFxApplication main;
 
+    /**
+     * Empty initializer
+     */
     public Statistics1Controller(){ }
 
     /**
@@ -106,10 +109,18 @@ public class Statistics1Controller {
         }
     }
 
+    /**
+     * sets the stage for this controller
+     * @param stage Javafx stage
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
+    /**
+     * sets the main for this controller
+     * @param main JavaFxApplication main
+     */
     public void setMain(JavaFxApplication main) {
         this.main = main;
     }

@@ -13,6 +13,7 @@ import java.io.IOException;
  * JavaFX scene controller
  */
 public class Statistics2Controller {
+    
     @FXML
     private BarChart<String, Integer> chart;
     final CategoryAxis x = new CategoryAxis();
@@ -20,6 +21,9 @@ public class Statistics2Controller {
     private Stage stage;
     private JavaFxApplication main;
 
+    /**
+     * Empty initializer
+     */
     public Statistics2Controller(){ }
 
     /**
@@ -46,10 +50,18 @@ public class Statistics2Controller {
         }
     }
 
+    /**
+     * sets the stage for this controller
+     * @param stage Javafx stage
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
+    /**
+     * sets the main for this controller
+     * @param main JavaFxApplication main
+     */
     public void setMain(JavaFxApplication main) {
         this.main = main;
     }

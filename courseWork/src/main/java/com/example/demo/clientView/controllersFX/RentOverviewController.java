@@ -57,12 +57,17 @@ public class RentOverviewController {
         carNameColumn.setCellValueFactory(cellData -> cellData.getValue().getBrandProperty());
         lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().getLastNameProperty());
 
-        showRentOverviewDetails(null); //очищаем справа
+        showRentOverviewDetails(null);
         rentTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable,oldValue,newValue) -> showRentOverviewDetails(newValue)
-        ); //при изменении слушатель изменит данные на новые из таблицы
+        );
 
     }
+
+    /**
+     * sets the main for this controller
+     * @param main JavaFxApplication main
+     */
     public void setMain(JavaFxApplication main){
         this.main = main;
         rentTable.setItems(getAllRents());

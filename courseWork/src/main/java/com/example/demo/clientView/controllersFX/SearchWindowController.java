@@ -30,9 +30,15 @@ public class SearchWindowController {
     @FXML
     private TextField phoneField;
 
-
+    /**
+     * Empty initializer
+     */
     public SearchWindowController(){}
 
+    /**
+     * sets the main for this controller
+     * @param main JavaFxApplication main
+     */
     public void setMain(JavaFxApplication main){
         this.main = main;
     }
@@ -41,6 +47,10 @@ public class SearchWindowController {
     private void initialize() {
     }
 
+    /**
+     * sets the stage for this controller
+     * @param searchStage Javafx stage
+     */
     public void setDialogStage(Stage searchStage) {
         this.searchStage = searchStage;
     }

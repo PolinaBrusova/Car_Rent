@@ -11,7 +11,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -24,7 +23,9 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
-
+/**
+ * JavaFX scene controller
+ */
 public class JavaFxApplication extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
@@ -32,8 +33,15 @@ public class JavaFxApplication extends Application {
     private long employeeId;
     private ObservableList<Car> existingCars = FXCollections.observableArrayList();
 
+    /**
+     * Empty initializer
+     */
     public JavaFxApplication() { }
 
+    /**
+     * starts the show
+     * @param primaryStage JavaFx stage
+     */
     @Override
     public void start(Stage primaryStage){
         this.primaryStage = primaryStage;
@@ -43,6 +51,9 @@ public class JavaFxApplication extends Application {
         showLoginPage();
     }
 
+    /**
+     * Initializer root layout (Border pane) for other windows to lay on
+     */
     public void initRootLayout() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -60,6 +71,9 @@ public class JavaFxApplication extends Application {
         }
     }
 
+    /**
+     * shows page with authorization
+     */
     public void showLoginPage() {
         try {
             Stage stage = new Stage();
@@ -82,26 +96,49 @@ public class JavaFxApplication extends Application {
         }
     }
 
+    /**
+     * returns the value of the primary stage attribute
+     * @return JavaFX stage (primary)
+     */
     public Stage getPrimaryStage() {
         return primaryStage;
     }
 
+    /**
+     * returns the id of the logged employee
+     * @return Long id
+     */
     public long getEmployeeId() {
         return employeeId;
     }
 
+    /**
+     * sets the id of the logged employee
+     * @param employeeId Long value for id
+     */
     public void setEmployeeId(long employeeId) {
         this.employeeId = employeeId;
     }
 
+    /**
+     * returns the data for the tableView
+     * @return ObservableList<Client> personData
+     */
     public ObservableList<Client> getPersonData() {
         return personData;
     }
 
+    /**
+     * returns the list of cars
+     * @return ObservableList<Car> existingCars
+     */
     public ObservableList<Car> getExistingCars() {
         return existingCars;
     }
 
+    /**
+     * initializes Anchor pane (new scene) with information about clients of the service
+     */
     public void showPersonOverview() {
         this.personData.clear();
         try {
@@ -129,6 +166,12 @@ public class JavaFxApplication extends Application {
         }
     }
 
+    /**
+     * Loads editing window
+     * @param person selected Client from the table
+     * @return HashMap<Boolean, Client> where boolean reference for clicking on "OK" button
+     * and Client contains edited client
+     */
     public HashMap<Boolean, Client> showPersonEditDialog(Client person) {
         try {
             HashMap<Boolean, Client> dictionary = new HashMap<>();
@@ -156,6 +199,9 @@ public class JavaFxApplication extends Application {
         }
     }
 
+    /**
+     * gets all cars existing in the database and fills the variable
+     */
     public void findAllCars(){
         try {
             this.existingCars.clear();
@@ -188,6 +234,9 @@ public class JavaFxApplication extends Application {
         }
     }
 
+    /**
+     * initializes Anchor pane (new scene) with information about cars of the service
+     */
     public void showCarOwerview(){
         findAllCars();
         try {
@@ -202,6 +251,9 @@ public class JavaFxApplication extends Application {
         }
     }
 
+    /**
+     * initializes Anchor pane (new scene) with information about retns of the service
+     */
     public void showRentOwerview(){
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -215,6 +267,9 @@ public class JavaFxApplication extends Application {
         }
     }
 
+    /**
+     * initializes Anchor pane (new scene) with information about comfort levels of the service
+     */
     public void showLevelOverview(){
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -228,15 +283,26 @@ public class JavaFxApplication extends Application {
         }
     }
 
+    /**
+     * stops the application
+     * @throws Exception if any errors occur
+     */
     @Override
     public void stop() throws Exception {
         super.stop();
     }
 
+    /**
+     * Enter point
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Shows alert about problems with connection
+     */
     public void handleNoConnection(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.initOwner(primaryStage);

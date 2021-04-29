@@ -49,12 +49,17 @@ public class PersonOverviewController {
         firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().getFirstNameProperty());
         lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().getLastNameProperty());
 
-        showPersonsOverviewDetails(null); //очищаем справа
+        showPersonsOverviewDetails(null);
         personTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable,oldValue,newValue) -> showPersonsOverviewDetails(newValue)
-        ); //при изменении слушатель изменит данные на новые из таблицы
+        );
 
     }
+
+    /**
+     * sets the main for this controller
+     * @param main JavaFxApplication main
+     */
     public void setMain(JavaFxApplication main){
         this.main = main;
         personTable.setItems(main.getPersonData());

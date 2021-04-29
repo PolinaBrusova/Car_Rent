@@ -31,10 +31,18 @@ public class ComfortEditingController {
     private void initialize() {
     }
 
+    /**
+     * sets the stage for this controller
+     * @param dialogStage Javafx stage
+     */
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
 
+    /**
+     * Sets level for the edit
+     * @param comfortLevel ComfortLevel
+     */
     public void setLevel(ComfortLevel comfortLevel) {
         this.comfortLevel = comfortLevel;
         idField.setText(comfortLevel.getId());
@@ -44,10 +52,18 @@ public class ComfortEditingController {
         expField.setText(String.valueOf(comfortLevel.getMinExperience()));
     }
 
+    /**
+     * returns the value of the isOkClicked variable
+     * @return boolean isOkClicked
+     */
     public boolean isOkClicked() {
         return okClicked;
     }
 
+    /**
+     * returns the value of the comfortLevel variable
+     * @return ComfortLevel object
+     */
     public ComfortLevel getLevel() {return comfortLevel;}
 
     /**

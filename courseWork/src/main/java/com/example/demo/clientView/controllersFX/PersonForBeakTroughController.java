@@ -37,10 +37,15 @@ public class PersonForBeakTroughController {
     @FXML
     private DatePicker endDate;
 
-
-
+    /**
+     * Empty initializer
+     */
     public PersonForBeakTroughController(){}
 
+    /**
+     * sets the main for this controller
+     * @param main JavaFxApplication main
+     */
     public void setMain(JavaFxApplication main){
         this.main = main;
     }
@@ -49,10 +54,18 @@ public class PersonForBeakTroughController {
     private void initialize() {
     }
 
+    /**
+     * sets the stage for this controller
+     * @param searchStage Javafx stage
+     */
     public void setDialogStage(Stage searchStage) {
         this.searchStage = searchStage;
     }
 
+    /**
+     * sets elements for this.cars
+     * @param cars ObservableList<Car>
+     */
     public void setCars(ObservableList<Car> cars) {
         this.cars = cars;
     }

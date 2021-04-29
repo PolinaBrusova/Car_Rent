@@ -9,12 +9,19 @@ import javafx.stage.Stage;
 public class SalesInfoController {
     private Stage salesInfoStage;
 
+    /**
+     * Empty initializer
+     */
     public SalesInfoController(){ }
 
     @FXML
     private void initialize() {
     }
 
+    /**
+     * sets the stage for this controller
+     * @param stage Javafx stage
+     */
     public void setSalesInfogStage(Stage stage) {
         this.salesInfoStage = stage;
     }

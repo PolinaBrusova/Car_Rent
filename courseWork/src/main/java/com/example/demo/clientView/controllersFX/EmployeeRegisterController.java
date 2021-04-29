@@ -27,12 +27,23 @@ public class EmployeeRegisterController {
 
     private Stage registerStage;
 
+    /**
+     * Empty initializer
+     */
     public EmployeeRegisterController(){}
 
+    /**
+     * sets the main for this controller
+     * @param main JavaFxApplication main
+     */
     public void setMain(JavaFxApplication main){
         this.main = main;
     }
 
+    /**
+     * sets the stage for this controller
+     * @param registerStage Javafx stage
+     */
     public void setRegisterStage(Stage registerStage) {
         this.registerStage = registerStage;
     }
