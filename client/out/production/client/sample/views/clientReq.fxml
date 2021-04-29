@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="300.0" prefWidth="600.0" stylesheets="@edits.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.ClientReqController">
+   <children>
+      <Button layoutX="531.0" layoutY="359.0" mnemonicParsing="false" onAction="#handleClose" text="Закрыть" />
+      <Label layoutX="110.0" layoutY="30.0" text="НЕОБХОДИМЫЕ ТРЕБОВАНИЯ ДЛЯ КЛИЕНТОВ АВТОПРОКАТА" />
+      <Label layoutX="189.0" layoutY="65.0" text="Минимальный возраст водителя - 18 лет" />
+      <Label layoutX="117.0" layoutY="95.0" text="Обязательно наличие водительского удостоверения категории B" />
+      <Label layoutX="153.0" layoutY="125.0" text="Клиент ответственнен за все штрафы и нарушения" />
+      <Label layoutX="88.0" layoutY="155.0" text="Так же клиент обязан самостоятельно оплачивать парковку в течении аренды" />
+      <Label layoutX="142.0" layoutY="185.0" text="Автомобиль должен эксплуатироваться на территоррии РФ" />
+      <Label layoutX="140.0" layoutY="215.0" text="Клиент на собственные средства заполняет бак автомобиля" />
+   </children>
+</AnchorPane>

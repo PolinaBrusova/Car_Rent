@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="280.0" prefWidth="380.0" stylesheets="@pop_ups.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.PersonForBeakTroughController">
+    <children><GridPane layoutX="5.0" layoutY="57.0" prefHeight="172.0" prefWidth="495.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="57.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="298.0" minWidth="10.0" prefWidth="285.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="241.0" minWidth="10.0" prefWidth="209.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="97.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="139.0" minHeight="10.0" prefHeight="71.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="139.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+        <children>
+            <Label text="    Номер:" />
+            <Label text="    Дата начала аренды:" GridPane.rowIndex="1" />
+            <Label text="    Дата окончания аренды:" GridPane.rowIndex="2" />
+            <TextField fx:id="phoneField" prefHeight="35.0" prefWidth="299.0" GridPane.columnIndex="1" />
+            <DatePicker fx:id="startDate" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <DatePicker fx:id="endDate" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        </children>
+    </GridPane>
+        <HBox layoutX="197.1875" layoutY="241.0" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+        <Button layoutX="290.0" layoutY="231.0" mnemonicParsing="false" onAction="#handleSearch" prefHeight="41.0" prefWidth="209.0" text="Найти" textFill="#d34e15">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Button>
+      <Label layoutX="38.0" layoutY="14.0" text="Необходимо выбрать клиента и даты аренды" />
+    </children></AnchorPane>
